@@ -6,7 +6,6 @@ public enum Igralec {
 	//odigraj potezo
 	BELI, CRNI;
 	
-	
 	public Igralec nasprotnik() {
 		if (this == BELI) {
 			return CRNI;
@@ -14,6 +13,7 @@ public enum Igralec {
 			return BELI;
 		}
 	}
+
 	
 
 	
