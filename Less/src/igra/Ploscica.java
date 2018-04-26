@@ -23,6 +23,7 @@ public class Ploscica {
 		}
 	}
 	
+	//rotira pravilno (testirano)
 	public void nakljucno_rotiraj(){
 		int stevilo_rotacij = (int)(Math.random()*100) % 4;
 		while (stevilo_rotacij > 0){

@@ -15,6 +15,6 @@ public enum Stanje {
 	private int kvotaPremikov;
 	
 	
-	public static Stanje 
+	//public static Stanje 
 	
 }
