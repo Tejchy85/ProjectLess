@@ -63,7 +63,9 @@ public class Igra {
 			}
 		}
 	}
-
+	
+	
+	//ta funkcija ni še preverjena.
 	/**
 	 * 
 	 * @param x - x koordinata figurice za katero preverjamo možne poteze.
@@ -274,5 +276,15 @@ public class Igra {
 		}
 				
 		return poteze;
+	}
+	/**
+	 * 
+	 * @param trenutna - trenutna pozicija
+	 * @param zeljena - izbrano polje za premik figurice
+	 * @return ali lahko ibrano figurico igralec premakne na željeno polje
+	 */
+	public boolean veljavnaPoteza(Poteza trenutna, Poteza zeljena) {
+		List<Poteza> mozne = moznePoteze(trenutna.getX(), trenutna.getY(), kvotaPremikov);
+		return mozne.contains(zeljena);
 	}
 }
