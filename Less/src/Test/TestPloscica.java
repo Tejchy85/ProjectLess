@@ -1,5 +1,6 @@
 package Test;
 
+import igra.Igra;
 import igra.Ploscica;
 import igra.Polje;
 
@@ -21,9 +22,24 @@ public class TestPloscica extends TestCase {
 		for (Polje i : pol){
 			i = Polje.CRNO;
 			System.out.println(i);
-			}	
+			}
+		
+		Igra igra = new Igra();								//ograjice se postavijo pravilno
+		int[][] ogr = igra.getIgralnaPlosca().getOgrajiceVod();
+		for (int[] vre : ogr) {
+			for (int vr : vre) {
+				System.out.print(vr);
+			}
+		}
+		System.out.println();
+		int[][] ogra = igra.getIgralnaPlosca().getOgrajiceNavp();
+		for (int[] vre : ogra) {
+			for (int vr : vre) {
+				System.out.print(vr);
+			}
+		}
+		
 	}
 	
 			
 }
-
