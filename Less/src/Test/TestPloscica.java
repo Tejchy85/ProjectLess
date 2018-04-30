@@ -9,8 +9,7 @@ import junit.framework.TestCase;
 public class TestPloscica extends TestCase {
 	
 	public void testPloscica() {
-		Ploscica p = new Ploscica(new int[] {1,2,3
-				});
+		Ploscica p = new Ploscica(new int[] {1,2,3});
 		p.nakljucno_rotiraj();;
 		//assertEquals([1],[1]); //error: kaj pa zdej!!:o
 		for (int i : p.getOgrajice()){
@@ -23,8 +22,8 @@ public class TestPloscica extends TestCase {
 			i = Polje.CRNO;
 			System.out.println(i);
 			}	
-		
-		
 	}
+	
+			
 }
 

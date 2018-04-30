@@ -4,6 +4,10 @@ public class Ploscica {
 
 	//Simuliramo plošèice, ki sestavljajo polje, kot je to v fizièni igri
 	protected int[] ograjice;
+
+	public Ploscica (int[] o){
+		ograjice = o;
+	}
 	
 	public int[] getOgrajice() {
 		return ograjice;
@@ -11,10 +15,6 @@ public class Ploscica {
 
 	public void setOgrajice(int[] ograjice) {
 		this.ograjice = ograjice;
-	}
-
-	public Ploscica (int[] o){
-		ograjice = o;
 	}
 
 	public void rotiraj (){
