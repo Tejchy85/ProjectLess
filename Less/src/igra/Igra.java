@@ -28,6 +28,7 @@ public class Igra {
 	private int stevecPotezBeli; // na zaèetku so števci potez v skupnem enaki 0, ob vsakem koraku se poveèajo za 1,2,3. 
 	private int stevecPotezCrni; // zmagovalec je tisti ki bo postavil v nasprotni kot svoje figure v manj potezah. Èe postavita v enako potezah, je rezultat neodoèen
 	private int kvotaPremikov; // vsak igralec ima na voljo po 3 poteze vsakiè ko je na vrsti
+	protected Stanje trenutnoStanje; //spremlja trenutno stanje
 	
 	public Igra() {
 		naPotezi = Igralec.BELI;
@@ -287,6 +288,80 @@ public class Igra {
 	public boolean veljavnaPoteza(Poteza trenutna, Poteza zeljena) {
 		List<Poteza> mozne = moznePoteze(trenutna.getX(), trenutna.getY(), kvotaPremikov);
 		return mozne.contains(zeljena);
+	}
+	
+	
+	/**
+	 * Naredi potezo: spremeni kvoto, po potrebi spremeni igralca, 
+	 * prestavi figurico, èe je poteza veljavna, poveèa stevilo potez.
+	 * @param trenutna
+	 * @param koncna
+	 */
+	public void narediPotezo(Poteza trenutna, Poteza koncna) {
+		if (veljavnaPoteza(trenutna, koncna) == true) {
+			int zacetnakvota = kvotaPremikov;
+			
+			//Prestavimo figurico
+			igralnaPlosca.vsa_polja[koncna.getY()][koncna.getX()] = igralnaPlosca.vsa_polja[trenutna.getY()][trenutna.getX()];
+			igralnaPlosca.vsa_polja[trenutna.getY()][trenutna.getX()] = Polje.PRAZNO;
+			
+			//Izraèun koliko kvote je porabil. 
+			if (Math.abs(trenutna.getX() - koncna.getX()) == 2 || Math.abs(trenutna.getY() - koncna.getY()) == 2) {
+				kvotaPremikov = kvotaPremikov - 1;
+			} else {
+				if (trenutna.getX() < koncna.getX() || trenutna.getX() > koncna.getX() ) {
+					int kvota = igralnaPlosca.ograjiceNavp[trenutna.getY()][koncna.getX()];
+					kvotaPremikov = kvotaPremikov - kvota;
+				} else if (trenutna.getY() > koncna.getY() || trenutna.getY() < koncna.getY()) {
+					int kvota = igralnaPlosca.ograjiceVod[koncna.getY()][koncna.getX()];
+					kvotaPremikov = kvotaPremikov - kvota;
+				}
+			}
+			
+			//Poveèamo število potez
+			if(naPotezi == Igralec.BELI) {
+				stevecPotezBeli += (zacetnakvota - kvotaPremikov);
+			} else {
+				stevecPotezCrni += (zacetnakvota - kvotaPremikov);
+			}
+			
+			//Spremenimo igralca, èe je potrebno
+			if (kvotaPremikov == 0) {
+				naPotezi = naPotezi.nasprotnik();
+				kvotaPremikov = 3; 
+			}
+		
+		} else {
+			System.out.println("Neveljaven premik. Poskusi znova.");
+		}
+		
+		//Preverimo èe je igre konec.
+		boolean konec_crni = igralnaPlosca.konecCrni();
+		boolean konec_beli = igralnaPlosca.konecBeli();
+		if (konec_crni == true && konec_beli == false) {
+			trenutnoStanje = Stanje.ZMAGA_CRNI;
+		} else if (konec_beli = true) {
+			//to je potrebno narediti, ker lahko beli konèa še preden porabi tri korake. 
+			if (naPotezi != Igralec.CRNI) {
+				naPotezi = Igralec.CRNI;
+				kvotaPremikov = 3;
+				
+			}
+			kvotaPremikov = 3;
+			if ()
+		}
+		if (igralnaPlosca.konecBeli() == true) {
+			naPotezi = Igralec.CRNI;
+			kvotaPremikov = 3;
+			if (naPotezi != Igralec.CRNI) {
+				//èe je beli na potezi, to pomeni, da je èrni porabil svojo kvoto
+				if (stevecPotezBeli == stevecPotezCrni) {
+					trenutnoStanje = Stanje.NEODLOCENO;
+				} else if (stevecPotezCrni <)
+			}
+			kvotaPremikov = 3; 
+			naPotezi = Igralec.CRNI;
+		} 
 	}
 
 	public Plosca getIgralnaPlosca() {
