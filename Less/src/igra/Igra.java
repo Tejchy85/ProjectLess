@@ -11,6 +11,10 @@ import java.util.List;
  * stevcev ne rabimo (todo delete) - ko je skorajkonec (konecBeli) se zacne stetje: ce crni konca v 3 potezah je izenaceno, ce v manj je zmagal, ce ne izgubil
  * 				ce je konec==true, potem se igra takoj zakljuci - ce belega ni na koncu, je izgubil
  * 
+ *  !!"potezo" sem spremenil v "lokacijo"
+ *  
+ *  stevca ne uporabljava? --> delete?  
+ *  
  */
 
 public class Igra {
@@ -29,6 +33,7 @@ public class Igra {
 	private int stevecPotezCrni; // zmagovalec je tisti ki bo postavil v nasprotni kot svoje figure v manj potezah. Èe postavita v enako potezah, je rezultat neodoèen
 	private int kvotaPremikov; // vsak igralec ima na voljo po 3 poteze vsakiè ko je na vrsti
 	protected Stanje trenutnoStanje; //spremlja trenutno stanje
+	protected int zmagovalnaKvota; //ko beli zmaga si zapomnimo, v koliko premikih je koncal zadnjo potezo
 	
 	public Igra() {
 		naPotezi = Igralec.BELI;
@@ -36,6 +41,7 @@ public class Igra {
 		stevecPotezCrni = 0; 
 		kvotaPremikov = 3; 
 		igralnaPlosca = new Plosca(dim);
+		zmagovalnaKvota = 0;
 		
 		
 	}
@@ -75,8 +81,8 @@ public class Igra {
 	 * @param kvota - kvota potez igralca, ne moremo poklicati, èe ima igralec kvoto 0.
 	 * @return vse možne poteze izbrane figurice
 	 */
-	public List<Poteza> moznePoteze(int x, int y, int kvota) {  //gledamo mozne poteze za eno figurico
-		LinkedList<Poteza> poteze = new LinkedList<Poteza>();
+	public List<Lokacija> moznePoteze(int x, int y, int kvota) {  //gledamo mozne poteze za eno figurico
+		LinkedList<Lokacija> poteze = new LinkedList<Lokacija>();
 		//Tekmovalec se lahko premakne za eno mesto dol, gor, levo, desno, 
 		//za dve mesti dol, gor, levo, desno (le v primeru, ko preskoèi oviro). 
 		//Preveriti je potrebno še èe igralec poskusi preskoèit. 
@@ -93,7 +99,7 @@ public class Igra {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
 					if (igralnaPlosca.ograjiceNavp[y][x] == 0) {
 						//èe vse to velja, je to veljavna poteza.
-						poteze.add(new Poteza(x-1,y));
+						poteze.add(new Lokacija(x-1,y));
 					}
 				}
 			}
@@ -107,7 +113,7 @@ public class Igra {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
 					if (igralnaPlosca.ograjiceNavp[y][x+1] == 0) {
 						//èe vse to velja, je to veljavna poteza.
-						poteze.add(new Poteza(x+1,y));
+						poteze.add(new Lokacija(x+1,y));
 					}
 				}
 			}
@@ -121,7 +127,7 @@ public class Igra {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
 					if (igralnaPlosca.ograjiceVod[y][x] == 0) {
 						//èe vse to velja, je to veljavna poteza.
-						poteze.add(new Poteza(x,y-1));
+						poteze.add(new Lokacija(x,y-1));
 					}
 				}	
 			}
@@ -136,7 +142,7 @@ public class Igra {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
 					if (igralnaPlosca.ograjiceVod[y+1][x] == 0) {
 						//èe vse to velja, je to veljavna poteza.
-						poteze.add(new Poteza(x,y+1));
+						poteze.add(new Lokacija(x,y+1));
 					}
 				}	
 			}
@@ -152,7 +158,7 @@ public class Igra {
 					//dejansko preskoèimo nekoga
 					if(igralnaPlosca.vsa_polja[y][x-1] != Polje.PRAZNO) {
 						if (igralnaPlosca.ograjiceNavp[y][x-1] == 0 && igralnaPlosca.ograjiceNavp[y][x]==0) {
-							poteze.add(new Poteza(x-2,y));
+							poteze.add(new Lokacija(x-2,y));
 						}
 					}
 				}
@@ -164,7 +170,7 @@ public class Igra {
 					//dejansko preskoèimo nekoga
 					if(igralnaPlosca.vsa_polja[y][x+1] != Polje.PRAZNO) {
 						if (igralnaPlosca.ograjiceNavp[y][x+1] == 0 && igralnaPlosca.ograjiceNavp[y][x+2]==0) {
-							poteze.add(new Poteza(x+2,y));
+							poteze.add(new Lokacija(x+2,y));
 						}
 					}
 				}
@@ -176,7 +182,7 @@ public class Igra {
 					//dejansko preskoèimo nekoga
 					if(igralnaPlosca.vsa_polja[y-1][x] != Polje.PRAZNO) {
 						if (igralnaPlosca.ograjiceVod[y-1][x] == 0 && igralnaPlosca.ograjiceVod[y][x]==0) {
-							poteze.add(new Poteza(x,y-2));
+							poteze.add(new Lokacija(x,y-2));
 						}
 					}
 				}
@@ -188,7 +194,7 @@ public class Igra {
 					//dejansko preskoèimo nekoga
 					if(igralnaPlosca.vsa_polja[y][x-1] != Polje.PRAZNO) {
 						if (igralnaPlosca.ograjiceVod[y+1][x] == 0 && igralnaPlosca.ograjiceNavp[y+2][x]==0) {
-							poteze.add(new Poteza(x,y+2));
+							poteze.add(new Lokacija(x,y+2));
 						}
 					}
 				}
@@ -204,7 +210,7 @@ public class Igra {
 			if ( x-1 >= 0) {
 				if (igralnaPlosca.vsa_polja[y][x-1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x] == 1) {
-						poteze.add(new Poteza(x-1,y));
+						poteze.add(new Lokacija(x-1,y));
 					}
 				}
 			}
@@ -213,7 +219,7 @@ public class Igra {
 			if ( x+1 < dim) {
 				if (igralnaPlosca.vsa_polja[y][x+1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x+1] == 1) {
-						poteze.add(new Poteza(x+1,y));
+						poteze.add(new Lokacija(x+1,y));
 					}
 				}
 			}
@@ -222,7 +228,7 @@ public class Igra {
 			if ( y-1 >= 0) {
 				if (igralnaPlosca.vsa_polja[y-1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y][x] == 1) {
-						poteze.add(new Poteza(x,y-1));
+						poteze.add(new Lokacija(x,y-1));
 					}
 				}	
 			}
@@ -231,7 +237,7 @@ public class Igra {
 			if ( y+1 < dim) {
 				if (igralnaPlosca.vsa_polja[y+1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y+1][x] == 1) {
-						poteze.add(new Poteza(x,y+1));
+						poteze.add(new Lokacija(x,y+1));
 					}
 				}	
 			}
@@ -243,7 +249,7 @@ public class Igra {
 			if ( x-1 >= 0) {
 				if (igralnaPlosca.vsa_polja[y][x-1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x] == 2) {
-						poteze.add(new Poteza(x-1,y));
+						poteze.add(new Lokacija(x-1,y));
 					}
 				}
 			}
@@ -252,7 +258,7 @@ public class Igra {
 			if ( x+1 < dim) {
 				if (igralnaPlosca.vsa_polja[y][x+1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x+1] == 2) {
-						poteze.add(new Poteza(x+1,y));
+						poteze.add(new Lokacija(x+1,y));
 					}
 				}
 			}
@@ -261,7 +267,7 @@ public class Igra {
 			if ( y-1 >= 0) {
 				if (igralnaPlosca.vsa_polja[y-1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y][x] == 2) {
-						poteze.add(new Poteza(x,y-1));
+						poteze.add(new Lokacija(x,y-1));
 					}
 				}	
 			}
@@ -270,7 +276,7 @@ public class Igra {
 			if ( y+1 < dim) {
 				if (igralnaPlosca.vsa_polja[y+1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y+1][x] == 2) {
-						poteze.add(new Poteza(x,y+1));
+						poteze.add(new Lokacija(x,y+1));
 					}
 				}	
 			}
@@ -285,8 +291,8 @@ public class Igra {
 	 * @param zeljena - izbrano polje za premik figurice
 	 * @return ali lahko ibrano figurico igralec premakne na željeno polje
 	 */
-	public boolean veljavnaPoteza(Poteza trenutna, Poteza zeljena) {
-		List<Poteza> mozne = moznePoteze(trenutna.getX(), trenutna.getY(), kvotaPremikov);
+	public boolean veljavnaPoteza(Lokacija trenutna, Lokacija zeljena) {
+		List<Lokacija> mozne = moznePoteze(trenutna.getX(), trenutna.getY(), kvotaPremikov);
 		return mozne.contains(zeljena);
 	}
 	
@@ -297,7 +303,7 @@ public class Igra {
 	 * @param trenutna
 	 * @param koncna
 	 */
-	public void narediPotezo(Poteza trenutna, Poteza koncna) {
+	public void narediPotezo(Lokacija trenutna, Lokacija koncna) {  //tu se pogoji nekako ponavljajo enako kot so napisani zgoraj - kako bi to lahko bilo bolje?
 		if (veljavnaPoteza(trenutna, koncna) == true) {
 			int zacetnakvota = kvotaPremikov;
 			
@@ -305,7 +311,7 @@ public class Igra {
 			igralnaPlosca.vsa_polja[koncna.getY()][koncna.getX()] = igralnaPlosca.vsa_polja[trenutna.getY()][trenutna.getX()];
 			igralnaPlosca.vsa_polja[trenutna.getY()][trenutna.getX()] = Polje.PRAZNO;
 			
-			//Izraèun koliko kvote je porabil. 
+			//Izraèun koliko kvote je porabil. 	mozne napake: napacni indeksi ograjic
 			if (Math.abs(trenutna.getX() - koncna.getX()) == 2 || Math.abs(trenutna.getY() - koncna.getY()) == 2) {
 				kvotaPremikov = kvotaPremikov - 1;
 			} else {
@@ -336,31 +342,25 @@ public class Igra {
 		}
 		
 		//Preverimo èe je igre konec.
-		boolean konec_crni = igralnaPlosca.konecCrni();
-		boolean konec_beli = igralnaPlosca.konecBeli();
-		if (konec_crni == true && konec_beli == false) {
+		boolean konecCrni = igralnaPlosca.konecCrni();
+		boolean konecBeli = igralnaPlosca.konecBeli();
+		if (konecCrni && !konecBeli) { //ni potrebe za konec_crni == true
 			trenutnoStanje = Stanje.ZMAGA_CRNI;
-		} else if (konec_beli = true) {
-			//to je potrebno narediti, ker lahko beli konèa še preden porabi tri korake. 
-			if (naPotezi != Igralec.CRNI) {
+		} else if (konecBeli) {							//to je potrebno narediti, ker lahko beli konèa še preden porabi tri korake. 
+			if (naPotezi != Igralec.CRNI) {                 //ce je crni na potezi, potem je beli koncal s kvoto==0, torej je kvogta crnega ze pravilno nastavljena na 3
 				naPotezi = Igralec.CRNI;
-				kvotaPremikov = 3;
-				
+				zmagovalnaKvota = kvotaPremikov;
+				kvotaPremikov = 3;		
 			}
-			kvotaPremikov = 3;
-			if ()
-		}
-		if (igralnaPlosca.konecBeli() == true) {
-			naPotezi = Igralec.CRNI;
-			kvotaPremikov = 3;
-			if (naPotezi != Igralec.CRNI) {
-				//èe je beli na potezi, to pomeni, da je èrni porabil svojo kvoto
-				if (stevecPotezBeli == stevecPotezCrni) {
-					trenutnoStanje = Stanje.NEODLOCENO;
-				} else if (stevecPotezCrni <)
+			if (konecCrni) {
+				if (kvotaPremikov < zmagovalnaKvota) {
+					trenutnoStanje = Stanje.ZMAGA_CRNI;
+				} else if (kvotaPremikov == zmagovalnaKvota){
+					trenutnoStanje = Stanje.NEODLOCENO;					
+				} else {
+					trenutnoStanje = Stanje.ZMAGA_BELI;
+				}
 			}
-			kvotaPremikov = 3; 
-			naPotezi = Igralec.CRNI;
 		} 
 	}
 
