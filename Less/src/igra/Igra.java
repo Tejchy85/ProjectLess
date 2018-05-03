@@ -1,8 +1,6 @@
 package igra;
 
 import java.util.LinkedList;
-import java.util.List;
-
 
 public class Igra {
 	//bo povezala vse skupaj, tukaj bo konstruktor za zaèetek igre, raèunanje potez
@@ -247,9 +245,9 @@ public class Igra {
 	 * @param zeljena - izbrano polje za premik figurice
 	 * @return ali lahko ibrano figurico igralec premakne na željeno polje
 	 */
-	public boolean veljavnaPoteza(Lokacija trenutna, Lokacija zeljena) {
+	public boolean veljavnaPoteza(Lokacija trenutna, Lokacija zelena) {
 		LinkedList<Lokacija> mozne = moznePoteze(trenutna.getX(), trenutna.getY(), kvotaPremikov);
-		return mozne.contains(zeljena);
+		return mozne.contains(zelena);
 	}
 	
 	

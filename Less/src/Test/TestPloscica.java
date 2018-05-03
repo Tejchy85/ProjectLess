@@ -4,7 +4,7 @@ import igra.Igra;
 import igra.Ploscica;
 import igra.Polje;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 import junit.framework.TestCase;
 
 public class TestPloscica extends TestCase {
