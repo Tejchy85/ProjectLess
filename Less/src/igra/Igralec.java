@@ -2,8 +2,7 @@ package igra;
 
 public enum Igralec {
 	// beli, èrni
-	// 
-	//odigraj potezo
+	
 	BELI, CRNI;
 	
 	public Igralec nasprotnik() {

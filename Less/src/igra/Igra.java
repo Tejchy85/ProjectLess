@@ -3,19 +3,6 @@ package igra;
 import java.util.LinkedList;
 import java.util.List;
 
-/*TODO
- * veljavne poteze in kaj se zgodi
- * premikanje igralca - premakni gor,dol. ce poteza velja, potem premakni, ce ne pa vrni da to ne gre oz ne naredi nic
- * stevci potez oz koliko potez je se ostalo
- * zasedena polja so lahko 
- * stevcev ne rabimo (todo delete) - ko je skorajkonec (konecBeli) se zacne stetje: ce crni konca v 3 potezah je izenaceno, ce v manj je zmagal, ce ne izgubil
- * 				ce je konec==true, potem se igra takoj zakljuci - ce belega ni na koncu, je izgubil
- * 
- *  !!"potezo" sem spremenil v "lokacijo"
- *  
- *  stevca ne uporabljava? --> delete?  
- *  
- */
 
 public class Igra {
 	//bo povezala vse skupaj, tukaj bo konstruktor za zaèetek igre, raèunanje potez
@@ -28,60 +15,28 @@ public class Igra {
 	
 	//ATRIBUTI: 
 	protected Igralec naPotezi;
-	private Plosca igralnaPlosca;
-	private int stevecPotezBeli; // na zaèetku so števci potez v skupnem enaki 0, ob vsakem koraku se poveèajo za 1,2,3. 
-	private int stevecPotezCrni; // zmagovalec je tisti ki bo postavil v nasprotni kot svoje figure v manj potezah. Èe postavita v enako potezah, je rezultat neodoèen
-	private int kvotaPremikov; // vsak igralec ima na voljo po 3 poteze vsakiè ko je na vrsti
+	protected Plosca igralnaPlosca;
+	protected int kvotaPremikov; // vsak igralec ima na voljo po 3 poteze vsakiè ko je na vrsti
 	protected Stanje trenutnoStanje; //spremlja trenutno stanje
 	protected int zmagovalnaKvota; //ko beli zmaga si zapomnimo, v koliko premikih je koncal zadnjo potezo
 	
 	public Igra() {
 		naPotezi = Igralec.BELI;
-		stevecPotezBeli = 0; 
-		stevecPotezCrni = 0; 
 		kvotaPremikov = 3; 
 		igralnaPlosca = new Plosca(dim);
 		zmagovalnaKvota = 0;
-		
-		
+		trenutnoStanje = Stanje.BELI_NA_POTEZI;		
 	}
-	
-	public Stanje stanje() {
-		// Ali imamo zmagovalca ali ne ?
-		if (igralnaPlosca.konec() == true) { //ne morm pogruntat zkej to ne dela____ ce je beli ze konec potem je lahko izenaceno
-			return Stanje.ZMAGA_CRNI;
-		} else if (igralnaPlosca.konecBeli() == true) {
-			kvotaPremikov = 3;
-			return Stanje.CRNI_NA_POTEZI;
-		} else {
-			//kdo je na vrsti ? Èe je igralcu zmankalo kvote se zamenjata, v nasprotnem primeru je zopet na vrsti. 
-			if (kvotaPremikov == 0) {
-				kvotaPremikov = 3; 
-				if (naPotezi == Igralec.BELI) {
-					return Stanje.CRNI_NA_POTEZI;
-				} else {
-					return Stanje.BELI_NA_POTEZI;
-				}
-			} else {
-				if (naPotezi == Igralec.CRNI) {
-					return Stanje.CRNI_NA_POTEZI;
-				} else {
-					return Stanje.BELI_NA_POTEZI;
-				}
-			}
-		}
-	}
-	
-	
-	//ta funkcija ni še preverjena.
+		
+	//ta funkcija ni še preverjena. 
 	/**
 	 * 
-	 * @param x - x koordinata figurice za katero preverjamo možne poteze.
-	 * @param y - y koordinata figurice za katero preverjamo možne poteze.
+	 * @param x - stolpec v katerem se nahaja figurica za katero preverjamo možne poteze.
+	 * @param y - vrstica v katerem se nahaja figurica za katero preverjamo možne poteze.
 	 * @param kvota - kvota potez igralca, ne moremo poklicati, èe ima igralec kvoto 0.
 	 * @return vse možne poteze izbrane figurice
 	 */
-	public List<Lokacija> moznePoteze(int x, int y, int kvota) {  //gledamo mozne poteze za eno figurico
+	public LinkedList<Lokacija> moznePoteze(int x, int y, int kvota) {  //gledamo mozne poteze za eno figurico
 		LinkedList<Lokacija> poteze = new LinkedList<Lokacija>();
 		//Tekmovalec se lahko premakne za eno mesto dol, gor, levo, desno, 
 		//za dve mesti dol, gor, levo, desno (le v primeru, ko preskoèi oviro). 
@@ -153,6 +108,7 @@ public class Igra {
 			//Ko preskakujemo figurice, ne smemo imeti nikjer ograjice, zato pogledamo v tabelo 
 			//navpiènih ograjc, na mesto x-1 in x
 			 
+			//preskok levo
 			if (x-2 >= 0) {
 				if (igralnaPlosca.vsa_polja[y][x-2] == Polje.PRAZNO) {
 					//dejansko preskoèimo nekoga
@@ -192,7 +148,7 @@ public class Igra {
 			if (y+2 < dim) {
 				if (igralnaPlosca.vsa_polja[y+2][x] == Polje.PRAZNO) {
 					//dejansko preskoèimo nekoga
-					if(igralnaPlosca.vsa_polja[y][x-1] != Polje.PRAZNO) {
+					if(igralnaPlosca.vsa_polja[y+1][x] != Polje.PRAZNO) {
 						if (igralnaPlosca.ograjiceVod[y+1][x] == 0 && igralnaPlosca.ograjiceNavp[y+2][x]==0) {
 							poteze.add(new Lokacija(x,y+2));
 						}
@@ -292,7 +248,7 @@ public class Igra {
 	 * @return ali lahko ibrano figurico igralec premakne na željeno polje
 	 */
 	public boolean veljavnaPoteza(Lokacija trenutna, Lokacija zeljena) {
-		List<Lokacija> mozne = moznePoteze(trenutna.getX(), trenutna.getY(), kvotaPremikov);
+		LinkedList<Lokacija> mozne = moznePoteze(trenutna.getX(), trenutna.getY(), kvotaPremikov);
 		return mozne.contains(zeljena);
 	}
 	
@@ -304,9 +260,9 @@ public class Igra {
 	 * @param koncna
 	 */
 	public void narediPotezo(Lokacija trenutna, Lokacija koncna) {  //tu se pogoji nekako ponavljajo enako kot so napisani zgoraj - kako bi to lahko bilo bolje?
-		if (veljavnaPoteza(trenutna, koncna) == true) {
-			int zacetnakvota = kvotaPremikov;
-			
+		if (veljavnaPoteza(trenutna,koncna) == false) {
+			System.out.println("Neveljaven premik. Poskusi znova.");
+		} else {
 			//Prestavimo figurico
 			igralnaPlosca.vsa_polja[koncna.getY()][koncna.getX()] = igralnaPlosca.vsa_polja[trenutna.getY()][trenutna.getX()];
 			igralnaPlosca.vsa_polja[trenutna.getY()][trenutna.getX()] = Polje.PRAZNO;
@@ -324,22 +280,15 @@ public class Igra {
 				}
 			}
 			
-			//Poveèamo število potez
-			if(naPotezi == Igralec.BELI) {
-				stevecPotezBeli += (zacetnakvota - kvotaPremikov);
-			} else {
-				stevecPotezCrni += (zacetnakvota - kvotaPremikov);
-			}
 			
 			//Spremenimo igralca, èe je potrebno
 			if (kvotaPremikov == 0) {
 				naPotezi = naPotezi.nasprotnik();
 				kvotaPremikov = 3; 
+				trenutnoStanje = trenutnoStanje.zamenjaj();
 			}
 		
-		} else {
-			System.out.println("Neveljaven premik. Poskusi znova.");
-		}
+		} 
 		
 		//Preverimo èe je igre konec.
 		boolean konecCrni = igralnaPlosca.konecCrni();
@@ -347,7 +296,7 @@ public class Igra {
 		if (konecCrni && !konecBeli) { //ni potrebe za konec_crni == true
 			trenutnoStanje = Stanje.ZMAGA_CRNI;
 		} else if (konecBeli) {							//to je potrebno narediti, ker lahko beli konèa še preden porabi tri korake. 
-			if (naPotezi != Igralec.CRNI) {                 //ce je crni na potezi, potem je beli koncal s kvoto==0, torej je kvogta crnega ze pravilno nastavljena na 3
+			if (naPotezi != Igralec.CRNI) {                 //ce je crni na potezi, potem je beli koncal s kvoto==0, torej je kvota crnega ze pravilno nastavljena na 3
 				naPotezi = Igralec.CRNI;
 				zmagovalnaKvota = kvotaPremikov;
 				kvotaPremikov = 3;		
@@ -360,6 +309,8 @@ public class Igra {
 				} else {
 					trenutnoStanje = Stanje.ZMAGA_BELI;
 				}
+			} else {
+				trenutnoStanje = Stanje.ZMAGA_BELI;
 			}
 		} 
 	}

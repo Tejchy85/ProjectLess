@@ -2,8 +2,8 @@ package igra;
 
 public class Lokacija {
 	
-	protected int x; 
-	protected int y; 
+	protected int x; //predstavlja stolpec 
+	protected int y; //predstavlja vrstico
 	
 	public Lokacija(int x, int y) {
 		this.x = x; 
@@ -24,6 +24,12 @@ public class Lokacija {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public void print() {
+		System.out.print(x);
+		System.out.println(y);
+		
 	}
 	
 	
