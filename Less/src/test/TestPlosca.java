@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import igra.Polje;
 import junit.framework.TestCase;

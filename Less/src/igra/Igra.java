@@ -25,6 +25,20 @@ public class Igra {
 		zmagovalnaKvota = 0;
 		trenutnoStanje = Stanje.BELI_NA_POTEZI;		
 	}
+	
+	/**
+	 *
+	 * @param igra nova kopija dane igre
+	 */
+
+	public Igra(Igra igra) {
+		this.naPotezi = igra.getNaPotezi();
+		this.kvotaPremikov = igra.getKvotaPremikov();
+		this.igralnaPlosca = igra.getIgralnaPlosca();
+		this.zmagovalnaKvota = igra.getZmagovalnaKvota();
+		this.trenutnoStanje = igra.getTrenutnoStanje();
+
+	}
 		
 	//ta funkcija ni še preverjena. 
 	/**
@@ -34,7 +48,9 @@ public class Igra {
 	 * @param kvota - kvota potez igralca, ne moremo poklicati, èe ima igralec kvoto 0.
 	 * @return vse možne poteze izbrane figurice
 	 */
-	public LinkedList<Lokacija> moznePoteze(int x, int y, int kvota) {  //gledamo mozne poteze za eno figurico
+	public LinkedList<Lokacija> moznePoteze(Lokacija p, int kvota) {  //gledamo mozne poteze za eno figurico
+		int x = p.getX();
+		int y = p.getY();
 		LinkedList<Lokacija> poteze = new LinkedList<Lokacija>();
 		//Tekmovalec se lahko premakne za eno mesto dol, gor, levo, desno, 
 		//za dve mesti dol, gor, levo, desno (le v primeru, ko preskoèi oviro). 
@@ -246,7 +262,7 @@ public class Igra {
 	 * @return ali lahko ibrano figurico igralec premakne na željeno polje
 	 */
 	public boolean veljavnaPoteza(Lokacija trenutna, Lokacija zelena) {
-		LinkedList<Lokacija> mozne = moznePoteze(trenutna.getX(), trenutna.getY(), kvotaPremikov);
+		LinkedList<Lokacija> mozne = moznePoteze(trenutna, kvotaPremikov);
 		return mozne.contains(zelena);
 	}
 	
@@ -315,6 +331,46 @@ public class Igra {
 
 	public Plosca getIgralnaPlosca() {
 		return igralnaPlosca;
+	}
+
+	public Stanje getTrenutnoStanje() {
+		return trenutnoStanje;
+	}
+
+	public void setTrenutnoStanje(Stanje trenutnoStanje) {
+		this.trenutnoStanje = trenutnoStanje;
+	}
+
+	public int getKvotaPremikov() {
+		return kvotaPremikov;
+	}
+
+	public void setKvotaPremikov(int kvotaPremikov) {
+		this.kvotaPremikov = kvotaPremikov;
+	}
+
+	public Igralec getNaPotezi() {
+		return naPotezi;
+	}
+
+	public void setNaPotezi(Igralec naPotezi) {
+		this.naPotezi = naPotezi;
+	}
+
+	public int getZmagovalnaKvota() {
+		return zmagovalnaKvota;
+	}
+
+	public void setZmagovalnaKvota(int zmagovalnaKvota) {
+		this.zmagovalnaKvota = zmagovalnaKvota;
+	}
+
+	public static int getDim() {
+		return dim;
+	}
+
+	public void setIgralnaPlosca(Plosca igralnaPlosca) {
+		this.igralnaPlosca = igralnaPlosca;
 	}
 
 }

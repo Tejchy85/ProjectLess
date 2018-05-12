@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 
 import igra.Igra;
@@ -12,7 +12,7 @@ public class TestIgra extends TestCase {
 		//ta tester je potrebno pognati, ko bodo že definirane pravilno ograjice.
 		Lokacija zacetna = new Lokacija(1,1);
 		Lokacija koncna = new Lokacija(1,2);
-		for (Lokacija l : igra.moznePoteze(zacetna.getX(), zacetna.getY(), 3)){
+		for (Lokacija l : igra.moznePoteze(zacetna, 3)){
 			l.print();
 		}
 		System.out.println("nova");
