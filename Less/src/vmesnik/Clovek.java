@@ -1,12 +1,15 @@
 package vmesnik;
 
+import igra.Igralec;
 import igra.Lokacija;
 
 public class Clovek extends Strateg {
 	private GlavnoOkno master;
+	private Igralec jaz;
 	
-	public Clovek(GlavnoOkno master) {
+	public Clovek(GlavnoOkno master, Igralec jaz) {
 		this.master = master;
+		this.jaz = jaz;
 	}
 	
 	@Override
@@ -18,8 +21,8 @@ public class Clovek extends Strateg {
 	}
 
 	@Override
-	public void klik(Lokacija p) {
-		master.odigraj(p);
+	public void klik(Lokacija zacetna, Lokacija koncna) {
+		master.odigraj(zacetna, koncna);
 	}
 
 }

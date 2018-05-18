@@ -21,5 +21,5 @@ public abstract class Strateg {
 	 * 
 	 * Glanvo okno klièe to metodo, ko uporabnik klikne na polje (i,j).
 	 */
-	public abstract void klik(Lokacija p);
+	public abstract void klik(Lokacija zacetna, Lokacija koncna);
 }

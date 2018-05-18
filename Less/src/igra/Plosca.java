@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class Plosca {
 	protected int dim; //plosca je vselej kvadratna, zato potrebujemo le eno stevilo
-	protected Polje[][] vsa_polja;	
+	protected Polje[][] vsaPolja;	
 	protected int[][] ograjiceVod;
 	protected int[][] ograjiceNavp;
 	
 	public Plosca(int dimenzija) {
 		dim = dimenzija;
-		vsa_polja = new Polje[dim][dim];
+		vsaPolja = new Polje[dim][dim];
 		ograjiceNavp = new int[dim][dim+1]; //mozne napake: ravno obratno
 		ograjiceVod = new int[dim+1][dim];
 				
@@ -22,11 +22,11 @@ public class Plosca {
 		for (int i = 0; i < dim; i++) {
 			for (int j = 0; j < dim; j++) {
 				if (i < 2 && j < 2) {
-					vsa_polja[i][j] = Polje.BELO;
+					vsaPolja[i][j] = Polje.BELO;
 				} else if (i > dim-3 && j > dim-3) {
-					vsa_polja[i][j] = Polje.CRNO;
+					vsaPolja[i][j] = Polje.CRNO;
 				} else {
-					vsa_polja[i][j] = Polje.PRAZNO;
+					vsaPolja[i][j] = Polje.PRAZNO;
 				}
 			}
 		}
@@ -101,8 +101,8 @@ public class Plosca {
 	 * @return ali je èrni postavil vse figure na ciljna polja in je igra konèana 
 	 */
 	public boolean konec() {       //crnii je vse svoje figurice pripeljal do konca --> igra se takoj zakljuci
-	return (vsa_polja[0][0] == Polje.CRNO && vsa_polja[1][0] == Polje.CRNO && 
-			vsa_polja[0][1] == Polje.CRNO && vsa_polja[1][1] == Polje.CRNO);
+	return (vsaPolja[0][0] == Polje.CRNO && vsaPolja[1][0] == Polje.CRNO && 
+			vsaPolja[0][1] == Polje.CRNO && vsaPolja[1][1] == Polje.CRNO);
 	}
 
 	
@@ -112,17 +112,17 @@ public class Plosca {
 	 */
 	
 	public boolean konecBeli() {       //beli je vse svoje figurice pripeljal do konca
-		return (vsa_polja[dim-1][dim-1] == Polje.BELO && vsa_polja[dim-2][dim-1] == Polje.BELO && 
-				vsa_polja[dim-1][dim-2] == Polje.BELO && vsa_polja[dim-2][dim-2] == Polje.BELO);
+		return (vsaPolja[dim-1][dim-1] == Polje.BELO && vsaPolja[dim-2][dim-1] == Polje.BELO && 
+				vsaPolja[dim-1][dim-2] == Polje.BELO && vsaPolja[dim-2][dim-2] == Polje.BELO);
 	}
 	
 	public boolean konecCrni() {       //crnii je vse svoje figurice pripeljal do konca --> igra se takoj zakljuci
-		return (vsa_polja[0][0] == Polje.CRNO && vsa_polja[1][0] == Polje.CRNO && 
-				vsa_polja[0][1] == Polje.CRNO && vsa_polja[1][1] == Polje.CRNO);
+		return (vsaPolja[0][0] == Polje.CRNO && vsaPolja[1][0] == Polje.CRNO && 
+				vsaPolja[0][1] == Polje.CRNO && vsaPolja[1][1] == Polje.CRNO);
 	}
 
 	public Polje[][] getVsa_polja() {
-		return vsa_polja;
+		return vsaPolja;
 	}
 
 	public int[][] getOgrajiceVod() {
@@ -131,6 +131,10 @@ public class Plosca {
 
 	public int[][] getOgrajiceNavp() {
 		return ograjiceNavp;
+	}
+
+	public int getDim() {
+		return dim;
 	}
 	
 }

@@ -65,7 +65,7 @@ public class Igra {
 			//preverimo, da ne pademo iz plošèe.
 			if ( x-1 >= 0) {
 				//preverimo, èe je polje prazno
-				if (igralnaPlosca.vsa_polja[y][x-1] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y][x-1] == Polje.PRAZNO) {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
 					if (igralnaPlosca.ograjiceNavp[y][x] == 0) {
 						//èe vse to velja, je to veljavna poteza.
@@ -79,7 +79,7 @@ public class Igra {
 			//preverimo, da ne pademo iz plošèe.
 			if ( x+1 < dim) {
 				//preverimo, èe je polje prazno
-				if (igralnaPlosca.vsa_polja[y][x+1] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y][x+1] == Polje.PRAZNO) {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
 					if (igralnaPlosca.ograjiceNavp[y][x+1] == 0) {
 						//èe vse to velja, je to veljavna poteza.
@@ -93,7 +93,7 @@ public class Igra {
 			//preverimo, da ne pademo iz plošèe.
 			if ( y-1 >= 0) {
 				//preverimo, èe je polje prazno
-				if (igralnaPlosca.vsa_polja[y-1][x] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y-1][x] == Polje.PRAZNO) {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
 					if (igralnaPlosca.ograjiceVod[y][x] == 0) {
 						//èe vse to velja, je to veljavna poteza.
@@ -108,7 +108,7 @@ public class Igra {
 			//preverimo, da ne pademo iz plošèe.
 			if ( y+1 < dim) {
 				//preverimo, èe je polje prazno
-				if (igralnaPlosca.vsa_polja[y+1][x] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y+1][x] == Polje.PRAZNO) {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
 					if (igralnaPlosca.ograjiceVod[y+1][x] == 0) {
 						//èe vse to velja, je to veljavna poteza.
@@ -125,9 +125,9 @@ public class Igra {
 			 
 			//preskok levo
 			if (x-2 >= 0) {
-				if (igralnaPlosca.vsa_polja[y][x-2] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y][x-2] == Polje.PRAZNO) {
 					//dejansko preskoèimo nekoga
-					if(igralnaPlosca.vsa_polja[y][x-1] != Polje.PRAZNO) {
+					if(igralnaPlosca.vsaPolja[y][x-1] != Polje.PRAZNO) {
 						if (igralnaPlosca.ograjiceNavp[y][x-1] == 0 && igralnaPlosca.ograjiceNavp[y][x]==0) {
 							poteze.add(new Lokacija(x-2,y));
 						}
@@ -137,9 +137,9 @@ public class Igra {
 			
 			//Preskok desno
 			if (x+2 < dim) {
-				if (igralnaPlosca.vsa_polja[y][x+2] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y][x+2] == Polje.PRAZNO) {
 					//dejansko preskoèimo nekoga
-					if(igralnaPlosca.vsa_polja[y][x+1] != Polje.PRAZNO) {
+					if(igralnaPlosca.vsaPolja[y][x+1] != Polje.PRAZNO) {
 						if (igralnaPlosca.ograjiceNavp[y][x+1] == 0 && igralnaPlosca.ograjiceNavp[y][x+2]==0) {
 							poteze.add(new Lokacija(x+2,y));
 						}
@@ -149,9 +149,9 @@ public class Igra {
 			
 			//Preskok gor 
 			if (y-2 >= 0) {
-				if (igralnaPlosca.vsa_polja[y-2][x] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y-2][x] == Polje.PRAZNO) {
 					//dejansko preskoèimo nekoga
-					if(igralnaPlosca.vsa_polja[y-1][x] != Polje.PRAZNO) {
+					if(igralnaPlosca.vsaPolja[y-1][x] != Polje.PRAZNO) {
 						if (igralnaPlosca.ograjiceVod[y-1][x] == 0 && igralnaPlosca.ograjiceVod[y][x]==0) {
 							poteze.add(new Lokacija(x,y-2));
 						}
@@ -161,9 +161,9 @@ public class Igra {
 			
 			//Preskok dol
 			if (y+2 < dim) {
-				if (igralnaPlosca.vsa_polja[y+2][x] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y+2][x] == Polje.PRAZNO) {
 					//dejansko preskoèimo nekoga
-					if(igralnaPlosca.vsa_polja[y+1][x] != Polje.PRAZNO) {
+					if(igralnaPlosca.vsaPolja[y+1][x] != Polje.PRAZNO) {
 						if (igralnaPlosca.ograjiceVod[y+1][x] == 0 && igralnaPlosca.ograjiceNavp[y+2][x]==0) {
 							poteze.add(new Lokacija(x,y+2));
 						}
@@ -179,7 +179,7 @@ public class Igra {
 			
 			//premik levo: 
 			if ( x-1 >= 0) {
-				if (igralnaPlosca.vsa_polja[y][x-1] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y][x-1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x] == 1) {
 						poteze.add(new Lokacija(x-1,y));
 					}
@@ -188,7 +188,7 @@ public class Igra {
 			
 			//premik desno: 
 			if ( x+1 < dim) {
-				if (igralnaPlosca.vsa_polja[y][x+1] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y][x+1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x+1] == 1) {
 						poteze.add(new Lokacija(x+1,y));
 					}
@@ -197,7 +197,7 @@ public class Igra {
 			
 			//premik gor: 
 			if ( y-1 >= 0) {
-				if (igralnaPlosca.vsa_polja[y-1][x] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y-1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y][x] == 1) {
 						poteze.add(new Lokacija(x,y-1));
 					}
@@ -206,7 +206,7 @@ public class Igra {
 			
 			//premik dol: 
 			if ( y+1 < dim) {
-				if (igralnaPlosca.vsa_polja[y+1][x] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y+1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y+1][x] == 1) {
 						poteze.add(new Lokacija(x,y+1));
 					}
@@ -218,7 +218,7 @@ public class Igra {
 			//preveriti je potrebno premikanje za eno mesto levo, desno, gor, dol z dvema ograjama. 
 			//premik levo: 
 			if ( x-1 >= 0) {
-				if (igralnaPlosca.vsa_polja[y][x-1] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y][x-1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x] == 2) {
 						poteze.add(new Lokacija(x-1,y));
 					}
@@ -227,7 +227,7 @@ public class Igra {
 			
 			//premik desno: 
 			if ( x+1 < dim) {
-				if (igralnaPlosca.vsa_polja[y][x+1] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y][x+1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x+1] == 2) {
 						poteze.add(new Lokacija(x+1,y));
 					}
@@ -236,7 +236,7 @@ public class Igra {
 			
 			//premik gor: 
 			if ( y-1 >= 0) {
-				if (igralnaPlosca.vsa_polja[y-1][x] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y-1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y][x] == 2) {
 						poteze.add(new Lokacija(x,y-1));
 					}
@@ -245,7 +245,7 @@ public class Igra {
 			
 			//premik dol: 
 			if ( y+1 < dim) {
-				if (igralnaPlosca.vsa_polja[y+1][x] == Polje.PRAZNO) {
+				if (igralnaPlosca.vsaPolja[y+1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y+1][x] == 2) {
 						poteze.add(new Lokacija(x,y+1));
 					}
@@ -279,8 +279,8 @@ public class Igra {
 			System.out.println("Neveljaven premik. Poskusi znova.");
 		} else {
 			//Prestavimo figurico
-			igralnaPlosca.vsa_polja[koncna.getY()][koncna.getX()] = igralnaPlosca.vsa_polja[trenutna.getY()][trenutna.getX()];
-			igralnaPlosca.vsa_polja[trenutna.getY()][trenutna.getX()] = Polje.PRAZNO;
+			igralnaPlosca.vsaPolja[koncna.getY()][koncna.getX()] = igralnaPlosca.vsaPolja[trenutna.getY()][trenutna.getX()];
+			igralnaPlosca.vsaPolja[trenutna.getY()][trenutna.getX()] = Polje.PRAZNO;
 			
 			//Izraèun koliko kvote je porabil. 	mozne napake: napacni indeksi ograjic
 			if (Math.abs(trenutna.getX() - koncna.getX()) == 2 || Math.abs(trenutna.getY() - koncna.getY()) == 2) {

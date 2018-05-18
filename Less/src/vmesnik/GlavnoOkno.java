@@ -1,5 +1,7 @@
 package vmesnik;
 
+import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,10 +14,24 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import igra.Igra;
+import igra.Igralec;
 import igra.Lokacija;
+import igra.Plosca;
+import igra.Polje;
 
 @SuppressWarnings("serial")
 public class GlavnoOkno extends JFrame implements ActionListener {
+	
+	/**TODO
+	*narisat ograjice
+	*pravilno premikanje preverit + napisat
+	*obarvanje moznih potez
+	*spreminjanje napisa na kaj drugega kot "na vrsti je beli"
+	*preverjanje, da logika igre deluje pravilno
+	*kaj se zgodi, ko nekdo zmaga, kaj se zgodi, ko je neodloceno
+	*
+	*due to ned 23:59
+	**/
 	
 	/**
 	 * Okence, kjer bo pisalo, kdo je na vrsti, koliko kvote se ima, ter ali je že kdo zmagal
@@ -68,7 +84,29 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		igraMenu.add(novaIgra);
 		novaIgra.addActionListener(this);
 		
+		// igralno polje
+		polje = new IgralnoPolje(this);
+		GridBagConstraints polje_layout = new GridBagConstraints();
+		polje_layout.gridx = 0;
+		polje_layout.gridy = 0;
+		polje_layout.fill = GridBagConstraints.BOTH;
+		polje_layout.weightx = 1.0;
+		polje_layout.weighty = 1.0;
+		getContentPane().add(polje, polje_layout);
+				
+		// statusna vrstica za sporoèila
+		status = new JLabel();
+		status.setFont(new Font(status.getFont().getName(),
+							    status.getFont().getStyle(),
+							    20));
 		
+		GridBagConstraints status_layout = new GridBagConstraints();
+		status_layout.gridx = 0;
+		status_layout.gridy = 1;
+		status_layout.anchor = GridBagConstraints.CENTER;
+		getContentPane().add(status, status_layout);
+		
+		novaIgra(new Clovek(this, Igralec.BELI), new Clovek(this, Igralec.CRNI)); // za zacetek clovek proti cloveku
 	}
 
 	/**
@@ -82,12 +120,12 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		
 	}
 	
-	public void nova_igra() {
+	public void novaIgra(Strateg beli, Strateg crni) {
 		if (strategB != null) { strategB.prekini(); }
 		if (strategC != null) { strategC.prekini(); }
 		this.igra = new Igra();
-		strategB = new Clovek(this);
-		strategC = new Racunalnik(this);
+		strategB = new Clovek(this, Igralec.BELI);
+		strategC = new Clovek(this, Igralec.CRNI);
 		// Tistemu, ki je na potezi, to povemo
 		switch (igra.getTrenutnoStanje()) {
 		case BELI_NA_POTEZI: strategB.na_potezi(); break;
@@ -99,8 +137,8 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 }
 	
 
-	public void odigraj(Lokacija p) {
-		igra.narediPotezo(trenutna, koncna);
+	public void odigraj(Lokacija zacetna, Lokacija koncna) {
+		igra.narediPotezo(zacetna, koncna);
 		osveziGUI();
 		switch (igra.getTrenutnoStanje()) {
 		case BELI_NA_POTEZI: strategB.na_potezi(); break;
@@ -125,14 +163,14 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		polje.repaint();
 	}
 	
-	public void klikniPolje(Lokacija p) {
+	public void klikniPolje(Lokacija zacetna, Lokacija koncna) {
 		if (igra != null) {
 			switch (igra.getTrenutnoStanje()) {
 			case BELI_NA_POTEZI:
-				strategB.klik(p);
+				strategB.klik(zacetna, koncna);
 				break;
 			case CRNI_NA_POTEZI:
-				strategC.klik(p);
+				strategC.klik(zacetna, koncna);
 				break;
 			default:
 				break;
@@ -151,4 +189,12 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	public Igra copyIgra() {
 		return new Igra(igra);
 }
+	
+	public Plosca getPlosca() {
+		return igra.getIgralnaPlosca();
+	}
+	
+	public int getDim() {
+		return igra.getDim();
+	}
 }

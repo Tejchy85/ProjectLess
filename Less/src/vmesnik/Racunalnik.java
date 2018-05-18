@@ -22,7 +22,7 @@ public class Racunalnik extends Strateg {
 	}
 
 	@Override
-	public void klik(Lokacija p) {
+	public void klik(Lokacija zacetna, Lokacija koncna) {
 		// TODO Auto-generated method stub
 
 	}
