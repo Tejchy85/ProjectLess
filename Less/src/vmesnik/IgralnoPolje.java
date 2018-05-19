@@ -1,6 +1,5 @@
 package vmesnik;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -58,10 +57,9 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		Graphics2D g2 = (Graphics2D)g;
 		int dim = master.getDim();
 
-		double w = (double) stranica;
 		
 		// èrte
-		g2.setColor(Color.magenta);
+		g2.setColor(Color.BLACK);
 		for (int i = 0; i < dim + 1; i++) {
 			g2.drawLine(0, i * stranica, stranica * dim, i * stranica);
 			g2.drawLine(i * stranica, 0, i * stranica, stranica * dim);
@@ -86,6 +84,9 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			narisiFigurico(g2, null, izbrana.getY(), izbrana.getX());
 			pobarvajMozne(g2, izbrana);
 		}
+		
+		//narisemo ograjice:
+		narisiOgrajice(g2, master.getPlosca().getOgrajiceVod(), master.getPlosca().getOgrajiceNavp());
 		master.osveziGUI();
 	
 	}
@@ -109,6 +110,25 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		g.setColor(Color.cyan);
 		for (Lokacija l : mozne){
 			g.fillRect(l.getX()*stranica, l.getY()*stranica, stranica, stranica);
+		}
+	}
+	
+	private void narisiOgrajice(Graphics g, int[][] vodoravne, int [][] navpicne) {
+		g.setColor(Color.RED);
+		for (int i = 0; i < navpicne.length;i++) {
+			 int[] vrstica = navpicne[i];
+			 for (int j = 0; j < vrstica.length; j++) {
+				 int stOgrajic = vrstica[j];
+				 g.drawLine(j*stranica*stOgrajic, i*stranica, j*stranica*stOgrajic, i*stranica+stranica);
+			 }
+		}
+		
+		for (int i = 0; i < vodoravne.length;i++) {
+			 int[] vrstica = vodoravne[i];
+			 for (int j = 0; j < vrstica.length; j++) {
+				 int stOgrajic = vrstica[j];
+				 g.drawLine(j*stranica, i*stranica*stOgrajic, j*stranica + stranica, i*stranica*stOgrajic);
+			 }
 		}
 	}
 
@@ -146,27 +166,19 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void mouseEntered(MouseEvent e) {	
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void mousePressed(MouseEvent e) {	
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void mouseReleased(MouseEvent e) {	
 	}
 	
 	

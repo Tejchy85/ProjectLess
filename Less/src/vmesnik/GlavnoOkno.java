@@ -17,7 +17,7 @@ import igra.Igra;
 import igra.Igralec;
 import igra.Lokacija;
 import igra.Plosca;
-import igra.Polje;
+
 
 @SuppressWarnings("serial")
 public class GlavnoOkno extends JFrame implements ActionListener {
@@ -192,6 +192,6 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	}
 	
 	public int getDim() {
-		return igra.getDim();
+		return igra.dim;
 	}
 }
