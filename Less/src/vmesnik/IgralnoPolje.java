@@ -51,16 +51,6 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		return new Dimension((master.getDim() + 1) * stranica, (master.getDim() + 1) *stranica);
 	}
 	
-	/*private void narisiPlosco(Graphics g, Plosca plosca) { //to briseva
-		//narisemo plosco z ograjicami.
-		//narišemo ogrodje iz èrt in èrte po sredini. 
-		int stPolj = plosca.getDim();
-		
-		//imamo kvadratno polje
-		int dolzinaCrte = stPolj * stranica;
-		
-		//potrebno postaviti navpiène in vodoravne èrte in tako dovimo plošèo.
-	} */
 		
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -90,31 +80,38 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 				}
 			}
 		}
+		
+		//drugaèe obarvaj izbrano:
+		if (izbrana != null) {
+			narisiFigurico(g2, null, izbrana.getY(), izbrana.getX());
+			pobarvajMozne(g2, izbrana);
+		}
+		master.osveziGUI();
 	
 	}
 	
 	private void narisiFigurico(Graphics g, Igralec igralec, int vrstica, int stolpec ) {
 		//narisemo figurico na doloceno polje dolocene barve
-		switch (igralec) {
-		case CRNI: barvaFiguric = Color.BLACK; break;
-		case BELI: barvaFiguric = Color.GREEN; break;
+		if (igralec == Igralec.CRNI) {
+			barvaFiguric = Color.BLACK;
+		} else if (igralec == Igralec.BELI) {
+			barvaFiguric = Color.GREEN;
+		} else { // to je ko je igralec null - za izbrano
+			barvaFiguric = Color.BLUE;
 		}
 		g.setColor(barvaFiguric);
 		//double s = (double) stranica; pomozno za lepse risanje
 		g.drawOval(stolpec * stranica , vrstica * stranica, stranica, stranica);
-		//Verjetno bo treba kej popravlat, da se bo centriralo.
 	}
 	
 	private void pobarvajMozne(Graphics g, Lokacija p){
 		LinkedList<Lokacija> mozne = master.getMozne(p);
+		g.setColor(Color.cyan);
 		for (Lokacija l : mozne){
-			pobarvaj(l);
+			g.fillRect(l.getX()*stranica, l.getY()*stranica, stranica, stranica);
 		}
 	}
 
-	private void pobarvaj(Lokacija l) {
-		//TODO		
-	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -123,24 +120,29 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		
 		int x = e.getX();
 		int y = e.getY();
-		System.out.println("kliknil si" + x + y);
+		System.out.println("kliknil si " + x + " " + y);
 		if (!(x % stranica < debelina || stranica - x % stranica < debelina)){ //pogoj: nisi kliknil na ograjico		
 			int i = x / stranica;
 			int j = y /stranica;
 			lokacija = new Lokacija(i,j);
 		}
-		
+		System.out.println("izbrana je" + izbrana);
+		System.out.println("Lokacija je " + lokacija.getX() + " " + lokacija.getY());
 		
 		if (lokacija != null){
 			if (izbrana == null){
 				izbrana = lokacija;
+			} else if (izbrana.equals(lokacija)) {
+					izbrana = null;
 			} else{
 				LinkedList<Lokacija> mozne = master.getMozne(izbrana);
 				if (mozne.contains(lokacija)){
 					master.klikniPolje(izbrana, lokacija);
+					izbrana = null;
 				}
 			}
-		}		
+		}
+		repaint();
 	}
 
 	@Override

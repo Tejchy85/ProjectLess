@@ -263,6 +263,15 @@ public class Igra {
 	 * @return ali lahko ibrano figurico igralec premakne na željeno polje
 	 */
 	public boolean veljavnaPoteza(Lokacija trenutna, Lokacija zelena) {
+		// Preveriti potrebno še, èe je trenutna lokacija sploh os trenutnega igralca polje
+		Polje polje = igralnaPlosca.vsaPolja[trenutna.getY()][trenutna.getX()];
+		if (Polje.BELO == polje && naPotezi != Igralec.BELI) {
+			return false;
+		} else if(Polje.CRNO == polje && naPotezi != Igralec.CRNI) {
+			return false;
+		} else if (Polje.PRAZNO == polje) {
+			return false;
+		}
 		LinkedList<Lokacija> mozne = moznePoteze(trenutna, kvotaPremikov);
 		return mozne.contains(zelena);
 	}
@@ -283,14 +292,14 @@ public class Igra {
 			igralnaPlosca.vsaPolja[trenutna.getY()][trenutna.getX()] = Polje.PRAZNO;
 			
 			//Izraèun koliko kvote je porabil. 	mozne napake: napacni indeksi ograjic
-			if (Math.abs(trenutna.getX() - koncna.getX()) == 2 || Math.abs(trenutna.getY() - koncna.getY()) == 2) {
+			if (Math.abs(trenutna.getX() - koncna.getX()) == 2 || Math.abs(trenutna.getY() - koncna.getY()) == 2) { //preskoèimo figurico
 				kvotaPremikov = kvotaPremikov - 1;
 			} else {
 				if (trenutna.getX() < koncna.getX() || trenutna.getX() > koncna.getX() ) {
-					int kvota = igralnaPlosca.ograjiceNavp[trenutna.getY()][koncna.getX()];
+					int kvota = 1 + igralnaPlosca.ograjiceNavp[trenutna.getY()][koncna.getX()];
 					kvotaPremikov = kvotaPremikov - kvota;
 				} else if (trenutna.getY() > koncna.getY() || trenutna.getY() < koncna.getY()) {
-					int kvota = igralnaPlosca.ograjiceVod[koncna.getY()][koncna.getX()];
+					int kvota = 1 + igralnaPlosca.ograjiceVod[koncna.getY()][koncna.getX()];
 					kvotaPremikov = kvotaPremikov - kvota;
 				}
 			}

@@ -24,9 +24,6 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	
 	/**TODO
 	*narisat ograjice
-	*pravilno premikanje preverit + napisat
-	*obarvanje moznih potez
-	*spreminjanje napisa na kaj drugega kot "na vrsti je beli"
 	*preverjanje, da logika igre deluje pravilno
 	*kaj se zgodi, ko nekdo zmaga, kaj se zgodi, ko je neodloceno
 	*
@@ -153,8 +150,8 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		}
 		else {
 			switch(igra.getTrenutnoStanje()) {
-			case BELI_NA_POTEZI: status.setText("Na potezi je beli"); break;
-			case CRNI_NA_POTEZI: status.setText("Na potezi je crni"); break;
+			case BELI_NA_POTEZI: status.setText("Na potezi je beli. " + "Kvota: " + igra.getKvotaPremikov()); break;
+			case CRNI_NA_POTEZI: status.setText("Na potezi je crni. " + "Kvota: " + igra.getKvotaPremikov()); break;
 			case ZMAGA_BELI: status.setText("Zmagal je beli"); break;
 			case ZMAGA_CRNI: status.setText("Zmagal je crni"); break;
 			case NEODLOCENO: status.setText("Neodloèeno!"); break;
