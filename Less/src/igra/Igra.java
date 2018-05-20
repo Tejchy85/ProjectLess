@@ -295,10 +295,20 @@ public class Igra {
 			if (Math.abs(trenutna.getX() - koncna.getX()) == 2 || Math.abs(trenutna.getY() - koncna.getY()) == 2) { //preskoèimo figurico
 				kvotaPremikov = kvotaPremikov - 1;
 			} else {
-				if (trenutna.getX() < koncna.getX() || trenutna.getX() > koncna.getX() ) {
+				if (trenutna.getX() < koncna.getX() ) {
+					//premik v desno: 
 					int kvota = 1 + igralnaPlosca.ograjiceNavp[trenutna.getY()][koncna.getX()];
 					kvotaPremikov = kvotaPremikov - kvota;
-				} else if (trenutna.getY() > koncna.getY() || trenutna.getY() < koncna.getY()) {
+				} else if ( trenutna.getX() > koncna.getX()) {
+					//premik v levo: 
+					int kvota = 1 + igralnaPlosca.ograjiceNavp[trenutna.getY()][trenutna.getX()];
+					kvotaPremikov = kvotaPremikov - kvota;
+				} else if (trenutna.getY() > koncna.getY() ) {
+					//premik gor: 
+					int kvota = 1 + igralnaPlosca.ograjiceNavp[trenutna.getY()][trenutna.getX()];
+					kvotaPremikov = kvotaPremikov - kvota;
+				} else if(trenutna.getY() < koncna.getY()) {
+					//premik dol:
 					int kvota = 1 + igralnaPlosca.ograjiceVod[koncna.getY()][koncna.getX()];
 					kvotaPremikov = kvotaPremikov - kvota;
 				}

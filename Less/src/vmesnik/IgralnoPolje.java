@@ -114,11 +114,17 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	}
 	
 	private void narisiOgrajice(Graphics g, int[][] vodoravne, int [][] navpicne) {
-		g.setColor(Color.RED);
 		for (int i = 0; i < navpicne.length;i++) {
 			 int[] vrstica = navpicne[i];
 			 for (int j = 0; j < vrstica.length; j++) {
 				 int stOgrajic = vrstica[j];
+				 if (stOgrajic == 0) {
+					 g.setColor(Color.BLACK);
+				 } else if(stOgrajic == 1) {
+					 g.setColor(Color.RED); 
+				 } else {
+					 g.setColor(Color.BLUE);
+				 }
 				 g.drawLine(j*stranica*stOgrajic, i*stranica, j*stranica*stOgrajic, i*stranica+stranica);
 			 }
 		}
@@ -127,6 +133,13 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			 int[] vrstica = vodoravne[i];
 			 for (int j = 0; j < vrstica.length; j++) {
 				 int stOgrajic = vrstica[j];
+				 if (stOgrajic == 0) {
+					 g.setColor(Color.BLACK);
+				 } else if(stOgrajic == 1) {
+					 g.setColor(Color.RED); 
+				 } else if (stOgrajic == 2) {
+					 g.setColor(Color.BLUE);
+				 }
 				 g.drawLine(j*stranica, i*stranica*stOgrajic, j*stranica + stranica, i*stranica*stOgrajic);
 			 }
 		}
