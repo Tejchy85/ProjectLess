@@ -2,7 +2,7 @@ package igra;
 
 import java.util.ArrayList;
 
-//Vedela kje so katere bele figurice in kje èrne. 
+//Vedela bo, kje so katere bele figurice in kje èrne. 
 //Vedela bo, èe je igra že napol konèana(èe beli postavil vse na konèno mesto), èe je konèana (èrni postavil na konène mesto).
 
 
@@ -62,19 +62,38 @@ public class Plosca {
 			izbrane.add(st);
 			
 			Ploscica pl = seznamPloscic[st];
-			pl.nakljucno_rotiraj();
+			pl.nakljucno_rotiraj();	
+			
 			for (int k : pl.ograjice) { 						//pogledamo vsako ograjico posebej
 				
 				if (k%2==1) { 									//dodajamo navpicne ograjice
-					if (k < 6) { 								//prva vrstica na ploscici
-						ograjiceNavp[i][j + (5-k)%2]++;
-					} else { 									//druga vrstica
-						ograjiceNavp[i+1][j + (k-7)%2]++;
+					if (k < 6) {								//prva vrstica na ploscici
+						if	(k==1) {
+							ograjiceNavp[i][j + 2]++;
+						} else if (k==3) {
+							ograjiceNavp[i][j + 1]++;
+						} else {
+							ograjiceNavp[i][j]++;
+						}
+					} else {									//druga vrstica
+						if (k ==7) {
+							ograjiceNavp[i+1][j]++;
+						} if (k ==7) {
+							ograjiceNavp[i+1][j + 1]++;
+						} else {
+							ograjiceNavp[i+1][j + 2]++;
+						}
 					}
 				
 				} else {										 //dodajamo vodoravne ograjice
 					if (3 < k && k < 10) {
-						ograjiceVod[i + (k-4)/2][j]++;
+						if(k==4) {
+							ograjiceVod[i][j]++;
+						} else if (k==6) {
+							ograjiceVod[i+1][j]++;
+						} else {
+							ograjiceVod[i+2][j]++;
+						}
 					} else {
 						if (k==10) {
 						ograjiceVod[i + 2][j+1]++;
@@ -83,7 +102,7 @@ public class Plosca {
 							ograjiceVod[i][j+1]++;
 							}
 						if (k==0) {
-							ograjiceVod[i + 1][j+1]++;
+							ograjiceVod[i+1][j+1]++;
 							}
 					}
 						
@@ -92,8 +111,13 @@ public class Plosca {
 			ploscic++;
 			i = (ploscic / 3) * 2;
 			j = (ploscic % 3) * 2;
-
 		}
+	for (int[] vrstica : ograjiceNavp) {
+		for(int s: vrstica) {
+			System.out.print(s);
+		}
+		System.out.println();
+	}
 	}
 	
 	/**

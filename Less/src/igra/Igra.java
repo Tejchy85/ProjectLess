@@ -305,7 +305,7 @@ public class Igra {
 					kvotaPremikov = kvotaPremikov - kvota;
 				} else if (trenutna.getY() > koncna.getY() ) {
 					//premik gor: 
-					int kvota = 1 + igralnaPlosca.ograjiceNavp[trenutna.getY()][trenutna.getX()];
+					int kvota = 1 + igralnaPlosca.ograjiceVod[trenutna.getY()][trenutna.getX()];
 					kvotaPremikov = kvotaPremikov - kvota;
 				} else if(trenutna.getY() < koncna.getY()) {
 					//premik dol:

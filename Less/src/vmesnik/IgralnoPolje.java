@@ -1,5 +1,6 @@
 package vmesnik;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -93,15 +94,15 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	
 	private void narisiFigurico(Graphics g, Igralec igralec, int vrstica, int stolpec ) {
 		//narisemo figurico na doloceno polje dolocene barve
+		
 		if (igralec == Igralec.CRNI) {
 			barvaFiguric = Color.BLACK;
 		} else if (igralec == Igralec.BELI) {
 			barvaFiguric = Color.GREEN;
-		} else { // to je ko je igralec null - za izbrano
+		} else { 										// to je ko je igralec null - za izbrano
 			barvaFiguric = Color.BLUE;
 		}
 		g.setColor(barvaFiguric);
-		//double s = (double) stranica; pomozno za lepse risanje
 		g.drawOval(stolpec * stranica , vrstica * stranica, stranica, stranica);
 	}
 	
@@ -118,14 +119,18 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			 int[] vrstica = navpicne[i];
 			 for (int j = 0; j < vrstica.length; j++) {
 				 int stOgrajic = vrstica[j];
-				 if (stOgrajic == 0) {
-					 g.setColor(Color.BLACK);
-				 } else if(stOgrajic == 1) {
-					 g.setColor(Color.RED); 
-				 } else {
-					 g.setColor(Color.BLUE);
+				 if(stOgrajic != 0) {
+					 if(stOgrajic == 1) {
+						 g.setColor(Color.BLUE); 
+						 g.fillRect(j*stranica - stranica / 16, i*stranica, stranica / 8, stranica);
+					 } if(stOgrajic == 2) {
+						 g.setColor(Color.BLUE); 
+						 g.fillRect(j*stranica - stranica / 16, i*stranica, stranica / 8, stranica);
+						 g.setColor(Color.RED);
+						 g.fillRect(j*stranica - stranica / 32, i*stranica, stranica / 16, stranica);
+						 //g.drawLine(x1, y1, x2, y2);
+					 }
 				 }
-				 g.drawLine(j*stranica*stOgrajic, i*stranica, j*stranica*stOgrajic, i*stranica+stranica);
 			 }
 		}
 		
@@ -138,7 +143,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 				 } else if(stOgrajic == 1) {
 					 g.setColor(Color.RED); 
 				 } else if (stOgrajic == 2) {
-					 g.setColor(Color.BLUE);
+					 g.setColor(Color.magenta);
 				 }
 				 g.drawLine(j*stranica, i*stranica*stOgrajic, j*stranica + stranica, i*stranica*stOgrajic);
 			 }
