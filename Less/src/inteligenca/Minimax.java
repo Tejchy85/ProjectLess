@@ -67,9 +67,9 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 	/**
 	 * Z metodo minimax poišèi najboljšo potezo v dani igri.
 	 * 
-	 * @param k števec globine, do kje smo že preiskali
+	 * @param k števec globine, do kje smo že preiskali //TODO kaj bo to toèno za nas
 	 * @param igra
-	 * @return najboljša poteza (ali null, èe ji ni), skupaj z oceno najboljše poteze
+	 * @return najboljša poteza (ali null, èe bi igra bila zakljucena), skupaj z oceno najboljše poteze
 	 */
 	private OcenjenaPoteza minimax(int k, Igra igra) {
 		Igralec naPotezi = null;
@@ -101,18 +101,20 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 					null,
 					Ocena.oceniPozicijo(jaz, igra));
 		}
-		// Hranimo najboljšo do sedaj videno potezo in njeno oceno.
-		// Tu bi bilo bolje imeti seznam do sedaj videnih najboljših potez, ker je lahko
-		// v neki poziciji veè enakovrednih najboljših potez. Te bi lahko zbrali
-		// v seznam, potem pa vrnili nakljuèno izbrano izmed najboljših potez, kar bi
-		// popestrilo igro raèunalnika.
+	
+		//Išèemo najboljši premik
 		Lokacija najboljsa = null;
 		int ocenaNajboljse = 0;
+		Lokacija najboljsaGledeNaFigurico = null; 
+		int ocenaNajboljsaGledeNaFigurico = 0;
+		Lokacija najboljsaFigurica = null;
+		
 		Lokacija[] figurice = new Lokacija[4];
 		switch (naPotezi) {
 		case BELI: figurice = igra.getIgralnaPlosca().belaPolja(); break;
 		case CRNI: figurice = igra.getIgralnaPlosca().crnaPolja(); break;
 		}
+		
 		for (Lokacija z : figurice) {
 			for (Lokacija p : igra.moznePoteze(z, igra.getKvotaPremikov())) {
 				// V kopiji igre odigramo potezo p
@@ -129,12 +131,19 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 					ocenaNajboljse = ocenaP;
 				}
 			}
+			if (najboljsaGledeNaFigurico == null
+				|| (ocenaNajboljse > ocenaNajboljsaGledeNaFigurico)) {
+				najboljsaGledeNaFigurico = najboljsa;
+				najboljsaFigurica = z;
+				ocenaNajboljsaGledeNaFigurico = ocenaNajboljse;
+			}		
 			
 		}
 
 		// Vrnemo najboljšo najdeno potezo in njeno oceno
-		assert (najboljsa != null);
-		return new OcenjenaPoteza(najboljsa, ocenaNajboljse);
+		assert (najboljsaFigurica != null);
+		assert (najboljsaGledeNaFigurico != null);
+		return new OcenjenaPoteza(najboljsaFigurica, najboljsaGledeNaFigurico, ocenaNajboljsaGledeNaFigurico);
 	}
 	
 }
