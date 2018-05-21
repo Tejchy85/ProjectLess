@@ -23,18 +23,18 @@ import igra.Stanje;
 @SuppressWarnings("serial")
 public class GlavnoOkno extends JFrame implements ActionListener {
 	
-	/**TODO
-	*preverjanje, da logika igre deluje pravilno
-	*kaj se zgodi, ko nekdo zmaga, kaj se zgodi, ko je neodloceno
-	*
-	**/
 	
 	protected JLabel status; 
 	
 	/**
 	 * Izbire v menuju
 	 */
-	protected JMenuItem novaIgra;
+	protected JMenuItem clovekClovek;
+	protected JMenuItem clovekRacunalnik;
+	protected JMenuItem racunalnikClovek;
+	protected JMenuItem racunalnikRacunalnik;
+	
+	
 	
 	/**
 	 * Strateg, ki vleèe poteze belega.
@@ -68,14 +68,27 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		
 		//menu: igra(nova igra taka kot je, nova igra dva igralca, dva raèunlnika..), izbira barve(figurice, polja in podobno)
 		JMenuBar mb = new JMenuBar();
-		JMenu igraMenu = new JMenu("Igra");
+		JMenu igraMenu = new JMenu("Nova igra");
 		mb.add(igraMenu);
 		setJMenuBar(mb);
 		
 		//izbire v igra: 
-		novaIgra = new JMenuItem("Nova igra");
-		igraMenu.add(novaIgra);
-		novaIgra.addActionListener(this);
+		clovekClovek = new JMenuItem("Èlovek vs Èlovek");
+		igraMenu.add(clovekClovek);
+		clovekClovek.addActionListener(this);
+		
+		clovekRacunalnik = new JMenuItem("Èlovek vs Raèunalnik");
+		igraMenu.add(clovekRacunalnik);
+		clovekRacunalnik.addActionListener(this);
+		
+		racunalnikClovek = new JMenuItem("Raèunalnik vs Èlovek");
+		igraMenu.add(racunalnikClovek);
+		racunalnikClovek.addActionListener(this);
+		
+		racunalnikRacunalnik = new JMenuItem("Raèunalnik vs Raèunalnik");
+		igraMenu.add(racunalnikRacunalnik);
+		racunalnikRacunalnik.addActionListener(this);
+		
 		
 		// igralno polje
 		polje = new IgralnoPolje(this);
@@ -107,9 +120,23 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	 * @param arg0
 	 */
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		//vpršamo kako igro želi: ali bo igral z raèunalnikom ali z drugim igralcem in kdo bo beli in kdo èrni
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == clovekRacunalnik) {
+			novaIgra(new Clovek(this, Igralec.BELI),
+					  new Racunalnik(this, Igralec.CRNI));
+		}
+		else if (e.getSource() == racunalnikClovek) {
+			novaIgra(new Racunalnik(this, Igralec.BELI),
+					  new Clovek(this, Igralec.CRNI));
+		}
+		else if (e.getSource() == racunalnikRacunalnik) {
+			novaIgra(new Racunalnik(this, Igralec.BELI),
+					  new Racunalnik(this, Igralec.CRNI));
+		}
+		else if (e.getSource() == clovekClovek) {
+			novaIgra(new Clovek(this, Igralec.BELI),
+			          new Clovek(this, Igralec.CRNI));
+		}
 		
 	}
 	
@@ -117,8 +144,8 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		if (strategB != null) { strategB.prekini(); }
 		if (strategC != null) { strategC.prekini(); }
 		this.igra = new Igra();
-		strategB = new Clovek(this, Igralec.BELI);
-		strategC = new Racunalnik(this, Igralec.CRNI);
+		strategB = beli;
+		strategC = crni;
 		// Tistemu, ki je na potezi, to povemo
 		switch (igra.getTrenutnoStanje()) {
 		case BELI_NA_POTEZI: strategB.na_potezi(); break;
