@@ -392,5 +392,13 @@ public class Igra {
 	public void setIgralnaPlosca(Plosca igralnaPlosca) {
 		this.igralnaPlosca = igralnaPlosca;
 	}
+	
+	public int[][] getOgrajiceVod(Plosca igralnaPlosca){
+		return igralnaPlosca.getOgrajiceVod();
+	}
+	
+	public int[][] getOgrajiceNavp(Plosca igralnaPlosca){
+		return igralnaPlosca.getOgrajiceNavp();
+	}
 
 }

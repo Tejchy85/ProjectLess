@@ -17,9 +17,9 @@ public class Ocena {
 
 	
 	/**
-	 * @param jaz igralec, ki želi oceno
-	 * @param igra trentno stanje igre (ne spreminjaj tega objekta!)
-	 * @return ocena vrednosti pozicije (èe je igre konec, je ocena zagotovo pravilna)
+	 * @param jaz - igralec, ki želi oceno
+	 * @param igra - trentno stanje igre (ne spreminjaj tega objekta!)
+	 * @return ocena - vrednosti pozicije (èe je igre konec, je ocena zagotovo pravilna)
 	 */
 	public static int oceniPozicijo(Igralec jaz, Igra igra) {
 		//TODO: prestudirat kako toèno bo on ocenu pozicijo.
@@ -32,10 +32,14 @@ public class Ocena {
 			return NEODLOCENO;
 		case BELI_NA_POTEZI:
 		case CRNI_NA_POTEZI:
-			// Preštejemo, koliko teric ima vsak igralec
-		//	Plosca plosca = igra.getIgralnaPlosca();
-		//	int vrednostX = 0;
-		//	int vrednostO = 0;
+			// Preštejemo, koliko kvote potrebuje vsak igralec do koncne pozicije
+		Plosca plosca = igra.getIgralnaPlosca();
+		int[][] ograjiceVod = igra.getOgrajiceVod(plosca);
+		int[][] ograjiceNavp= igra.getOgrajiceNavp(plosca);
+		int vrednostBeli = 0;
+		int vrednostCrni = 0;
+		
+		
 		//	for (Terica t : Igra.terice) {
 		//		int poljaX = 0;
 		//		int poljaO = 0;

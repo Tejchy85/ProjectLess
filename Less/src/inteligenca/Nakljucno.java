@@ -35,9 +35,16 @@ public class Nakljucno extends SwingWorker<Lokacija, Object> {
 			int r = generator.nextInt(4);
 			izbrana = figurice[r];
 			List<Lokacija> poteze = igra.moznePoteze(izbrana, igra.getKvotaPremikov());
-			int q = generator.nextInt(poteze.size());
+			while(poteze.isEmpty()){
+				r = generator.nextInt(4);
+				izbrana = figurice[r];
+			}
+			
+			poteze = igra.moznePoteze(izbrana, igra.getKvotaPremikov());
+			int q = generator.nextInt(poteze.size());		
 			return poteze.get(q);
 		}
+
 		@Override
 		public void done() {
 			try {

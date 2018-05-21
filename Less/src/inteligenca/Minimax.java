@@ -25,7 +25,7 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 	private int globina;
 
 	/**
-	 * Ali raèualnik igra X ali O?
+	 * Ali raèualnik igra Belega ali Crnega?
 	 */
 	private Igralec jaz; // koga igramo
 	
