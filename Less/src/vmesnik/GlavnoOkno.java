@@ -17,6 +17,7 @@ import igra.Igra;
 import igra.Igralec;
 import igra.Lokacija;
 import igra.Plosca;
+import igra.Stanje;
 
 
 @SuppressWarnings("serial")
@@ -117,7 +118,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		if (strategC != null) { strategC.prekini(); }
 		this.igra = new Igra();
 		strategB = new Clovek(this, Igralec.BELI);
-		strategC = new Clovek(this, Igralec.CRNI);
+		strategC = new Racunalnik(this, Igralec.CRNI);
 		// Tistemu, ki je na potezi, to povemo
 		switch (igra.getTrenutnoStanje()) {
 		case BELI_NA_POTEZI: strategB.na_potezi(); break;
@@ -188,5 +189,9 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	
 	public int getDim() {
 		return igra.dim;
+	}
+	
+	public Stanje getStanje(){
+		return igra.getTrenutnoStanje();
 	}
 }

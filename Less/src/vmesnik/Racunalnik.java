@@ -1,30 +1,36 @@
 package vmesnik;
 
+import javax.swing.SwingWorker;
+
+import igra.Igralec;
 import igra.Lokacija;
+import inteligenca.Nakljucno;
 
 public class Racunalnik extends Strateg {
 	private GlavnoOkno master;
-
-	public Racunalnik(GlavnoOkno master) {
+	private Igralec rac;
+	private SwingWorker<Lokacija,Object> mislec;
+	
+	public Racunalnik(GlavnoOkno master, Igralec igralec) {
 		this.master = master;
+		rac = igralec;
 	}
 	
 	@Override
 	public void na_potezi() {
-		// TODO Auto-generated method stub
-
+		mislec = new Nakljucno(master);
+		mislec.execute();
 	}
 
 	@Override
 	public void prekini() {
-		// TODO Auto-generated method stub
-
+		if (mislec != null) {
+			mislec.cancel(true);
+		}
 	}
 
 	@Override
 	public void klik(Lokacija zacetna, Lokacija koncna) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

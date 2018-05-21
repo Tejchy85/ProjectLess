@@ -1,6 +1,5 @@
 package vmesnik;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -40,7 +39,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		this.master = master;
 		this.addMouseListener(this);
 		stranica = 100;
-		debelina = 1;
+		debelina = stranica / 8;
 		polmer = 5;
 	}
 	
@@ -101,7 +100,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			barvaFiguric = new Color(50,50,50);
 		} else if (igralec == Igralec.BELI) {
 			barvaFiguric = new Color(250,250,250);
-		} else { 										// to je ko je igralec null - za izbrano
+		} else{ 										// to je ko je igralec null - za izbrano
 			barvaFiguric = Color.BLUE;
 		}
 		g.setColor(barvaFiguric);
@@ -128,12 +127,12 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 				 if(stOgrajic != 0) {
 					 if(stOgrajic == 1) {
 						 g.setColor(Color.BLUE); 
-						 g.fillRect(j*stranica - stranica / 16, i*stranica, stranica / 8, stranica);
+						 g.fillRect(j*stranica - debelina / 2, i*stranica, debelina, stranica);
 					 } if(stOgrajic == 2) {
 						 g.setColor(Color.BLUE); 
-						 g.fillRect(j*stranica - stranica / 16, i*stranica, stranica / 8, stranica);
+						 g.fillRect(j*stranica - debelina / 2, i*stranica, debelina, stranica);
 						 g.setColor(Color.RED);
-						 g.fillRect(j*stranica - stranica / 32, i*stranica, stranica / 16, stranica);
+						 g.fillRect(j*stranica - debelina / 4, i*stranica, debelina / 2, stranica);
 					 }
 				 }
 			 }
@@ -145,12 +144,13 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 				 int stOgrajic = vrstica[j];
 				 if(stOgrajic == 1) {
 					 g.setColor(Color.BLUE); 
-					 g.fillRect(j*stranica, i*stranica - stranica / 16, stranica, stranica / 8);
+					 g.fillRect(j*stranica, i*stranica - debelina / 2, stranica, debelina);
 				 } else if(stOgrajic == 2) {
 					 g.setColor(Color.BLUE); 
-					 g.fillRect(j*stranica, i*stranica - stranica / 16, stranica, stranica / 8);	 
+					 g.fillRect(j*stranica, i*stranica - debelina / 2, stranica, debelina);	 
 					 g.setColor(Color.RED);
-					 g.fillRect(j*stranica, i*stranica - stranica / 32, stranica, stranica / 16);
+					 g.fillRect(j*stranica, i*stranica - debelina / 4, stranica, debelina / 2
+							 );
 				 }
 			 }
 		 }
@@ -159,25 +159,27 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		//todo racunanje, kje je clovek kliknil
 		Lokacija lokacija = null;
 		
 		int x = e.getX();
 		int y = e.getY();
+		int i = x / stranica;
+		int j = y /stranica;
 		System.out.println("kliknil si " + x + " " + y);
-		if (!(x % stranica < debelina || stranica - x % stranica < debelina)		//pogoj1: nisi kliknil na ograjico 
-				&& ((igra.get == Stanje.BELI_NA_POTEZI && igra{ 					//TODO	
-																					//pogoj2: si kliknil na svojo figuro
-			int i = x / stranica;
-			int j = y /stranica;
+		
+		if (!(x % stranica < debelina || stranica - x % stranica < debelina)){									//pogoj1: nisi kliknil na ograjico	
 			lokacija = new Lokacija(i,j);
 		}
 		System.out.println("izbrana je" + izbrana);
-		System.out.println("Lokacija je " + lokacija.getX() + " " + lokacija.getY());
 		
 		if (lokacija != null){
 			if (izbrana == null){
-				izbrana = lokacija;
+				if ((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO)		//pogoj2: kliknil si na svojo figuro
+					|| (master.getStanje() == Stanje.CRNI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.CRNO)) {
+					izbrana = lokacija;
+				} else {
+					izbrana = null;
+				}
 			} else if (izbrana.equals(lokacija)) {
 					izbrana = null;
 			} else{

@@ -120,16 +120,43 @@ public class Plosca {
 	}
 	}
 	
+	public Lokacija[] crnaPolja(){
+		Lokacija[] l = new Lokacija[4];
+		int p = 0;
+		for (int i=0; i < dim; i++){
+			for (int j=0; j < dim; j++){
+				if (this.vsaPolja[j][i] == Polje.CRNO){
+					l[p] = new Lokacija(i,j);
+					p++;
+				}
+			}
+		}
+		return l;
+	}
+	
+	public Lokacija[] belaPolja(){
+		Lokacija[] l = new Lokacija[4];
+		int p = 0;
+		for (int i=0; i < dim; i++){
+			for (int j=0; j < dim; j++){
+				if (this.vsaPolja[j][i] == Polje.BELO){
+					l[p] = new Lokacija(i,j);
+					p++;
+				}
+			}
+		}
+		return l;
+	}
+	
 	/**
 	 * 
 	 * @return ali je èrni postavil vse figure na ciljna polja in je igra konèana 
 	 */
-	public boolean konec() {       //crnii je vse svoje figurice pripeljal do konca --> igra se takoj zakljuci
-	return (vsaPolja[0][0] == Polje.CRNO && vsaPolja[1][0] == Polje.CRNO && 
-			vsaPolja[0][1] == Polje.CRNO && vsaPolja[1][1] == Polje.CRNO);
+	public boolean konecCrni() {       											//crni je vse svoje figurice pripeljal do konca --> igra se takoj zakljuci
+		return (vsaPolja[0][0] == Polje.CRNO && vsaPolja[1][0] == Polje.CRNO && 
+				vsaPolja[0][1] == Polje.CRNO && vsaPolja[1][1] == Polje.CRNO);
 	}
 
-	
 	/**
 	 * 
 	 * @return ali je beli postavil vse figure na ciljna polja in èe èrni v treh potezah ne konèa je zmagal beli
@@ -140,10 +167,7 @@ public class Plosca {
 				vsaPolja[dim-1][dim-2] == Polje.BELO && vsaPolja[dim-2][dim-2] == Polje.BELO);
 	}
 	
-	public boolean konecCrni() {       //crnii je vse svoje figurice pripeljal do konca --> igra se takoj zakljuci
-		return (vsaPolja[0][0] == Polje.CRNO && vsaPolja[1][0] == Polje.CRNO && 
-				vsaPolja[0][1] == Polje.CRNO && vsaPolja[1][1] == Polje.CRNO);
-	}
+	
 
 	public Polje[][] getVsa_polja() {
 		return vsaPolja;

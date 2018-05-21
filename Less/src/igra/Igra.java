@@ -164,7 +164,7 @@ public class Igra {
 				if (igralnaPlosca.vsaPolja[y+2][x] == Polje.PRAZNO) {
 					//dejansko preskoèimo nekoga
 					if(igralnaPlosca.vsaPolja[y+1][x] != Polje.PRAZNO) {
-						if (igralnaPlosca.ograjiceVod[y+1][x] == 0 && igralnaPlosca.ograjiceNavp[y+2][x]==0) {
+						if (igralnaPlosca.ograjiceVod[y+1][x] == 0 && igralnaPlosca.ograjiceVod[y+2][x]==0) {
 							poteze.add(new Lokacija(x,y+2));
 						}
 					}
@@ -327,12 +327,12 @@ public class Igra {
 		//Preverimo èe je igre konec.
 		boolean konecCrni = igralnaPlosca.konecCrni();
 		boolean konecBeli = igralnaPlosca.konecBeli();
-		if (konecCrni && !konecBeli) { //ni potrebe za konec_crni == true
+		if (konecCrni && !konecBeli) { 
 			trenutnoStanje = Stanje.ZMAGA_CRNI;
 		} else if (konecBeli) {							//to je potrebno narediti, ker lahko beli konèa še preden porabi tri korake. 
 			if (naPotezi != Igralec.CRNI) {                 //ce je crni na potezi, potem je beli koncal s kvoto==0, torej je kvota crnega ze pravilno nastavljena na 3
 				naPotezi = Igralec.CRNI;
-				zmagovalnaKvota = kvotaPremikov;
+				zmagovalnaKvota = 3 - kvotaPremikov;
 				kvotaPremikov = 3;		
 			}
 			if (konecCrni) {
