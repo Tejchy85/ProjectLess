@@ -1,6 +1,8 @@
 package inteligenca;
 
 import java.util.List;
+import java.util.Random;
+
 import javax.swing.SwingWorker;
 
 import vmesnik.GlavnoOkno;
@@ -22,18 +24,18 @@ public class Nakljucno extends SwingWorker<Lokacija, Object> {
 		@Override
 		protected Lokacija doInBackground() throws Exception {
 			Igra igra = master.copyIgra();
-			Thread.sleep(100);
+			Thread.sleep(500);
+			Random generator = new Random();
 			Lokacija[] figurice = new Lokacija[4];
 			if (igra.getNaPotezi() == Igralec.BELI){
 				figurice = igra.getIgralnaPlosca().belaPolja();
 			} else{
 				figurice = igra.getIgralnaPlosca().crnaPolja();
 			}
-			
-			int r = ((int) Math.random() * 100) % 4;
+			int r = generator.nextInt(4);
 			izbrana = figurice[r];
 			List<Lokacija> poteze = igra.moznePoteze(izbrana, igra.getKvotaPremikov());
-			int q = ((int) Math.random() * 100) % poteze.size();
+			int q = generator.nextInt(poteze.size());
 			return poteze.get(q);
 		}
 		@Override
