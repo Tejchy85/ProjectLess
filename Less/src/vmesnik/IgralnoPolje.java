@@ -16,6 +16,7 @@ import igra.Igralec;
 import igra.Lokacija;
 import igra.Plosca;
 import igra.Polje;
+import igra.Stanje;
 
 @SuppressWarnings("serial")
 public class IgralnoPolje extends JPanel implements MouseListener {
@@ -94,16 +95,21 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	
 	private void narisiFigurico(Graphics g, Igralec igralec, int vrstica, int stolpec ) {
 		//narisemo figurico na doloceno polje dolocene barve
+		int polmer = stranica / 2;
 		
 		if (igralec == Igralec.CRNI) {
-			barvaFiguric = Color.BLACK;
+			barvaFiguric = new Color(50,50,50);
 		} else if (igralec == Igralec.BELI) {
-			barvaFiguric = Color.GREEN;
+			barvaFiguric = new Color(250,250,250);
 		} else { 										// to je ko je igralec null - za izbrano
 			barvaFiguric = Color.BLUE;
 		}
 		g.setColor(barvaFiguric);
-		g.drawOval(stolpec * stranica , vrstica * stranica, stranica, stranica);
+		g.fillOval(stolpec * stranica + polmer /2, vrstica * stranica + polmer/2, polmer, polmer);
+		if(igralec == Igralec.BELI) {
+			g.setColor(Color.BLACK);
+			g.drawOval(stolpec * stranica + polmer /2, vrstica * stranica + polmer/2, polmer, polmer);
+		}
 	}
 	
 	private void pobarvajMozne(Graphics g, Lokacija p){
@@ -128,7 +134,6 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 						 g.fillRect(j*stranica - stranica / 16, i*stranica, stranica / 8, stranica);
 						 g.setColor(Color.RED);
 						 g.fillRect(j*stranica - stranica / 32, i*stranica, stranica / 16, stranica);
-						 //g.drawLine(x1, y1, x2, y2);
 					 }
 				 }
 			 }
@@ -138,16 +143,17 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			 int[] vrstica = vodoravne[i];
 			 for (int j = 0; j < vrstica.length; j++) {
 				 int stOgrajic = vrstica[j];
-				 if (stOgrajic == 0) {
-					 g.setColor(Color.BLACK);
-				 } else if(stOgrajic == 1) {
-					 g.setColor(Color.RED); 
-				 } else if (stOgrajic == 2) {
-					 g.setColor(Color.magenta);
+				 if(stOgrajic == 1) {
+					 g.setColor(Color.BLUE); 
+					 g.fillRect(j*stranica, i*stranica - stranica / 16, stranica, stranica / 8);
+				 } else if(stOgrajic == 2) {
+					 g.setColor(Color.BLUE); 
+					 g.fillRect(j*stranica, i*stranica - stranica / 16, stranica, stranica / 8);	 
+					 g.setColor(Color.RED);
+					 g.fillRect(j*stranica, i*stranica - stranica / 32, stranica, stranica / 16);
 				 }
-				 g.drawLine(j*stranica, i*stranica*stOgrajic, j*stranica + stranica, i*stranica*stOgrajic);
 			 }
-		}
+		 }
 	}
 
 
@@ -159,7 +165,9 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		int x = e.getX();
 		int y = e.getY();
 		System.out.println("kliknil si " + x + " " + y);
-		if (!(x % stranica < debelina || stranica - x % stranica < debelina)){ //pogoj: nisi kliknil na ograjico		
+		if (!(x % stranica < debelina || stranica - x % stranica < debelina)		//pogoj1: nisi kliknil na ograjico 
+				&& ((igra.get == Stanje.BELI_NA_POTEZI && igra{ 					//TODO	
+																					//pogoj2: si kliknil na svojo figuro
 			int i = x / stranica;
 			int j = y /stranica;
 			lokacija = new Lokacija(i,j);

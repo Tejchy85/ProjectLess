@@ -23,16 +23,11 @@ import igra.Plosca;
 public class GlavnoOkno extends JFrame implements ActionListener {
 	
 	/**TODO
-	*narisat ograjice
 	*preverjanje, da logika igre deluje pravilno
 	*kaj se zgodi, ko nekdo zmaga, kaj se zgodi, ko je neodloceno
 	*
-	*due to ned 23:59
 	**/
 	
-	/**
-	 * Okence, kjer bo pisalo, kdo je na vrsti, koliko kvote se ima, ter ali je že kdo zmagal
-	 */
 	protected JLabel status; 
 	
 	/**
