@@ -33,11 +33,31 @@ public class Igra {
 	 */
 
 	public Igra(Igra igra) {
+		int dim = igra.getDim();
 		this.naPotezi = igra.getNaPotezi();
 		this.kvotaPremikov = igra.getKvotaPremikov();
-		this.igralnaPlosca = igra.getIgralnaPlosca();
 		this.zmagovalnaKvota = igra.getZmagovalnaKvota();
 		this.trenutnoStanje = igra.getTrenutnoStanje();
+		Polje[][] kopijaVsehPolj = new Polje[dim][dim];
+		int[][] kopijaNavpicnih = new int[dim][dim];
+		int[][] kopijaVodoravnih = new int[dim][dim];
+		Polje[][] vsaPolja = igra.getIgralnaPlosca().getVsa_polja();
+		int[][] navpicne = igra.getIgralnaPlosca().getOgrajiceNavp();
+		int[][] vodoravne = igra.getIgralnaPlosca().getOgrajiceVod();
+		
+		for (int i = 0; i < dim; i++) {
+			for (int j = 0; j < dim; j++) {
+				kopijaVsehPolj[i][j] = vsaPolja[i][j];
+				kopijaNavpicnih[i][j] = navpicne[i][j];
+				kopijaVodoravnih[i][j] = vodoravne[i][j];
+			}
+		}
+		
+		Plosca kopijaPlosca = new Plosca(dim);
+		kopijaPlosca.setOgrajiceNavp(kopijaNavpicnih);
+		kopijaPlosca.setOgrajiceVod(kopijaVodoravnih);
+		kopijaPlosca.setVsaPolja(kopijaVsehPolj);
+		this.igralnaPlosca = kopijaPlosca;
 	}
 		
 	/**

@@ -171,6 +171,22 @@ public class Plosca {
 		return ograjiceVod;
 	}
 
+	public Polje[][] getVsaPolja() {
+		return vsaPolja;
+	}
+
+	public void setVsaPolja(Polje[][] vsaPolja) {
+		this.vsaPolja = vsaPolja;
+	}
+
+	public void setOgrajiceVod(int[][] ograjiceVod) {
+		this.ograjiceVod = ograjiceVod;
+	}
+
+	public void setOgrajiceNavp(int[][] ograjiceNavp) {
+		this.ograjiceNavp = ograjiceNavp;
+	}
+
 	public int[][] getOgrajiceNavp() {
 		return ograjiceNavp;
 	}

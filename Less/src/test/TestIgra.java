@@ -2,6 +2,7 @@ package test;
 
 
 import igra.Igra;
+import igra.Igralec;
 import igra.Lokacija;
 import junit.framework.TestCase;
 
@@ -16,8 +17,11 @@ public class TestIgra extends TestCase {
 			l.print();
 		}
 		System.out.println("nova");
-		assertEquals(igra.veljavnaPoteza(zacetna,koncna), true);
-		
+		//assertEquals(igra.veljavnaPoteza(zacetna,koncna), true);
+		Igra igra2 = new Igra(igra);
+		//igra2.narediPotezo(new Lokacija(1,1), new Lokacija(1,2));
+		//assertEquals(igra.getNaPotezi(),igra2.getNaPotezi() );
+		assertEquals(igra.getIgralnaPlosca(), igra2.getIgralnaPlosca());
 
 		
 	}
