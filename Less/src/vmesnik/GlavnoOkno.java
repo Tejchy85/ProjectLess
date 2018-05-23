@@ -113,6 +113,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		getContentPane().add(status, status_layout);
 		
 		novaIgra(new Clovek(this, Igralec.BELI), new Clovek(this, Igralec.CRNI)); // za zacetek clovek proti cloveku
+	
 	}
 
 	/**

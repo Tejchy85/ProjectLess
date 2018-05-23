@@ -24,7 +24,7 @@ public class Igra {
 		kvotaPremikov = 3; 
 		igralnaPlosca = new Plosca(dim);
 		zmagovalnaKvota = 0;
-		trenutnoStanje = Stanje.BELI_NA_POTEZI;		
+		trenutnoStanje = Stanje.BELI_NA_POTEZI;	
 	}
 	
 	/**
@@ -38,7 +38,6 @@ public class Igra {
 		this.igralnaPlosca = igra.getIgralnaPlosca();
 		this.zmagovalnaKvota = igra.getZmagovalnaKvota();
 		this.trenutnoStanje = igra.getTrenutnoStanje();
-
 	}
 		
 	//ta funkcija ni še preverjena. 
