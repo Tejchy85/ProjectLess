@@ -1,11 +1,15 @@
 package inteligenca;
 
 import javax.swing.SwingWorker;
-
 import vmesnik.GlavnoOkno;
 import igra.Igra;
 import igra.Igralec;
 import igra.Lokacija;
+
+//TODO poiskat napako v minimax;
+//poteza se mora izvest ena naenkrat
+// preverit pravilnost racunanja z globino
+//ce bo igral defenzivno, moramo mimimax dopolnit, da gre naprej
 
 /**
  * Inteligenca, ki uporabi algoritem minimax.
@@ -47,8 +51,11 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 	
 	@Override
 	protected Lokacija doInBackground() throws Exception {
+		
 		Igra igra = master.copyIgra();
-		OcenjenaPoteza p = minimax(globina, igra);
+		Thread.sleep(5000);
+		OcenjenaPoteza p = minimax(0, igra);
+		System.out.println(p.toString());
 		this.zacetna = p.zacetna;
 		assert (this.zacetna != null);
 		assert (p.koncna != null);
@@ -94,6 +101,8 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 		assert (naPotezi != null);
 		// Nekdo je na potezi, ugotovimo, kaj se splaèa igrati
 		if (k >= globina) {
+			System.out.println("tukaj sem");
+
 			// dosegli smo najveèjo dovoljeno globino, zato
 			// ne vrnemo poteze, ampak samo oceno pozicije
 			return new OcenjenaPoteza(
