@@ -67,7 +67,7 @@ public class Ocena {
 			int vrednostDol = 0;
 			int vrednostDesno = 0;
 			
-			if(x!=dim-1 || y!=dim-1){
+			if((x+1)!=dim-1 || (y+1)!=dim-1){
 				if(x+1 < dim){
 					vrednostDesno = optimalnaBeli(new Lokacija(x + 1, y), igra, ocena + 1 + ograjiceNavp[y][x+1]);
 				}else {
@@ -93,7 +93,7 @@ public class Ocena {
 		int vrednostGor = 0;
 		int vrednostLevo = 0;
 		
-		if(x!=0 || y!=0){
+		if((x-1)!=0 || (y-1)!=0){
 			if(x-1 > 0){
 				vrednostLevo = optimalnaCrni(new Lokacija(x - 1, y), igra, ocena + 1 + ograjiceNavp[y][x]);
 			}else {

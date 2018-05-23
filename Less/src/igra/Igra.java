@@ -40,7 +40,6 @@ public class Igra {
 		this.trenutnoStanje = igra.getTrenutnoStanje();
 	}
 		
-	//ta funkcija ni še preverjena. 
 	/**
 	 * 
 	 * @param x - stolpec v katerem se nahaja figurica za katero preverjamo možne poteze.
@@ -284,7 +283,7 @@ public class Igra {
 	 */
 	public void narediPotezo(Lokacija trenutna, Lokacija koncna) {  //tu se pogoji nekako ponavljajo enako kot so napisani zgoraj - kako bi to lahko bilo bolje?
 		if (veljavnaPoteza(trenutna,koncna) == false) {
-			System.out.println("Neveljaven premik. Poskusi znova.");
+			//System.out.println("Neveljaven premik. Poskusi znova.");
 		} else {
 			//Prestavimo figurico
 			igralnaPlosca.vsaPolja[koncna.getY()][koncna.getX()] = igralnaPlosca.vsaPolja[trenutna.getY()][trenutna.getX()];

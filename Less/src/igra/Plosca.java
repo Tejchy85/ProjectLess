@@ -112,12 +112,6 @@ public class Plosca {
 			i = (ploscic / 3) * 2;
 			j = (ploscic % 3) * 2;
 		}
-	for (int[] vrstica : ograjiceNavp) {
-		for(int s: vrstica) {
-			System.out.print(s);
-		}
-		System.out.println();
-	}
 	}
 	
 	public Lokacija[] crnaPolja(){

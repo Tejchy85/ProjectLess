@@ -51,14 +51,17 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 	
 	@Override
 	protected Lokacija doInBackground() throws Exception {
-		
 		Igra igra = master.copyIgra();
-		Thread.sleep(5000);
+		Thread.sleep(2000);
 		OcenjenaPoteza p = minimax(0, igra);
 		System.out.println(p.toString());
-		this.zacetna = p.zacetna;
+		
 		assert (this.zacetna != null);
+		this.zacetna = p.zacetna;
+		System.out.println("izbral sem zacetno");
 		assert (p.koncna != null);
+		System.out.println("dolocam se koncno");
+
 		return p.koncna;
 	}
 	
@@ -101,7 +104,7 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 		assert (naPotezi != null);
 		// Nekdo je na potezi, ugotovimo, kaj se splaèa igrati
 		if (k >= globina) {
-			System.out.println("tukaj sem");
+			//System.out.println("tukaj sem, ocena te pozicije je" + Ocena.oceniPozicijo(jaz, igra));
 
 			// dosegli smo najveèjo dovoljeno globino, zato
 			// ne vrnemo poteze, ampak samo oceno pozicije
@@ -129,6 +132,8 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 				// V kopiji igre odigramo potezo p
 				Igra kopijaIgre = new Igra(igra);
 				kopijaIgre.narediPotezo(z,p);
+				//System.out.println("juhu, naredil sem potezo v kopiji!");
+				
 				// Izraèunamo vrednost pozicije po odigrani potezi p
 				int ocenaP = minimax(k+1, kopijaIgre).vrednost;
 				// Èe je p boljša poteza, si jo zabeležimo
@@ -139,13 +144,15 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 					najboljsa = p;
 					ocenaNajboljse = ocenaP;
 				}
+						
 			}
 			if (najboljsaGledeNaFigurico == null
-				|| (ocenaNajboljse > ocenaNajboljsaGledeNaFigurico)) {
-				najboljsaGledeNaFigurico = najboljsa;
-				najboljsaFigurica = z;
-				ocenaNajboljsaGledeNaFigurico = ocenaNajboljse;
-			}		
+					|| (ocenaNajboljse > ocenaNajboljsaGledeNaFigurico)) {
+					//System.out.println("shranjujem si");
+					najboljsaGledeNaFigurico = najboljsa;
+					najboljsaFigurica = z;
+					ocenaNajboljsaGledeNaFigurico = ocenaNajboljse;
+					}
 			
 		}
 
