@@ -52,15 +52,15 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 	@Override
 	protected Lokacija doInBackground() throws Exception {
 		Igra igra = master.copyIgra();
-		Thread.sleep(2000);
+		//Thread.sleep(2000);
 		OcenjenaPoteza p = minimax(0, igra);
-		System.out.println(p.toString());
+		//System.out.println(p.toString());
 		
 		assert (this.zacetna != null);
 		this.zacetna = p.zacetna;
-		System.out.println("izbral sem zacetno");
+		//System.out.println("izbral sem zacetno");
 		assert (p.koncna != null);
-		System.out.println("dolocam se koncno");
+		//System.out.println("dolocam se koncno");
 
 		return p.koncna;
 	}
@@ -144,6 +144,10 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 					najboljsa = p;
 					ocenaNajboljse = ocenaP;
 				}
+				if (Math.abs(z.getX() - p.getX()) == 2 || Math.abs(z.getY()- p.getY()) == 2){
+					ocenaNajboljse *= 5;
+				}
+				//zvemo kdo je na potezi, in recimo za belega: èe se je premaknuj dol, premaknu desno pomnožimo ocenaNajboljse za 3 recimo.
 						
 			}
 			if (najboljsaGledeNaFigurico == null

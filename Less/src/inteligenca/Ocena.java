@@ -1,6 +1,8 @@
 
 package inteligenca;
 
+import java.util.LinkedList;
+
 import igra.Igra;
 import igra.Igralec;
 import igra.Lokacija;
@@ -41,9 +43,11 @@ public class Ocena {
 		
 		for (Lokacija bFig : figuriceBeli){
 			vrednostBeli += optimalnaBeli(bFig,igra,0);
+			vrednostBeli -= narazen(figuriceBeli);
 		}
 		for (Lokacija cFig : figuriceCrni){
 			vrednostCrni += optimalnaCrni(cFig,igra,0);
+			vrednostCrni -= narazen(figuriceCrni);
 		}
 		
 		if (igra.getNaPotezi() == Igralec.BELI){
@@ -69,7 +73,7 @@ public class Ocena {
 			
 			if((x+1)!=dim-1 || (y+1)!=dim-1){
 				if(x+1 < dim){
-					vrednostDesno = optimalnaBeli(new Lokacija(x + 1, y), igra, ocena + 1 + ograjiceNavp[y][x+1]);
+					vrednostDesno =  optimalnaBeli(new Lokacija(x + 1, y), igra, ocena + 1 + ograjiceNavp[y][x+1]);
 				}else {
 					vrednostDesno = 300;
 				}
@@ -111,6 +115,42 @@ public class Ocena {
 		return ocena;
 }
 	
+	/*premikanje v desno in dol je za belega dobro 
+			public static int dobrePotezeBeli (Lokacija b, Igra igra){
+		int rez = 0;
+		int x = b.getX();
+		int y = b.getY();
+		LinkedList<Lokacija> mozne = igra.moznePoteze(b, igra.getKvotaPremikov());
+		if (mozne.contains(new Lokacija(x+1,y))){
+			rez += 1;
+			}
+		if (mozne.contains(new Lokacija(x,y+1))){
+			rez += 1;
+			}
+		return rez;
+		}
+	*/
+	
+	public static int narazen (Lokacija[] figurice){
+		int max = 0;
+		int x1 = 0;
+		int x2 = 0;
+		int y1 = 0;
+		int y2 = 0;
+		for (Lokacija l1 : figurice){
+			for (Lokacija l2 : figurice){
+				x1 = l1.getX();
+				x2 = l2.getX();
+				y1 = l1.getY();
+				y2 = l2.getY();
+				int mmax = Math.max(Math.abs(x1-x2),Math.abs(y1-y2));
+			if (mmax > max){
+				max = mmax;
+			}
+			}
+		}
+		return max;
+	}
 }
 
 
