@@ -22,4 +22,10 @@ public abstract class Strateg {
 	 * Glanvo okno klièe to metodo, ko uporabnik klikne na polje (i,j).
 	 */
 	public abstract void klik(Lokacija zacetna, Lokacija koncna);
+	
+	
+	/*
+	 * ce igra racunalnik, ne bomo mogli klikniti na polje, da bi se obarvalo
+	 */
+	public abstract boolean uporabljaGUI();
 }

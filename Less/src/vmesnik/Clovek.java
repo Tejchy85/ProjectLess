@@ -24,5 +24,10 @@ public class Clovek extends Strateg {
 	public void klik(Lokacija zacetna, Lokacija koncna) {
 		master.odigraj(zacetna, koncna);
 	}
+	
+	@Override
+	public boolean uporabljaGUI() {
+		return true;
+	}
 
 }

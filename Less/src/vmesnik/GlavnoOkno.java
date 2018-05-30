@@ -215,11 +215,19 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		return igra.getIgralnaPlosca();
 	}
 	
+	public Stanje getStanje(){
+		return igra.getTrenutnoStanje();
+	}
+	
 	public int getDim() {
 		return igra.DIM;
 	}
 	
-	public Stanje getStanje(){
-		return igra.getTrenutnoStanje();
+	public Strateg getStrateg() {
+		if (igra.getTrenutnoStanje() == Stanje.BELI_NA_POTEZI){
+			return strategB;
+		} else {
+			return strategC;
+		}
 	}
 }

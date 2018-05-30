@@ -34,5 +34,10 @@ public class Racunalnik extends Strateg {
 	@Override
 	public void klik(Lokacija zacetna, Lokacija koncna) {
 	}
+	
+	@Override
+	public boolean uporabljaGUI() {
+		return false;
+	}
 
 }

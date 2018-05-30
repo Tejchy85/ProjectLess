@@ -57,8 +57,7 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 	@Override
 	protected Lokacija doInBackground() throws Exception {
 		Igra igra = master.copyIgra();
-
-		//Thread.sleep(500);
+		Thread.sleep(500);
 		OcenjenaPoteza p = minimax(0, igra);
 		//System.out.println(p.toString());
 		

@@ -278,7 +278,7 @@ public class Igra {
 	 * 
 	 * @param trenutna - trenutna pozicija
 	 * @param zeljena - izbrano polje za premik figurice
-	 * @return ali lahko ibrano figurico igralec premakne na željeno polje
+	 * @return ali lahko ibrano figurico igralec premakne na želeno polje
 	 */
 	public boolean veljavnaPoteza(Lokacija trenutna, Lokacija zelena) {
 		// Preveriti potrebno še, èe je trenutna lokacija sploh os trenutnega igralca polje

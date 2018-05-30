@@ -159,38 +159,40 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Lokacija lokacija = null;
-		
-		int x = e.getX();
-		int y = e.getY();
-		int i = x / stranica;
-		int j = y /stranica;
-		//System.out.println("kliknil si " + x + " " + y);
-		
-		if (!(x % stranica < debelina || stranica - x % stranica < debelina)){									//pogoj1: nisi kliknil na ograjico	
-			lokacija = new Lokacija(i,j);
-		}
-		//System.out.println("izbrana je" + izbrana);
-		
-		if (lokacija != null){
-			if (izbrana == null){
-				if ((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO)		//pogoj2: kliknil si na svojo figuro
-					|| (master.getStanje() == Stanje.CRNI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.CRNO)) {
-					izbrana = lokacija;
-				} else {
-					izbrana = null;
-				}
-			} else if (izbrana.equals(lokacija)) {
-					izbrana = null;
-			} else{
-				LinkedList<Lokacija> mozne = master.getMozne(izbrana);
-				if (mozne.contains(lokacija)){
-					master.klikniPolje(izbrana, lokacija);
-					izbrana = null;
+		if (master.getStrateg().uporabljaGUI()) {
+			Lokacija lokacija = null;
+			
+			int x = e.getX();
+			int y = e.getY();
+			int i = x / stranica;
+			int j = y /stranica;
+			//System.out.println("kliknil si " + x + " " + y);
+			
+			if (!(x % stranica < debelina || stranica - x % stranica < debelina)){									//pogoj1: nisi kliknil na ograjico	
+				lokacija = new Lokacija(i,j);
+			}
+			//System.out.println("izbrana je" + izbrana);
+			
+			if (lokacija != null){
+				if (izbrana == null){
+					if ((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO)		//pogoj2: kliknil si na svojo figuro
+						|| (master.getStanje() == Stanje.CRNI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.CRNO)) {
+						izbrana = lokacija;
+					} else {
+						izbrana = null;
+					}
+				} else if (izbrana.equals(lokacija)) {
+						izbrana = null;
+				} else{
+					LinkedList<Lokacija> mozne = master.getMozne(izbrana);
+					if (mozne.contains(lokacija)){
+						master.klikniPolje(izbrana, lokacija);
+						izbrana = null;
+					}
 				}
 			}
+			repaint();
 		}
-		repaint();
 	}
 
 	@Override
