@@ -10,7 +10,7 @@ public class Igra {
 	/**
 	 * Velikost igralne plošèe
 	 */
-	public static final int dim = 6;
+	public static final int DIM = 6;
 	
 	//ATRIBUTI: 
 	protected Igralec naPotezi;
@@ -22,7 +22,7 @@ public class Igra {
 	public Igra() {
 		naPotezi = Igralec.BELI;
 		kvotaPremikov = 3; 
-		igralnaPlosca = new Plosca(dim);
+		igralnaPlosca = new Plosca(DIM);
 		zmagovalnaKvota = 0;
 		trenutnoStanje = Stanje.BELI_NA_POTEZI;	
 	}
@@ -33,7 +33,7 @@ public class Igra {
 	 */
 
 	public Igra(Igra igra) {
-		int dim = igra.getDim();
+		int dim = Igra.getDim();
 		this.naPotezi = igra.getNaPotezi();
 		this.kvotaPremikov = igra.getKvotaPremikov();
 		this.zmagovalnaKvota = igra.getZmagovalnaKvota();
@@ -95,7 +95,7 @@ public class Igra {
 			//na mesto x + 1. 
 			
 			//preverimo, da ne pademo iz plošèe.
-			if ( x+1 < dim) {
+			if ( x+1 < DIM) {
 				//preverimo, èe je polje prazno
 				if (igralnaPlosca.vsaPolja[y][x+1] == Polje.PRAZNO) {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
@@ -124,7 +124,7 @@ public class Igra {
 			//na mesto y+1.
 			
 			//preverimo, da ne pademo iz plošèe.
-			if ( y+1 < dim) {
+			if ( y+1 < DIM) {
 				//preverimo, èe je polje prazno
 				if (igralnaPlosca.vsaPolja[y+1][x] == Polje.PRAZNO) {
 					//preverimo, èe nimamo nobene ograjice, saj imamo samo eno kvoto.
@@ -154,7 +154,7 @@ public class Igra {
 			}
 			
 			//Preskok desno
-			if (x+2 < dim) {
+			if (x+2 < DIM) {
 				if (igralnaPlosca.vsaPolja[y][x+2] == Polje.PRAZNO) {
 					//dejansko preskoèimo nekoga
 					if(igralnaPlosca.vsaPolja[y][x+1] != Polje.PRAZNO) {
@@ -178,7 +178,7 @@ public class Igra {
 			}
 			
 			//Preskok dol
-			if (y+2 < dim) {
+			if (y+2 < DIM) {
 				if (igralnaPlosca.vsaPolja[y+2][x] == Polje.PRAZNO) {
 					//dejansko preskoèimo nekoga
 					if(igralnaPlosca.vsaPolja[y+1][x] != Polje.PRAZNO) {
@@ -205,7 +205,7 @@ public class Igra {
 			}
 			
 			//premik desno: 
-			if ( x+1 < dim) {
+			if ( x+1 < DIM) {
 				if (igralnaPlosca.vsaPolja[y][x+1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x+1] == 1) {
 						poteze.add(new Lokacija(x+1,y));
@@ -223,7 +223,7 @@ public class Igra {
 			}
 			
 			//premik dol: 
-			if ( y+1 < dim) {
+			if ( y+1 < DIM) {
 				if (igralnaPlosca.vsaPolja[y+1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y+1][x] == 1) {
 						poteze.add(new Lokacija(x,y+1));
@@ -244,7 +244,7 @@ public class Igra {
 			}
 			
 			//premik desno: 
-			if ( x+1 < dim) {
+			if ( x+1 < DIM) {
 				if (igralnaPlosca.vsaPolja[y][x+1] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceNavp[y][x+1] == 2) {
 						poteze.add(new Lokacija(x+1,y));
@@ -262,7 +262,7 @@ public class Igra {
 			}
 			
 			//premik dol: 
-			if ( y+1 < dim) {
+			if ( y+1 < DIM) {
 				if (igralnaPlosca.vsaPolja[y+1][x] == Polje.PRAZNO) {
 					if (igralnaPlosca.ograjiceVod[y+1][x] == 2) {
 						poteze.add(new Lokacija(x,y+1));
@@ -404,7 +404,7 @@ public class Igra {
 	}
 
 	public static int getDim() {
-		return dim;
+		return DIM;
 	}
 
 	public void setIgralnaPlosca(Plosca igralnaPlosca) {

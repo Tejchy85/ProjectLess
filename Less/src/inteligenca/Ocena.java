@@ -42,18 +42,18 @@ public class Ocena {
 		Lokacija[] figuriceCrni = igra.getIgralnaPlosca().crnaPolja();
 		
 		for (Lokacija bFig : figuriceBeli){
-			vrednostBeli += optimalnaBeli(bFig,igra,0);
+			vrednostBeli += 4*12 - optimalnaBeli(bFig,igra,0);
 			vrednostBeli -= narazen(figuriceBeli);
 		}
 		for (Lokacija cFig : figuriceCrni){
-			vrednostCrni += optimalnaCrni(cFig,igra,0);
+			vrednostCrni += 4*12 - optimalnaCrni(cFig,igra,0);
 			vrednostCrni -= narazen(figuriceCrni);
 		}
 		
-		if (igra.getNaPotezi() == Igralec.BELI){
-			return vrednostBeli - vrednostCrni;
+		if (jaz == Igralec.BELI){
+			return 10*vrednostBeli - vrednostCrni;
 		}
-			return vrednostCrni - vrednostBeli;
+			return 10*vrednostCrni - vrednostBeli;
 		}
 		assert false;
 		return 42; // Java je blesava
@@ -75,12 +75,12 @@ public class Ocena {
 				if(x+1 < dim){
 					vrednostDesno =  optimalnaBeli(new Lokacija(x + 1, y), igra, ocena + 1 + ograjiceNavp[y][x+1]);
 				}else {
-					vrednostDesno = 300;
+					vrednostDesno = 1500;
 				}
 				if(y+1 < dim){
 					vrednostDol = optimalnaBeli(new Lokacija(x, y + 1), igra, ocena + 1 + ograjiceVod[y+1][x]);			
 				} else{
-					vrednostDol = 300;
+					vrednostDol = 1500;
 				}
 				return Math.min(vrednostDesno, vrednostDol);
 			}
@@ -101,12 +101,12 @@ public class Ocena {
 			if(x-1 > 0){
 				vrednostLevo = optimalnaCrni(new Lokacija(x - 1, y), igra, ocena + 1 + ograjiceNavp[y][x]);
 			}else {
-				vrednostLevo = 300;
+				vrednostLevo = 1500;
 			}
 			if(y-1 > 0){
 				vrednostGor = optimalnaCrni(new Lokacija(x, y - 1), igra, ocena + 1 + ograjiceVod[y][x]);			
 			} else{
-				vrednostGor = 300;
+				vrednostGor = 1500;
 			}
 			return Math.min(vrednostLevo, vrednostGor);
 		}

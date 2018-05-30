@@ -36,7 +36,11 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 	/**
 	 * Pove katera figurica se bo premikala
 	 */
-	private Lokacija zacetna; 
+	private Lokacija zacetna;
+	
+	private static final int OTEZENPRESKOK = 8;
+	
+	private static final int OTEZENA = 10;
 	
 	/**
 	 * @param master glavno okno, v katerem vleèemo poteze
@@ -47,12 +51,13 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 		this.master = master;
 		this.globina = globina;
 		this.jaz = jaz;
+		this.zacetna = null;
 	}
 	
 	@Override
 	protected Lokacija doInBackground() throws Exception {
 		Igra igra = master.copyIgra();
-		//Thread.sleep(2000);
+		//Thread.sleep(500);
 		OcenjenaPoteza p = minimax(0, igra);
 		//System.out.println(p.toString());
 		
@@ -112,7 +117,7 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 					null,
 					null,
 					Ocena.oceniPozicijo(jaz, igra));
-		}
+		} 
 	
 		//Išèemo najboljši premik
 		Lokacija najboljsa = null;
@@ -145,9 +150,17 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 					ocenaNajboljse = ocenaP;
 				}
 				if (Math.abs(z.getX() - p.getX()) == 2 || Math.abs(z.getY()- p.getY()) == 2){
-					ocenaNajboljse *= 5;
+					ocenaNajboljse *= OTEZENPRESKOK;
 				}
-				//zvemo kdo je na potezi, in recimo za belega: èe se je premaknuj dol, premaknu desno pomnožimo ocenaNajboljse za 3 recimo.
+				if (naPotezi == Igralec.BELI) {
+					if (p.getX() - z.getX() > 0 || p.getY() - z.getY() > 0 ) {
+						ocenaNajboljse *= OTEZENA;
+					}
+				} else {
+					if(z.getX() - p.getX() > 0 || z.getY() - p.getY() > 0 ){
+						ocenaNajboljse *= OTEZENA;
+					}
+				}
 						
 			}
 			if (najboljsaGledeNaFigurico == null
