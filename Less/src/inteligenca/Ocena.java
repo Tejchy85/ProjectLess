@@ -35,19 +35,19 @@ public class Ocena {
 		case BELI_NA_POTEZI:
 		case CRNI_NA_POTEZI:
 		
-		// Preštejemo, koliko kvote potrebuje vsak igralec do koncne pozicije
+		// Ovrednotimo glede na to, koliko kvote potrebuje vsak igralec do koncne pozicije
 		int vrednostBeli = 0;
 		int vrednostCrni = 0;
 		Lokacija[] figuriceBeli = igra.getIgralnaPlosca().belaPolja();
 		Lokacija[] figuriceCrni = igra.getIgralnaPlosca().crnaPolja();
 		
 		for (Lokacija bFig : figuriceBeli){
-			vrednostBeli += 4*12 - optimalnaBeli(bFig,igra,0);
-			vrednostBeli -= narazen(figuriceBeli);
+			vrednostBeli += 12 - optimalnaBeli(bFig,igra,0);
+			vrednostBeli += narazen(figuriceBeli);
 		}
 		for (Lokacija cFig : figuriceCrni){
-			vrednostCrni += 4*12 - optimalnaCrni(cFig,igra,0);
-			vrednostCrni -= narazen(figuriceCrni);
+			vrednostCrni += 12 - optimalnaCrni(cFig,igra,0);
+			vrednostCrni += narazen(figuriceCrni);
 		}
 		
 		if (jaz == Igralec.BELI){
@@ -56,7 +56,7 @@ public class Ocena {
 			return 10*vrednostCrni - vrednostBeli;
 		}
 		assert false;
-		return 42; // Java je blesava
+		return 42; 
 	}
 	
 	

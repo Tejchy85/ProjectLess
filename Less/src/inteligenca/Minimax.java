@@ -82,7 +82,7 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 	/**
 	 * Z metodo minimax poišèi najboljšo potezo v dani igri.
 	 * 
-	 * @param k števec globine, do kje smo že preiskali //TODO kaj bo to toèno za nas
+	 * @param k števec globine, do kje smo že preiskali 
 	 * @param igra
 	 * @return najboljša poteza (ali null, èe bi igra bila zakljucena), skupaj z oceno najboljše poteze
 	 */
