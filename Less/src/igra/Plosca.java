@@ -128,6 +128,25 @@ public class Plosca {
 		return l;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Plosca other = (Plosca) obj;
+		for (int i = 0; i < Igra.DIM ; i++ ){
+			for (int j = 0; j < Igra.DIM; j++) {
+				if (this.getVsa_polja()[i][j] != other.getVsa_polja()[i][j]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	public Lokacija[] belaPolja(){
 		Lokacija[] l = new Lokacija[4];
 		int p = 0;

@@ -216,7 +216,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	}
 	
 	public int getDim() {
-		return igra.dim;
+		return igra.DIM;
 	}
 	
 	public Stanje getStanje(){
