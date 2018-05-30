@@ -403,7 +403,7 @@ public class Igra {
 		this.zmagovalnaKvota = zmagovalnaKvota;
 	}
 
-	public static int getDim() {
+	public int getDim() {
 		return dim;
 	}
 
