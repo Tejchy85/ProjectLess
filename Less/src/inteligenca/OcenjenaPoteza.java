@@ -1,29 +1,27 @@
 package inteligenca;
 
-import igra.Lokacija;
+import igra.Poteza;
 
 /**
  * Poteza z oceno, kako dobra je ocena.
- * Poteza je lahko tudi {@null} (èe je npr. konec igre),
+ * Poteza je lahko tudi {@null} (ï¿½e je npr. konec igre),
  * v tem primeru ocena pove, kako dobra je pozicija.
  * 
  *
  */
 public class OcenjenaPoteza {
-	protected Lokacija zacetna;
-	protected Lokacija koncna;
+	protected Poteza poteza;
 	protected int vrednost;
 	
-	public OcenjenaPoteza(Lokacija zacetna, Lokacija koncna, int vrednost) {
+	public OcenjenaPoteza(Poteza poteza, int vrednost) {
 		super();
-		this.zacetna = zacetna;
-		this.koncna = koncna;
+		this.poteza = poteza;
 		this.vrednost = vrednost;
 	}
 
 	@Override
 	public String toString() {
-		return "OcenjenaPoteza [zacetna = " + zacetna +  ", koncna = " + koncna +", vrednost = " + vrednost + " ]";
+		return "OcenjenaPoteza [poteza = " + poteza +", vrednost = " + vrednost + " ]";
 	}
 	
 }

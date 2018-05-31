@@ -1,10 +1,11 @@
 package vmesnik;
 
 import igra.Lokacija;
+import igra.Poteza;
 
 public abstract class Strateg {
 	/**
-	 * Glavno okno klièe to metodo, ko je strateg na potezi.
+	 * Glavno okno kliï¿½e to metodo, ko je strateg na potezi.
 	 */
 	public abstract void na_potezi();
 	
@@ -19,9 +20,9 @@ public abstract class Strateg {
 	 * @param i
 	 * @param j
 	 * 
-	 * Glanvo okno klièe to metodo, ko uporabnik klikne na polje (i,j).
+	 * Glanvo okno kliï¿½e to metodo, ko uporabnik klikne na polje (i,j).
 	 */
-	public abstract void klik(Lokacija zacetna, Lokacija koncna);
+	public abstract void klik(Poteza poteza);
 	
 	
 	/*

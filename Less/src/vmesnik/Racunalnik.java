@@ -3,14 +3,14 @@ package vmesnik;
 import javax.swing.SwingWorker;
 
 import igra.Igralec;
-import igra.Lokacija;
+import igra.Poteza;
 import inteligenca.Minimax;
 import inteligenca.Nakljucno;
 
 public class Racunalnik extends Strateg {
 	private GlavnoOkno master;
 	private Igralec rac;
-	private SwingWorker<Lokacija,Object> mislec;
+	private SwingWorker<Poteza,Object> mislec;
 	
 	public Racunalnik(GlavnoOkno master, Igralec igralec) {
 		this.master = master;
@@ -19,8 +19,8 @@ public class Racunalnik extends Strateg {
 	
 	@Override
 	public void na_potezi() {
-		mislec = new Minimax(master, 3, rac);
-
+		mislec = new Nakljucno(master);
+		//mislec = new Minimax(master, 3, rac);
 		mislec.execute();
 	}
 
@@ -32,7 +32,7 @@ public class Racunalnik extends Strateg {
 	}
 
 	@Override
-	public void klik(Lokacija zacetna, Lokacija koncna) {
+	public void klik (Poteza poteza) {
 	}
 	
 	@Override

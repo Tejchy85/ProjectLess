@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.List;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
@@ -15,17 +16,18 @@ import igra.Igralec;
 import igra.Lokacija;
 import igra.Plosca;
 import igra.Polje;
+import igra.Poteza;
 import igra.Stanje;
 
 @SuppressWarnings("serial")
 public class IgralnoPolje extends JPanel implements MouseListener {
-	//ta class bo narisal plosèo in figurice, ograjice, poslušal kam bo kdo kliknil, 
+	//ta class bo narisal plosï¿½o in figurice, ograjice, posluï¿½al kam bo kdo kliknil, 
 	//TODO polmer, debelina in stranica se prilagajajo glede na velikost vmesnika, ki jo je izbral uporabnik (sprotno racunanje)
 	
 	protected GlavnoOkno master;
 	protected Color barvaFiguric;
 	protected int polmer; //polmer figuric
-	protected int stranica; //dolžina kvadratka, ki predstavlja polje
+	protected int stranica; //dolzina kvadratka, ki predstavlja polje
 	protected Lokacija izbrana;
 	protected int debelina; // predstavlja debelino crte na eni strani kvadratka
 	
@@ -44,7 +46,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	}
 	
 	/**
-	 * Velikost panela vsakiè ko odpremo okno.
+	 * Velikost panela vsakiï¿½ ko odpremo okno.
 	 */
 	@Override
 	public Dimension getPreferredSize() {
@@ -59,7 +61,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		int dim = master.getDim();
 
 		
-		// èrte
+		// crte
 		g2.setColor(Color.BLACK);
 		for (int i = 0; i < dim + 1; i++) {
 			g2.drawLine(0, i * stranica, stranica * dim, i * stranica);
@@ -80,7 +82,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			}
 		}
 		
-		//drugaèe obarvaj izbrano:
+		//drugace obarvaj izbrano:
 		if (izbrana != null) {
 			narisiFigurico(g2, null, izbrana.getY(), izbrana.getX());
 			pobarvajMozne(g2, izbrana);
@@ -112,10 +114,10 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	}
 	
 	private void pobarvajMozne(Graphics g, Lokacija p){
-		LinkedList<Lokacija> mozne = master.getMozne(p);
+		java.util.List<Poteza> mozne = GlavnoOkno.getMozne(p);
 		g.setColor(Color.cyan);
-		for (Lokacija l : mozne){
-			g.fillRect(l.getX()*stranica, l.getY()*stranica, stranica, stranica);
+		for (Poteza l : mozne){
+			g.fillRect(l.getZacetna().getX()*stranica, l.getZacetna().getY()*stranica, stranica, stranica);
 		}
 	}
 	
@@ -166,34 +168,33 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			int y = e.getY();
 			int i = x / stranica;
 			int j = y /stranica;
-			//System.out.println("kliknil si " + x + " " + y);
+			System.out.println("kliknil si " + x + " " + y);
 			
 			if (!(x % stranica < debelina || stranica - x % stranica < debelina)){									//pogoj1: nisi kliknil na ograjico	
 				lokacija = new Lokacija(i,j);
-			}
-			//System.out.println("izbrana je" + izbrana);
-			
+			}			
 			if (lokacija != null){
-				if (izbrana == null){
-					if ((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO)		//pogoj2: kliknil si na svojo figuro
-						|| (master.getStanje() == Stanje.CRNI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.CRNO)) {
+				System.out.println("izbrana je" + izbrana);
+				if (izbrana == null && ((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO)		//pogoj2: kliknil si na svojo figuro
+						|| (master.getStanje() == Stanje.CRNI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.CRNO))) {
 						izbrana = lokacija;
+						System.out.println("izbral sem jo");
 					} else {
 						izbrana = null;
 					}
 				} else if (izbrana.equals(lokacija)) {
 						izbrana = null;
-				} else{
-					LinkedList<Lokacija> mozne = master.getMozne(izbrana);
-					if (mozne.contains(lokacija)){
-						master.klikniPolje(izbrana, lokacija);
+				}
+			if (izbrana != null) {
+					java.util.List<Poteza> mozne = GlavnoOkno.getMozne(izbrana);
+					if (mozne.contains(new Poteza(izbrana, lokacija))){
+						master.klikniPolje(new Poteza(izbrana, lokacija));
 						izbrana = null;
 					}
 				}
 			}
 			repaint();
 		}
-	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {	

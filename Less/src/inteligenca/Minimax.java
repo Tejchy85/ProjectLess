@@ -5,6 +5,7 @@ import vmesnik.GlavnoOkno;
 import igra.Igra;
 import igra.Igralec;
 import igra.Lokacija;
+import igra.Poteza;
 
 //TODO poiskat napako v minimax;
 //poteza se mora izvest ena naenkrat
@@ -15,35 +16,30 @@ import igra.Lokacija;
  * Inteligenca, ki uporabi algoritem minimax.
  *
  */
-public class Minimax extends SwingWorker<Lokacija, Object> {
+public class Minimax extends SwingWorker<Poteza, Object> {
 
 	/**
 	 * Glavno okno, v katerem poteka ta igra
 	 */
 	private GlavnoOkno master;
 
-	//TODO: kaj toèno bo globina pri nas: kolikokrat bo na vrsti nek igralec?
+	//TODO: kaj toï¿½no bo globina pri nas: kolikokrat bo na vrsti nek igralec?
 	/**
 	 * Globina, do katere pregleduje minimax
 	 */
 	private int globina;
 
 	/**
-	 * Ali raèualnik igra Belega ali Crnega?
+	 * Ali raï¿½ualnik igra Belega ali Crnega?
 	 */
 	private Igralec jaz; // koga igramo
-	
-	/**
-	 * Pove katera figurica se bo premikala
-	 */
-	private Lokacija zacetna;
 	
 	private static final int OTEZENPRESKOK = 8;
 	
 	private static final int OTEZENA = 10;
 	
 	/**
-	 * @param master glavno okno, v katerem vleèemo poteze
+	 * @param master glavno okno, v katerem vleï¿½emo poteze
 	 * @param globina koliko potez naprej gledamo
 	 * @param jaz koga igramo
 	 */
@@ -51,40 +47,33 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 		this.master = master;
 		this.globina = globina;
 		this.jaz = jaz;
-		this.zacetna = null;
 	}
 	
 	@Override
-	protected Lokacija doInBackground() throws Exception {
+	protected Poteza doInBackground() throws Exception {
 		Igra igra = master.copyIgra();
 		Thread.sleep(500);
 		OcenjenaPoteza p = minimax(0, igra);
-		//System.out.println(p.toString());
-		
-		assert (this.zacetna != null);
-		this.zacetna = p.zacetna;
-		//System.out.println("izbral sem zacetno");
-		assert (p.koncna != null);
-		//System.out.println("dolocam se koncno");
+		assert (p != null);
 
-		return p.koncna;
+		return p;
 	}
 	
 	@Override
 	public void done() {
 		try {
-			Lokacija p = this.get();
-			if (p != null) { master.odigraj(this.zacetna, p); }
+			Poteza p = this.get();
+			if (p != null) { master.odigraj(p); }
 		} catch (Exception e) {
 		}
 	}
 
 	/**
-	 * Z metodo minimax poišèi najboljšo potezo v dani igri.
+	 * Z metodo minimax poiï¿½ï¿½i najboljï¿½o potezo v dani igri.
 	 * 
-	 * @param k števec globine, do kje smo že preiskali 
+	 * @param k ï¿½tevec globine, do kje smo ï¿½e preiskali 
 	 * @param igra
-	 * @return najboljša poteza (ali null, èe bi igra bila zakljucena), skupaj z oceno najboljše poteze
+	 * @return najboljï¿½a poteza (ali null, ï¿½e bi igra bila zakljucena), skupaj z oceno najboljï¿½e poteze
 	 */
 	private OcenjenaPoteza minimax(int k, Igra igra) {
 		Igralec naPotezi = null;
@@ -107,11 +96,11 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 			return new OcenjenaPoteza(null, null, Ocena.NEODLOCENO);
 		}
 		assert (naPotezi != null);
-		// Nekdo je na potezi, ugotovimo, kaj se splaèa igrati
+		// Nekdo je na potezi, ugotovimo, kaj se splaï¿½a igrati
 		if (k >= globina) {
 			//System.out.println("tukaj sem, ocena te pozicije je" + Ocena.oceniPozicijo(jaz, igra));
 
-			// dosegli smo najveèjo dovoljeno globino, zato
+			// dosegli smo najveï¿½jo dovoljeno globino, zato
 			// ne vrnemo poteze, ampak samo oceno pozicije
 			return new OcenjenaPoteza(
 					null,
@@ -119,7 +108,7 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 					Ocena.oceniPozicijo(jaz, igra));
 		} 
 	
-		//Išèemo najboljši premik
+		//Iï¿½ï¿½emo najboljï¿½i premik
 		Lokacija najboljsa = null;
 		int ocenaNajboljse = 0;
 		Lokacija najboljsaGledeNaFigurico = null; 
@@ -139,10 +128,10 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 				kopijaIgre.narediPotezo(z,p);
 				//System.out.println("juhu, naredil sem potezo v kopiji!");
 				
-				// Izraèunamo vrednost pozicije po odigrani potezi p
+				// Izraï¿½unamo vrednost pozicije po odigrani potezi p
 				int ocenaP = minimax(k+1, kopijaIgre).vrednost;
-				// Èe je p boljša poteza, si jo zabeležimo
-				if (najboljsa == null // še nimamo kandidata za najboljšo potezo
+				// ï¿½e je p boljï¿½a poteza, si jo zabeleï¿½imo
+				if (najboljsa == null // ï¿½e nimamo kandidata za najboljï¿½o potezo
 					|| (naPotezi == jaz && ocenaP > ocenaNajboljse) // maksimiziramo
 					|| (naPotezi != jaz && ocenaP < ocenaNajboljse) // minimiziramo
 					) {
@@ -173,7 +162,7 @@ public class Minimax extends SwingWorker<Lokacija, Object> {
 			
 		}
 
-		// Vrnemo najboljšo najdeno potezo in njeno oceno
+		// Vrnemo najboljï¿½o najdeno potezo in njeno oceno
 		assert (najboljsaFigurica != null);
 		assert (najboljsaGledeNaFigurico != null);
 		return new OcenjenaPoteza(najboljsaFigurica, najboljsaGledeNaFigurico, ocenaNajboljsaGledeNaFigurico);

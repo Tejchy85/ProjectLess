@@ -6,41 +6,21 @@ import java.util.Random;
 import javax.swing.SwingWorker;
 
 import vmesnik.GlavnoOkno;
-import igra.Igra;
-import igra.Igralec;
-import igra.Lokacija;
+import igra.Poteza;
 
 
-public class Nakljucno extends SwingWorker<Lokacija, Object> {
+public class Nakljucno extends SwingWorker<Poteza, Object> {
 
 		private GlavnoOkno master;
-		private Lokacija izbrana;
-		
 		public Nakljucno(GlavnoOkno master) {
 			this.master = master;
-			izbrana = null;
 		}
 		
 		@Override
-		protected Lokacija doInBackground() throws Exception {
-			Igra igra = master.copyIgra();
+		protected Poteza doInBackground() throws Exception {
 			Thread.sleep(500);
 			Random generator = new Random();
-			Lokacija[] figurice = new Lokacija[4];
-			if (igra.getNaPotezi() == Igralec.BELI){
-				figurice = igra.getIgralnaPlosca().belaPolja();
-			} else{
-				figurice = igra.getIgralnaPlosca().crnaPolja();
-			}
-			int r = generator.nextInt(4);
-			izbrana = figurice[r];
-			List<Lokacija> poteze = igra.moznePoteze(izbrana, igra.getKvotaPremikov());
-			while(poteze.isEmpty()){
-				r = generator.nextInt(4);
-				izbrana = figurice[r];
-			}
-			
-			poteze = igra.moznePoteze(izbrana, igra.getKvotaPremikov());
+			List<Poteza> poteze = master.vseMoznePoteze(master.getIgra().getNaPotezi());
 			int q = generator.nextInt(poteze.size());		
 			return poteze.get(q);
 		}
@@ -48,8 +28,8 @@ public class Nakljucno extends SwingWorker<Lokacija, Object> {
 		@Override
 		public void done() {
 			try {
-				Lokacija q = this.get();
-				if (q != null) { master.odigraj(izbrana, q); }
+				Poteza poteza = this.get();
+				if (poteza != null) { master.odigraj(poteza); }
 			} catch (Exception e) {
 			}
 		}
