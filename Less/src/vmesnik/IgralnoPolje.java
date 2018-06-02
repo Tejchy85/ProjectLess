@@ -28,7 +28,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	protected Color barvaFiguric;
 	protected int polmer; //polmer figuric
 	protected int stranica; //dolzina kvadratka, ki predstavlja polje
-	protected Lokacija izbrana;
+	protected Lokacija izbrana; //v tem razredu potrebujemo izbrano lokacijo, saj jo bomo obarvali in narisali njene mozne premike
 	protected int debelina; // predstavlja debelino crte na eni strani kvadratka
 	
 	/**
@@ -117,7 +117,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		java.util.List<Poteza> mozne = GlavnoOkno.getMozne(p);
 		g.setColor(Color.cyan);
 		for (Poteza l : mozne){
-			g.fillRect(l.getZacetna().getX()*stranica, l.getZacetna().getY()*stranica, stranica, stranica);
+			g.fillRect(l.getKoncna().getX()*stranica, l.getKoncna().getY()*stranica, stranica, stranica);
 		}
 	}
 	
@@ -170,31 +170,27 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			int j = y /stranica;
 			System.out.println("kliknil si " + x + " " + y);
 			
-			if (!(x % stranica < debelina || stranica - x % stranica < debelina)){									//pogoj1: nisi kliknil na ograjico	
+			if (!(x % stranica < debelina || stranica - x % stranica < debelina) &&
+				!(y% stranica < debelina || stranica - y % stranica < debelina)	){									//pogoj1: nisi kliknil na ograjico	
 				lokacija = new Lokacija(i,j);
-			}			
+			}
 			if (lokacija != null){
 				System.out.println("izbrana je" + izbrana);
-				if (izbrana == null && ((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO)		//pogoj2: kliknil si na svojo figuro
+				if (izbrana == null && ((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO) //pogoj2: kliknil si na svojo figuro
 						|| (master.getStanje() == Stanje.CRNI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.CRNO))) {
 						izbrana = lokacija;
 						System.out.println("izbral sem jo");
-					} else {
-						izbrana = null;
-					}
-				} else if (izbrana.equals(lokacija)) {
-						izbrana = null;
-				}
-			if (izbrana != null) {
-					java.util.List<Poteza> mozne = GlavnoOkno.getMozne(izbrana);
-					if (mozne.contains(new Poteza(izbrana, lokacija))){
+				} else if (izbrana != null) {
+					if (master.veljavna(new Poteza(izbrana, lokacija))){
+						System.out.println("zelim naredit potezo, pa ne gre :(");
 						master.klikniPolje(new Poteza(izbrana, lokacija));
-						izbrana = null;
-					}
+						}
+					izbrana = null;
 				}
 			}
 			repaint();
 		}
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {	

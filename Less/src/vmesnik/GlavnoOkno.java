@@ -201,7 +201,9 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		}		
 	}
 	
-	//izracuna mozne poteze za eno figurico
+	/** Izracuna mozne poteze za eno figurico.
+	 * @param Lokacija p
+	 **/
 	public static List<Poteza> getMozne(Lokacija p){
 		List<Poteza> mozne = igra.moznePoteze(p, igra.getKvotaPremikov());
 		return mozne;
@@ -228,6 +230,10 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			}
 		}
 		return poteze;
+	}
+	
+	public boolean veljavna (Poteza poteza) {
+		return igra.veljavnaPoteza(poteza);
 	}
 
 
