@@ -117,7 +117,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		java.util.List<Poteza> mozne = GlavnoOkno.getMozne(p);
 		g.setColor(Color.cyan);
 		for (Poteza l : mozne){
-			g.fillRect(l.getZacetna().getX()*stranica, l.getZacetna().getY()*stranica, stranica, stranica);
+			g.fillRect(l.getKoncna().getX()*stranica, l.getKoncna().getY()*stranica, stranica, stranica);
 		}
 	}
 	
