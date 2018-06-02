@@ -26,6 +26,9 @@ public class TestIgra extends TestCase {
 			p.getKoncna().print();
 		}
 		assertEquals(igra.veljavnaPoteza(poteza), true);
+		igra.narediPotezo(poteza);
+		System.out.println(igra.getIgralnaPlosca().getVsa_polja()[2][1]);
+		System.out.println(igra.getIgralnaPlosca().getVsa_polja()[1][1]);
 	}
 	
 }
