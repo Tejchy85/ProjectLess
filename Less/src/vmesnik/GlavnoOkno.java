@@ -160,13 +160,14 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 }
 	
 
-	public boolean odigraj(Poteza poteza) { //vrne, ali se je poteza odigrala		
+	public boolean odigraj(Poteza poteza) { //vrne, ali se je poteza odigrala
+		boolean a = igra.narediPotezo(poteza);
 		switch (igra.getTrenutnoStanje()) {
 		case BELI_NA_POTEZI: strategB.na_potezi(); break;
 		case CRNI_NA_POTEZI: strategC.na_potezi(); break;
 		default: break;
 		}
-		return igra.narediPotezo(poteza);
+		return a;
 	}
 	
 	public void osveziGUI() {
