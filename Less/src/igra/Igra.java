@@ -300,8 +300,9 @@ public class Igra {
 	 * @param trenutna
 	 * @param koncna
 	 */
-	public void narediPotezo(Poteza poteza) {  //tu se pogoji nekako ponavljajo enako kot so napisani zgoraj - kako bi to lahko bilo bolje?
+	public boolean narediPotezo(Poteza poteza) {  //tu se pogoji nekako ponavljajo enako kot so napisani zgoraj - kako bi to lahko bilo bolje?
 		if (veljavnaPoteza(poteza) == false) {
+			return false;
 			//System.out.println("Neveljaven premik. Poskusi znova.");
 		} else {
 			//Prestavimo figurico
@@ -364,6 +365,7 @@ public class Igra {
 				trenutnoStanje = Stanje.ZMAGA_BELI;
 			}
 		} 
+		return true;
 	}
 
 	public Plosca getIgralnaPlosca() {

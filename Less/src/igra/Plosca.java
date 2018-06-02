@@ -3,7 +3,7 @@ package igra;
 import java.util.ArrayList;
 
 //Vedela bo, kje so katere bele figurice in kje �rne. 
-//Vedela bo, �e je igra �e napol kon�ana(�e beli postavil vse na kon�no mesto), �e je kon�ana (�rni postavil na kon�ne mesto).
+//Vedela bo, ce je igra ze napol koncana(ce beli postavil vse na koncno mesto), ce je koncana (crni postavil na koncne mesto).
 
 
 public class Plosca {
@@ -145,7 +145,7 @@ public class Plosca {
 	
 	/**
 	 * 
-	 * @return ali je �rni postavil vse figure na ciljna polja in je igra kon�ana 
+	 * @return ali je crni postavil vse figure na ciljna polja in je igra koncana 
 	 */
 	public boolean konecCrni() {       											//crni je vse svoje figurice pripeljal do konca --> igra se takoj zakljuci
 		return (vsaPolja[0][0] == Polje.CRNO && vsaPolja[1][0] == Polje.CRNO && 
@@ -154,7 +154,7 @@ public class Plosca {
 
 	/**
 	 * 
-	 * @return ali je beli postavil vse figure na ciljna polja in �e �rni v treh potezah ne kon�a je zmagal beli
+	 * @return ali je beli postavil vse figure na ciljna polja in ce crni v treh potezah ne konca, je zmagal beli
 	 */
 	
 	public boolean konecBeli() {       //beli je vse svoje figurice pripeljal do konca
