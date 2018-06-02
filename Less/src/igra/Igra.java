@@ -33,7 +33,7 @@ public class Igra {
 	 */
 
 	public Igra(Igra igra) {
-		int dim = igra.DIM;
+		int dim = Igra.DIM;
 		this.naPotezi = igra.getNaPotezi();
 		this.kvotaPremikov = igra.getKvotaPremikov();
 		this.zmagovalnaKvota = igra.getZmagovalnaKvota();

@@ -1,16 +1,16 @@
 package vmesnik;
 
 import igra.Igralec;
-import igra.Lokacija;
+//import igra.Lokacija;
 import igra.Poteza;
 
 public class Clovek extends Strateg {
 	private GlavnoOkno master;
-	private Igralec jaz;
+	private Igralec jaz;	//nisem preprican, zakaj se tukaj pritozuje. V drugih razredih namrec uporabljamo podatek o igralcu.
 	
 	public Clovek(GlavnoOkno master, Igralec jaz) {
 		this.master = master;
-		this.jaz = jaz;
+		this.jaz = jaz;   
 	}
 	
 	@Override

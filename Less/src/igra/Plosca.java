@@ -2,8 +2,8 @@ package igra;
 
 import java.util.ArrayList;
 
-//Vedela bo, kje so katere bele figurice in kje èrne. 
-//Vedela bo, èe je igra že napol konèana(èe beli postavil vse na konèno mesto), èe je konèana (èrni postavil na konène mesto).
+//Vedela bo, kje so katere bele figurice in kje ï¿½rne. 
+//Vedela bo, ï¿½e je igra ï¿½e napol konï¿½ana(ï¿½e beli postavil vse na konï¿½no mesto), ï¿½e je konï¿½ana (ï¿½rni postavil na konï¿½ne mesto).
 
 
 public class Plosca {
@@ -128,24 +128,6 @@ public class Plosca {
 		return l;
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Plosca other = (Plosca) obj;
-		for (int i = 0; i < Igra.DIM ; i++ ){
-			for (int j = 0; j < Igra.DIM; j++) {
-				if (this.getVsa_polja()[i][j] != other.getVsa_polja()[i][j]) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
 
 	public Lokacija[] belaPolja(){
 		Lokacija[] l = new Lokacija[4];
@@ -163,7 +145,7 @@ public class Plosca {
 	
 	/**
 	 * 
-	 * @return ali je èrni postavil vse figure na ciljna polja in je igra konèana 
+	 * @return ali je ï¿½rni postavil vse figure na ciljna polja in je igra konï¿½ana 
 	 */
 	public boolean konecCrni() {       											//crni je vse svoje figurice pripeljal do konca --> igra se takoj zakljuci
 		return (vsaPolja[0][0] == Polje.CRNO && vsaPolja[1][0] == Polje.CRNO && 
@@ -172,7 +154,7 @@ public class Plosca {
 
 	/**
 	 * 
-	 * @return ali je beli postavil vse figure na ciljna polja in èe èrni v treh potezah ne konèa je zmagal beli
+	 * @return ali je beli postavil vse figure na ciljna polja in ï¿½e ï¿½rni v treh potezah ne konï¿½a je zmagal beli
 	 */
 	
 	public boolean konecBeli() {       //beli je vse svoje figurice pripeljal do konca
@@ -212,6 +194,25 @@ public class Plosca {
 
 	public int getDim() {
 		return dim;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Plosca other = (Plosca) obj;
+		for (int i = 0; i < Igra.DIM ; i++ ){
+			for (int j = 0; j < Igra.DIM; j++) {
+				if (this.getVsa_polja()[i][j] != other.getVsa_polja()[i][j]) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 }

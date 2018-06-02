@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.List;
+//import java.awt.List;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
@@ -159,6 +159,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	}
 
 
+	//@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (master.getStrateg().uporabljaGUI()) {
@@ -168,21 +169,30 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			int y = e.getY();
 			int i = x / stranica;
 			int j = y /stranica;
-			System.out.println("kliknil si " + x + " " + y);
+			//System.out.println("kliknil si " + x + " " + y);
 			
 			if (!(x % stranica < debelina || stranica - x % stranica < debelina) &&
 				!(y% stranica < debelina || stranica - y % stranica < debelina)	){									//pogoj1: nisi kliknil na ograjico	
 				lokacija = new Lokacija(i,j);
 			}
 			if (lokacija != null){
-				System.out.println("izbrana je" + izbrana);
-				if (izbrana == null && ((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO) //pogoj2: kliknil si na svojo figuro
-						|| (master.getStanje() == Stanje.CRNI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.CRNO))) {
+
+				//System.out.println("izbrana je" + izbrana);
+				if (izbrana == null) {
+					if((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO)
+						|| (master.getStanje() == Stanje.CRNI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.CRNO)) {
 						izbrana = lokacija;
-						System.out.println("izbral sem jo");
-				} else if (izbrana != null) {
-					if (master.veljavna(new Poteza(izbrana, lokacija))){
-						System.out.println("zelim naredit potezo, pa ne gre :(");
+						//System.out.println("izbral sem jo");
+
+					} else {
+						//System.out.println("Nastavil sem jo na null");
+						izbrana = null;
+					}
+				} else if (izbrana.equals(lokacija)) {
+					izbrana = null;
+				} else {
+					LinkedList<Poteza> mozne = GlavnoOkno.getMozne(izbrana);
+					if (mozne.contains(new Poteza(izbrana, lokacija))){
 						master.klikniPolje(new Poteza(izbrana, lokacija));
 						}
 					izbrana = null;

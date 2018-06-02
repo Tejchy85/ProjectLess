@@ -161,7 +161,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	
 
 	public void odigraj(Poteza poteza) {
-		igra.narediPotezo(poteza);
+		igra.narediPotezo(poteza); 
 		osveziGUI();
 		switch (igra.getTrenutnoStanje()) {
 		case BELI_NA_POTEZI: strategB.na_potezi(); break;
@@ -180,7 +180,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			case CRNI_NA_POTEZI: status.setText("Na potezi je crni. " + "Kvota: " + igra.getKvotaPremikov()); break;
 			case ZMAGA_BELI: status.setText("Zmagal je beli"); break;
 			case ZMAGA_CRNI: status.setText("Zmagal je crni"); break;
-			case NEODLOCENO: status.setText("Neodlo�eno!"); break;
+			case NEODLOCENO: status.setText("Neodloceno!"); break;
 			}
 		}
 		polje.repaint();
@@ -201,18 +201,17 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		}		
 	}
 	
-	/** Izracuna mozne poteze za eno figurico.
-	 * @param Lokacija p
-	 **/
-	public static List<Poteza> getMozne(Lokacija p){
-		List<Poteza> mozne = igra.moznePoteze(p, igra.getKvotaPremikov());
+
+	//izracuna mozne poteze za eno figurico
+	public static LinkedList<Poteza> getMozne(Lokacija p){
+		LinkedList<Poteza> mozne = igra.moznePoteze(p, igra.getKvotaPremikov());
 		return mozne;
 	}
 	
 	
 	//mogoce ta metoda spada v igro
 	public static List<Poteza> vseMoznePoteze(Igralec igralec) {
-		System.out.println("iammo vse poteze!");
+		//System.out.println("imamo vse poteze!");
 		Lokacija[] figurice = new Lokacija[4];
 		
 		if (igra.getNaPotezi() == Igralec.BELI){
@@ -253,7 +252,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	}
 	
 	public int getDim() {
-		return igra.DIM;
+		return Igra.DIM;
 	}
 	
 	public Strateg getStrateg() {
