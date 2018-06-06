@@ -1,8 +1,6 @@
 
 package inteligenca;
 
-import java.util.LinkedList;
-
 import igra.Igra;
 import igra.Igralec;
 import igra.Lokacija;
@@ -12,19 +10,18 @@ import igra.Lokacija;
  *
  */
 public class Ocena {
-	public static final int ZMAGA = (1 << 20); // vrednost zmage, ve� kot vsaka druga ocena pozicije
+	public static final int ZMAGA = (1 << 20); // vrednost zmage, vec kot vsaka druga ocena pozicije
 	public static final int ZGUBA = -ZMAGA;  // vrednost izgube, mora biti -ZMAGA
-	public static final int NEODLOCENO = 0;  // vrednost neodlo�ene igre
+	public static final int NEODLOCENO = 0;  // vrednost neodlocene igre
 
 
 	
 	/**
-	 * @param jaz - igralec, ki �eli oceno
+	 * @param jaz - igralec, ki zeli oceno
 	 * @param igra - trentno stanje igre (ne spreminjaj tega objekta!)
-	 * @return ocena - vrednosti pozicije (�e je igre konec, je ocena zagotovo pravilna)
+	 * @return ocena - vrednosti pozicije (ce je igre konec, je ocena zagotovo pravilna)
 	 */
 	public static int oceniPozicijo(Igralec jaz, Igra igra) {
-		//TODO: prestudirat kako to�no bo on ocenu pozicijo.
 		switch (igra.getTrenutnoStanje()) {
 		case ZMAGA_BELI:
 			return (jaz == Igralec.BELI ? ZMAGA : ZGUBA);
@@ -51,7 +48,7 @@ public class Ocena {
 		}
 		
 		if (jaz == Igralec.BELI){
-			return 20*vrednostBeli - vrednostCrni;
+			return 20*vrednostBeli - vrednostCrni;		//malo pomnozimo, da ne igra defenzivno
 		}
 			return 20*vrednostCrni - vrednostBeli;
 		}
@@ -152,6 +149,3 @@ public class Ocena {
 		return max;
 	}
 }
-
-
-//test: System.out.println(inteligenca.Ocena.optimalna(new Lokacija(1,1), this,0));

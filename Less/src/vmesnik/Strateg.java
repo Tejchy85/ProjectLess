@@ -14,12 +14,10 @@ public abstract class Strateg {
 	 */
 	public abstract void prekini();
 	
-	
 	/**
-	 * @param i
-	 * @param j
+	 * @param poteza
 	 * 
-	 * Glanvo okno klice to metodo, ko uporabnik klikne na polje (i,j).
+	 * Glavno okno klice to metodo, ko uporabnik klikne na polje in doloci potezo.
 	 */
 	public abstract void klik(Poteza poteza);
 	

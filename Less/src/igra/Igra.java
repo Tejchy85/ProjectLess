@@ -336,27 +336,16 @@ public class Igra {
 		} 
 		
 		
-		//Spremenimo igralca, ce je potrebno
-		if (kvotaPremikov == 0) {
-			naPotezi = naPotezi.nasprotnik();
-			trenutnoStanje = trenutnoStanje.zamenjaj();
-			kvotaPremikov = 3; 
-		}
-		
-		
 		//Preverimo, ali je igre konec.
 		boolean konecCrni = igralnaPlosca.konecCrni();
 		boolean konecBeli = igralnaPlosca.konecBeli();
 		
 		if (konecBeli && naPotezi == Igralec.CRNI && kvotaPremikov == 0){	
-			System.out.print("Prvi pogoj.");
 			trenutnoStanje = Stanje.ZMAGA_BELI;
 		} else if (konecCrni && !konecBeli) { 
-			System.out.print("Drugi pogoj.");
 			trenutnoStanje = Stanje.ZMAGA_CRNI;
 		} else if (konecBeli) {							//to je potrebno narediti, ker lahko beli konca ce preden porabi tri korake. 
 			if (naPotezi != Igralec.CRNI) {  
-				System.out.print("Tretji  pogoj.");//ce je crni na potezi, potem je beli koncal s kvoto==0, torej je kvota crnega ze pravilno nastavljena na 3
 				naPotezi = Igralec.CRNI;
 				trenutnoStanje = Stanje.CRNI_NA_POTEZI;
 				zmagovalnaKvota = 3 - kvotaPremikov;
@@ -364,17 +353,21 @@ public class Igra {
 			} 
 			if (konecCrni) {
 				if (kvotaPremikov < zmagovalnaKvota) {
-					System.out.print("Peti pogoj.");
 					trenutnoStanje = Stanje.ZMAGA_CRNI;
 				} else if (kvotaPremikov == zmagovalnaKvota){
-					System.out.print("Šesti pogoj.");
 					trenutnoStanje = Stanje.NEODLOCENO;					
 				} else {
-					System.out.print("Sedmi pogoj.");
 					trenutnoStanje = Stanje.ZMAGA_BELI;
 				}
-			}		
+			}
 		}
+		
+		//Spremenimo igralca, ce je potrebno
+				if (kvotaPremikov == 0) {
+					naPotezi = naPotezi.nasprotnik();
+					trenutnoStanje = trenutnoStanje.zamenjaj();
+					kvotaPremikov = 3; 
+				}
 		return true;
 	}
 

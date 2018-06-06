@@ -115,12 +115,11 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 			// V kopiji igre odigramo potezo p
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.narediPotezo(p);
-			//System.out.println("juhu, naredil sem potezo v kopiji!");
 			
 			// Izracunamo vrednost pozicije po odigrani potezi p
 			int ocenaP = minimax(k+1, kopijaIgre).vrednost;
 			// ce je p boljsa poteza, si jo zabelezimo
-			if (najboljsa == null // �e nimamo kandidata za najbolj�o potezo
+			if (najboljsa == null // ce nimamo kandidata za najboljso potezo
 				|| (naPotezi == jaz && ocenaP > ocenaNajboljse) // maksimiziramo
 				|| (naPotezi != jaz && ocenaP < ocenaNajboljse) // minimiziramo
 				) {
