@@ -12,19 +12,19 @@ import igra.Lokacija;
  *
  */
 public class Ocena {
-	public static final int ZMAGA = (1 << 20); // vrednost zmage, veè kot vsaka druga ocena pozicije
+	public static final int ZMAGA = (1 << 20); // vrednost zmage, veï¿½ kot vsaka druga ocena pozicije
 	public static final int ZGUBA = -ZMAGA;  // vrednost izgube, mora biti -ZMAGA
-	public static final int NEODLOCENO = 0;  // vrednost neodloèene igre
+	public static final int NEODLOCENO = 0;  // vrednost neodloï¿½ene igre
 
 
 	
 	/**
-	 * @param jaz - igralec, ki želi oceno
+	 * @param jaz - igralec, ki ï¿½eli oceno
 	 * @param igra - trentno stanje igre (ne spreminjaj tega objekta!)
-	 * @return ocena - vrednosti pozicije (èe je igre konec, je ocena zagotovo pravilna)
+	 * @return ocena - vrednosti pozicije (ï¿½e je igre konec, je ocena zagotovo pravilna)
 	 */
 	public static int oceniPozicijo(Igralec jaz, Igra igra) {
-		//TODO: prestudirat kako toèno bo on ocenu pozicijo.
+		//TODO: prestudirat kako toï¿½no bo on ocenu pozicijo.
 		switch (igra.getTrenutnoStanje()) {
 		case ZMAGA_BELI:
 			return (jaz == Igralec.BELI ? ZMAGA : ZGUBA);
@@ -51,9 +51,9 @@ public class Ocena {
 		}
 		
 		if (jaz == Igralec.BELI){
-			return 10*vrednostBeli - vrednostCrni;
+			return 20*vrednostBeli - vrednostCrni;
 		}
-			return 10*vrednostCrni - vrednostBeli;
+			return 20*vrednostCrni - vrednostBeli;
 		}
 		assert false;
 		return 42; 

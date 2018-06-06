@@ -1,5 +1,8 @@
 package inteligenca;
 
+import java.util.List;
+import java.util.Random;
+
 import javax.swing.SwingWorker;
 import vmesnik.GlavnoOkno;
 import igra.Igra;
@@ -106,8 +109,8 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 		//Iscemo najboljso potezo
 		Poteza najboljsa = null;
 		int ocenaNajboljse = 0;
-		
-		for (Poteza p : GlavnoOkno.vseMoznePoteze(naPotezi)) {
+
+		for (Poteza p : GlavnoOkno.vseDobre()) {
 			// V kopiji igre odigramo potezo p
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.narediPotezo(p);
@@ -131,11 +134,17 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 					ocenaNajboljse *= OTEZENA;
 				}
 			} else {
-				if(p.getKoncna().getX() - p.getZacetna().getX() > 0 || p.getZacetna().getY() - p.getKoncna().getY() > 0 ){
+				if(p.getKoncna().getX() - p.getZacetna().getX() < 0 || p.getZacetna().getY() - p.getKoncna().getY() > 0 ){
 					ocenaNajboljse *= OTEZENA;
 				}
-			}
-					
+			}				
+		}
+		
+		if (najboljsa == null){					//seznam dobrih je bil prazen, izberemo nakljucno, ki se premika v nepravo smer
+			Random generator = new Random();
+			List<Poteza> poteze = GlavnoOkno.vseMoznePoteze();
+			int q = generator.nextInt(poteze.size());		
+			najboljsa = poteze.get(q);
 		}
 
 		// Vrnemo najboljso najdeno potezo in njeno oceno

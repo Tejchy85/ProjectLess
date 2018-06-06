@@ -79,7 +79,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		igraMenu.add(clovekClovek);
 		clovekClovek.addActionListener(this);
 		
-		clovekRacunalnik = new JMenuItem("Clvoek vs Racunalnik");
+		clovekRacunalnik = new JMenuItem("Clovek vs Racunalnik");
 		igraMenu.add(clovekRacunalnik);
 		clovekRacunalnik.addActionListener(this);
 		
@@ -209,26 +209,12 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	}
 	
 	
-	//mogoce ta metoda spada v igro
-	public static List<Poteza> vseMoznePoteze(Igralec igralec) {
-		//System.out.println("imamo vse poteze!");
-		Lokacija[] figurice = new Lokacija[4];
-		
-		if (igra.getNaPotezi() == Igralec.BELI){
-			figurice = igra.getIgralnaPlosca().belaPolja();
-		} else{
-			figurice = igra.getIgralnaPlosca().crnaPolja();
-		}
-			
-		List<Poteza> poteze = new LinkedList<Poteza>();
-		
-		for (Lokacija l : figurice) {
-			List<Poteza> pot = getMozne(l);
-			for (Poteza p : pot) {
-				poteze.add(p);
-			}
-		}
-		return poteze;
+	public static List<Poteza> vseMoznePoteze() {
+		return igra.vsePoteze();
+	}
+	
+	public static List<Poteza> vseDobre (){
+		return igra.dobrePoteze();
 	}
 	
 	public boolean veljavna (Poteza poteza) {

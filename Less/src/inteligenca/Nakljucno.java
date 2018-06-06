@@ -20,7 +20,7 @@ public class Nakljucno extends SwingWorker<Poteza, Object> {
 		protected Poteza doInBackground() throws Exception {
 			Thread.sleep(500);
 			Random generator = new Random();
-			List<Poteza> poteze = GlavnoOkno.vseMoznePoteze(master.getIgra().getNaPotezi());
+			List<Poteza> poteze = GlavnoOkno.vseMoznePoteze();
 			int q = generator.nextInt(poteze.size());		
 			return poteze.get(q);
 		}

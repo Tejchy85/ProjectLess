@@ -2,6 +2,7 @@ package igra;
 
 import java.util.LinkedList;
 //test
+import java.util.List;
 
 public class Igra {
 	//bo povezala vse skupaj, tukaj bo konstruktor za zacetek igre, ra�unanje potez
@@ -368,6 +369,48 @@ public class Igra {
 		return true;
 	}
 
+	public List<Poteza> vsePoteze(){
+		//System.out.println("imamo vse poteze!");
+		Lokacija[] figurice = new Lokacija[4];
+		
+		if (naPotezi == Igralec.BELI){
+			figurice = igralnaPlosca.belaPolja();
+		} else{
+			figurice = igralnaPlosca.crnaPolja();
+		}
+			
+		List<Poteza> poteze = new LinkedList<Poteza>();
+		
+		for (Lokacija l : figurice) {
+			List<Poteza> pot = moznePoteze(l, kvotaPremikov);
+			for (Poteza p : pot) {
+				poteze.add(p);
+			}
+		}
+		return poteze;
+		
+	}
+	
+	public List<Poteza> dobrePoteze(){
+		List<Poteza> poteze = vsePoteze();
+		List<Poteza> dobre = new LinkedList<Poteza>();
+		if (naPotezi == Igralec.BELI){
+			for (Poteza p : poteze){
+				if (p.getKoncna().getX() - p.getZacetna().getX() > 0 || p.getKoncna().getY() - p.getZacetna().getY() > 0 ) {
+					dobre.add(p);
+				}
+			}
+		} else if (naPotezi == Igralec.CRNI){
+			for (Poteza p : poteze){
+				if(p.getKoncna().getX() - p.getZacetna().getX() < 0 || p.getZacetna().getY() - p.getKoncna().getY() > 0 ){
+					dobre.add(p);
+				}
+			}
+				
+		}
+		return dobre;
+	}
+	
 	public Plosca getIgralnaPlosca() {
 		return igralnaPlosca;
 	}
