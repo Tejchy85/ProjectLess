@@ -338,7 +338,9 @@ public class Igra {
 		//Preverimo, ali je igre konec.
 		boolean konecCrni = igralnaPlosca.konecCrni();
 		boolean konecBeli = igralnaPlosca.konecBeli();
-		if (konecCrni && !konecBeli) { 
+		if (konecBeli && naPotezi == Igralec.CRNI && kvotaPremikov == 0){			//ni v redu pogoj
+			trenutnoStanje = Stanje.ZMAGA_BELI;
+		} else if (konecCrni && !konecBeli) { 
 			trenutnoStanje = Stanje.ZMAGA_CRNI;
 		} else if (konecBeli) {							//to je potrebno narediti, ker lahko beli konca ce preden porabi tri korake. 
 			if (naPotezi != Igralec.CRNI) {                 //ce je crni na potezi, potem je beli koncal s kvoto==0, torej je kvota crnega ze pravilno nastavljena na 3
@@ -354,12 +356,10 @@ public class Igra {
 				} else {
 					trenutnoStanje = Stanje.ZMAGA_BELI;
 				}
-			}
-			if (konecBeli && naPotezi == Igralec.CRNI){			//ni v redu pogoj
-				trenutnoStanje = Stanje.ZMAGA_BELI;
-			}
-			
+			}		
 		} 
+		
+		
 		
 		//Spremenimo igralca, ce je potrebno
 		if (kvotaPremikov == 0) {
