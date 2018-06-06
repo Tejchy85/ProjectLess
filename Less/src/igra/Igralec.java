@@ -1,7 +1,7 @@
 package igra;
 
 public enum Igralec {
-	// beli, èrni
+	// beli, crni
 	
 	BELI, CRNI;
 	
