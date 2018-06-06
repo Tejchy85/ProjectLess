@@ -114,7 +114,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		status_layout.anchor = GridBagConstraints.CENTER;
 		getContentPane().add(status, status_layout);
 		
-		novaIgra(new Clovek(this, Igralec.BELI), new Clovek(this, Igralec.CRNI)); // za zacetek clovek proti cloveku
+		novaIgra(new Racunalnik(this, Igralec.BELI), new Racunalnik(this, Igralec.CRNI));
 	
 	}
 

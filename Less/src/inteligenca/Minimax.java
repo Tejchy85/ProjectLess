@@ -1,5 +1,6 @@
 package inteligenca;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -36,9 +37,9 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 	 */
 	private Igralec jaz; // koga igramo
 	
-	private static final int OTEZENPRESKOK = 8;
+	//private static final int OTEZENPRESKOK = 8;
 	
-	private static final int OTEZENA = 10;
+	//private static final int OTEZENA = 10;
 	
 	/**
 	 * @param master glavno okno, v katerem vle�emo poteze
@@ -109,8 +110,14 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 		//Iscemo najboljso potezo
 		Poteza najboljsa = null;
 		int ocenaNajboljse = 0;
-
-		for (Poteza p : GlavnoOkno.vseDobre()) {
+		
+		List<Poteza> poteze = new LinkedList<Poteza>();
+		if (!GlavnoOkno.vseDobre().isEmpty()){
+			poteze = GlavnoOkno.vseDobre();
+		} else {
+			poteze = GlavnoOkno.vseMoznePoteze();
+		}
+		for (Poteza p : poteze) {
 			// V kopiji igre odigramo potezo p
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.narediPotezo(p);
@@ -126,6 +133,8 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 				najboljsa = p;
 				ocenaNajboljse = ocenaP;
 			}
+			
+			/* ta del kode doloci vecjo vrednost potezam v pravo smer
 			if (Math.abs(p.getKoncna().getX() - p.getZacetna().getX()) == 2 || Math.abs(p.getKoncna().getY()- p.getZacetna().getY()) == 2){
 				ocenaNajboljse *= OTEZENPRESKOK;
 			}
@@ -137,15 +146,16 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 				if(p.getKoncna().getX() - p.getZacetna().getX() < 0 || p.getZacetna().getY() - p.getKoncna().getY() > 0 ){
 					ocenaNajboljse *= OTEZENA;
 				}
-			}				
+			}
+			*/				
 		}
 		
-		if (najboljsa == null){					//seznam dobrih je bil prazen, izberemo nakljucno, ki se premika v nepravo smer
+		/*if (najboljsa == null){					//seznam dobrih je bil prazen, izberemo nakljucno, ki se premika v nepravo smer
 			Random generator = new Random();
 			List<Poteza> poteze = GlavnoOkno.vseMoznePoteze();
 			int q = generator.nextInt(poteze.size());		
 			najboljsa = poteze.get(q);
-		}
+		}*/
 
 		// Vrnemo najboljso najdeno potezo in njeno oceno
 		assert (najboljsa != null);

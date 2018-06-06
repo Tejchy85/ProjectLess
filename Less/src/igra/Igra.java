@@ -332,14 +332,6 @@ public class Igra {
 					kvotaPremikov = kvotaPremikov - kvota;
 				}
 			}
-			
-			
-			//Spremenimo igralca, ce je potrebno
-			if (kvotaPremikov == 0) {
-				naPotezi = naPotezi.nasprotnik();
-				kvotaPremikov = 3; 
-				trenutnoStanje = trenutnoStanje.zamenjaj();
-			}
 		
 		} 
 		
@@ -348,7 +340,7 @@ public class Igra {
 		boolean konecBeli = igralnaPlosca.konecBeli();
 		if (konecCrni && !konecBeli) { 
 			trenutnoStanje = Stanje.ZMAGA_CRNI;
-		} else if (konecBeli) {							//to je potrebno narediti, ker lahko beli kon�a �e preden porabi tri korake. 
+		} else if (konecBeli) {							//to je potrebno narediti, ker lahko beli konca ce preden porabi tri korake. 
 			if (naPotezi != Igralec.CRNI) {                 //ce je crni na potezi, potem je beli koncal s kvoto==0, torej je kvota crnega ze pravilno nastavljena na 3
 				naPotezi = Igralec.CRNI;
 				zmagovalnaKvota = 3 - kvotaPremikov;
@@ -362,10 +354,21 @@ public class Igra {
 				} else {
 					trenutnoStanje = Stanje.ZMAGA_BELI;
 				}
-			} else {
+			}
+			if (konecBeli && naPotezi == Igralec.CRNI){			//ni v redu pogoj
 				trenutnoStanje = Stanje.ZMAGA_BELI;
 			}
+			
 		} 
+		
+		//Spremenimo igralca, ce je potrebno
+		if (kvotaPremikov == 0) {
+			naPotezi = naPotezi.nasprotnik();
+			trenutnoStanje = trenutnoStanje.zamenjaj();
+			
+			kvotaPremikov = 3; 
+		}
+		
 		return true;
 	}
 
@@ -399,11 +402,17 @@ public class Igra {
 				if (p.getKoncna().getX() - p.getZacetna().getX() > 0 || p.getKoncna().getY() - p.getZacetna().getY() > 0 ) {
 					dobre.add(p);
 				}
+				if (p.getZacetna().getX() == DIM || p.getZacetna().getY() == DIM){ //dodamo robne poteze, da preprecimo ciklanje
+					//dobre.add(p);
+				}
 			}
 		} else if (naPotezi == Igralec.CRNI){
 			for (Poteza p : poteze){
 				if(p.getKoncna().getX() - p.getZacetna().getX() < 0 || p.getZacetna().getY() - p.getKoncna().getY() > 0 ){
 					dobre.add(p);
+				}
+				if (p.getZacetna().getX() == 0 || p.getZacetna().getY() == 0){ //dodamo robne poteze, da preprecimo ciklanje
+					//dobre.add(p);
 				}
 			}
 				
