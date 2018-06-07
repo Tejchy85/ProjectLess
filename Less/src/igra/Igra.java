@@ -342,8 +342,10 @@ public class Igra {
 		
 		if (konecBeli && naPotezi == Igralec.CRNI && kvotaPremikov == 0){	
 			trenutnoStanje = Stanje.ZMAGA_BELI;
+			return true;
 		} else if (konecCrni && !konecBeli) { 
 			trenutnoStanje = Stanje.ZMAGA_CRNI;
+			return true;
 		} else if (konecBeli) {							//to je potrebno narediti, ker lahko beli konca ce preden porabi tri korake. 
 			if (naPotezi != Igralec.CRNI) {  
 				naPotezi = Igralec.CRNI;
@@ -354,10 +356,13 @@ public class Igra {
 			if (konecCrni) {
 				if (kvotaPremikov < zmagovalnaKvota) {
 					trenutnoStanje = Stanje.ZMAGA_CRNI;
+					return true;
 				} else if (kvotaPremikov == zmagovalnaKvota){
-					trenutnoStanje = Stanje.NEODLOCENO;					
+					trenutnoStanje = Stanje.NEODLOCENO;	
+					return true;
 				} else {
 					trenutnoStanje = Stanje.ZMAGA_BELI;
+					return true;
 				}
 			}
 		}

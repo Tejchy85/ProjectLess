@@ -169,23 +169,17 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			int y = e.getY();
 			int i = x / stranica;
 			int j = y /stranica;
-			//System.out.println("kliknil si " + x + " " + y);
 			
 			if (!(x % stranica < debelina || stranica - x % stranica < debelina) &&
 				!(y% stranica < debelina || stranica - y % stranica < debelina)	){									//pogoj1: nisi kliknil na ograjico	
 				lokacija = new Lokacija(i,j);
 			}
 			if (lokacija != null){
-
-				//System.out.println("izbrana je" + izbrana);
 				if (izbrana == null) {
 					if((master.getStanje() == Stanje.BELI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.BELO)
 						|| (master.getStanje() == Stanje.CRNI_NA_POTEZI && master.getPlosca().getVsa_polja()[j][i] == Polje.CRNO)) {
 						izbrana = lokacija;
-						//System.out.println("izbral sem jo");
-
 					} else {
-						//System.out.println("Nastavil sem jo na null");
 						izbrana = null;
 					}
 				} else if (izbrana.equals(lokacija)) {
