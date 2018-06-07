@@ -354,10 +354,10 @@ public class Igra {
 				kvotaPremikov = 3;		
 			} 
 			if (konecCrni) {
-				if (kvotaPremikov < zmagovalnaKvota) {
+				if (3 - kvotaPremikov < zmagovalnaKvota) {
 					trenutnoStanje = Stanje.ZMAGA_CRNI;
 					return true;
-				} else if (kvotaPremikov == zmagovalnaKvota){
+				} else if (3 - kvotaPremikov == zmagovalnaKvota){
 					trenutnoStanje = Stanje.NEODLOCENO;	
 					return true;
 				} else {
@@ -377,7 +377,6 @@ public class Igra {
 	}
 
 	public List<Poteza> vsePoteze(){
-		//System.out.println("imamo vse poteze!");
 		Lokacija[] figurice = new Lokacija[4];
 		
 		if (naPotezi == Igralec.BELI){
