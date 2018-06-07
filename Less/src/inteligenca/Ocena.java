@@ -47,11 +47,15 @@ public class Ocena {
 			vrednostCrni += narazen(figuriceCrni);
 		}
 		
+		
+		
 		if (jaz == Igralec.BELI){
 			return 20*vrednostBeli - vrednostCrni;		//malo pomnozimo, da ne igra defenzivno
 		}
 			return 20*vrednostCrni - vrednostBeli;
 		}
+		
+			
 		assert false;
 		return 42; 
 	}
@@ -110,7 +114,9 @@ public class Ocena {
 		
 		
 		return ocena;
+		
 }
+	
 	
 	/*premikanje v desno in dol je za belega dobro 
 			public static int dobrePotezeBeli (Lokacija b, Igra igra){

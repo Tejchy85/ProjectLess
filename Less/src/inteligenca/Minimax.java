@@ -31,7 +31,7 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 	 */
 	private Igralec jaz; // koga igramo
 	
-	//private static final int OTEZENPRESKOK = 8;
+	private static final int OTEZENPRESKOK = 10;
 	
 	//private static final int OTEZENA = 10;
 	
@@ -127,10 +127,12 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 				ocenaNajboljse = ocenaP;
 			}
 			
-			/* ta del kode doloci vecjo vrednost potezam v pravo smer
+			
 			if (Math.abs(p.getKoncna().getX() - p.getZacetna().getX()) == 2 || Math.abs(p.getKoncna().getY()- p.getZacetna().getY()) == 2){
 				ocenaNajboljse *= OTEZENPRESKOK;
 			}
+			
+			/* ta del kode doloci vecjo vrednost potezam v pravo smer
 			if (naPotezi == Igralec.BELI) {
 				if (p.getKoncna().getX() - p.getZacetna().getX() > 0 || p.getKoncna().getY() - p.getZacetna().getY() > 0 ) {
 					ocenaNajboljse *= OTEZENA;

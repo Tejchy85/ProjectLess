@@ -21,8 +21,8 @@ public class Racunalnik extends Strateg {
 	@Override
 	public void na_potezi() {
 		//mislec = new Nakljucno(master);
-		//mislec = new Minimax(master,3, rac);
-		mislec = new AlfaBeta(master, 5, rac);
+		//mislec = new Minimax(master,5, rac);
+		mislec = new AlfaBeta(master, 6, rac);
 		mislec.execute();
 	}
 
