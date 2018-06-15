@@ -1,6 +1,6 @@
 package vmesnik;
 
-public class Test {
+public class Less {
 
 	public static void main(String[] args) {
 		GlavnoOkno okno = new GlavnoOkno();

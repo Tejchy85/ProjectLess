@@ -1,8 +1,5 @@
 package inteligenca;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 
 import javax.swing.SwingWorker;
 import vmesnik.GlavnoOkno;
@@ -30,10 +27,6 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 	 * Ali racualnik igra Belega ali Crnega?
 	 */
 	private Igralec jaz; // koga igramo
-	
-	private static final int OTEZENPRESKOK = 10;
-	
-	//private static final int OTEZENA = 10;
 	
 	/**
 	 * @param master glavno okno, v katerem vlecemo poteze
@@ -87,37 +80,33 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 					null,
 					(jaz == Igralec.BELI ? Ocena.ZMAGA : Ocena.ZGUBA));
 		case NEODLOCENO:
+
+			
 			return new OcenjenaPoteza(null, Ocena.NEODLOCENO);
 		}
 		assert (naPotezi != null);
 		// Nekdo je na potezi, ugotovimo, kaj se splaca igrati
 		if (k >= globina) {
-			//System.out.println("tukaj sem, ocena te pozicije je" + Ocena.oceniPozicijo(jaz, igra));
-
 			// dosegli smo najvecjo dovoljeno globino, zato
 			// ne vrnemo poteze, ampak samo oceno pozicije
 			return new OcenjenaPoteza(
 					null,
-					Ocena.oceniPozicijo(jaz, igra));
+					Ocena2.oceniPozicijo(jaz, igra));
 		} 
 	
 		//Iscemo najboljso potezo
 		Poteza najboljsa = null;
 		int ocenaNajboljse = 0;
 		
-		List<Poteza> poteze = new LinkedList<Poteza>();
-		if (!GlavnoOkno.vseDobre().isEmpty()){
-			poteze = GlavnoOkno.vseDobre();
-		} else {
-			poteze = GlavnoOkno.vseMoznePoteze();
-		}
-		for (Poteza p : poteze) {
+		for (Poteza p : igra.vsePoteze()) {
 			// V kopiji igre odigramo potezo p
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.narediPotezo(p);
 			
 			// Izracunamo vrednost pozicije po odigrani potezi p
-			int ocenaP = minimax(k+1, kopijaIgre).vrednost;
+			int ocenaP = minimax(
+					(igra.getNaPotezi() == kopijaIgre.getNaPotezi() ? k : k+1), 
+					kopijaIgre).vrednost;
 			// ce je p boljsa poteza, si jo zabelezimo
 			if (najboljsa == null // ce nimamo kandidata za najboljso potezo
 				|| (naPotezi == jaz && ocenaP > ocenaNajboljse) // maksimiziramo
@@ -126,31 +115,8 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 				najboljsa = p;
 				ocenaNajboljse = ocenaP;
 			}
-			
-			
-			if (Math.abs(p.getKoncna().getX() - p.getZacetna().getX()) == 2 || Math.abs(p.getKoncna().getY()- p.getZacetna().getY()) == 2){
-				ocenaNajboljse *= OTEZENPRESKOK;
-			}
-			
-			/* ta del kode doloci vecjo vrednost potezam v pravo smer
-			if (naPotezi == Igralec.BELI) {
-				if (p.getKoncna().getX() - p.getZacetna().getX() > 0 || p.getKoncna().getY() - p.getZacetna().getY() > 0 ) {
-					ocenaNajboljse *= OTEZENA;
-				}
-			} else {
-				if(p.getKoncna().getX() - p.getZacetna().getX() < 0 || p.getZacetna().getY() - p.getKoncna().getY() > 0 ){
-					ocenaNajboljse *= OTEZENA;
-				}
-			}
-			*/				
+			//tu po potrebu dodamo alfa-beta
 		}
-		
-		/*if (najboljsa == null){					//seznam dobrih je bil prazen, izberemo nakljucno, ki se premika v nepravo smer
-			Random generator = new Random();
-			List<Poteza> poteze = GlavnoOkno.vseMoznePoteze();
-			int q = generator.nextInt(poteze.size());		
-			najboljsa = poteze.get(q);
-		}*/
 
 		// Vrnemo najboljso najdeno potezo in njeno oceno
 		assert (najboljsa != null);

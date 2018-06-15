@@ -5,6 +5,7 @@ import javax.swing.SwingWorker;
 import igra.Igralec;
 import igra.Poteza;
 import inteligenca.Minimax;
+import inteligenca.MinimaxAlfaBeta;
 import inteligenca.Nakljucno;
 import inteligenca.AlfaBeta;
 
@@ -21,8 +22,9 @@ public class Racunalnik extends Strateg {
 	@Override
 	public void na_potezi() {
 		//mislec = new Nakljucno(master);
-		//mislec = new Minimax(master,5, rac);
-		mislec = new AlfaBeta(master, 6, rac);
+		//mislec = new Minimax(master,2, rac);
+		//mislec = new AlfaBeta(master, 6, rac);
+		mislec = new MinimaxAlfaBeta(master, 2, rac);
 		mislec.execute();
 	}
 
