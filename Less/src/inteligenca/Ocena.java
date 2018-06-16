@@ -29,8 +29,7 @@ public class Ocena {
 			return (jaz == Igralec.CRNI ? ZMAGA : ZGUBA);
 		case NEODLOCENO:
 			return NEODLOCENO;
-		case BELI_NA_POTEZI:
-		case CRNI_NA_POTEZI:
+		default:
 		
 		// Ovrednotimo glede na to, koliko kvote potrebuje vsak igralec do koncne pozicije
 		int vrednostBeli = 0;
@@ -39,25 +38,23 @@ public class Ocena {
 		Lokacija[] figuriceCrni = igra.getIgralnaPlosca().crnaPolja();
 		
 		for (Lokacija bFig : figuriceBeli){
-			vrednostBeli += 12 - optimalnaBeli(bFig,igra,0);
-			vrednostBeli += narazen(figuriceBeli);
+			vrednostBeli += optimalnaBeli(bFig,igra,0);
 		}
+		vrednostBeli += narazen(figuriceBeli);
+		
 		for (Lokacija cFig : figuriceCrni){
-			vrednostCrni += 12 - optimalnaCrni(cFig,igra,0);
-			vrednostCrni += narazen(figuriceCrni);
+			vrednostCrni += optimalnaCrni(cFig,igra,0);
 		}
+		vrednostCrni += narazen(figuriceCrni);
+
 		
 		
 		
 		if (jaz == Igralec.BELI){
-			return 20*vrednostBeli - vrednostCrni;		//malo pomnozimo, da ne igra defenzivno
+			return 2*vrednostBeli - vrednostCrni;		//malo pomnozimo, da ne igra defenzivno
 		}
-			return 20*vrednostCrni - vrednostBeli;
+			return 2*vrednostCrni - vrednostBeli;
 		}
-		
-			
-		assert false;
-		return 42; 
 	}
 	
 	
@@ -85,9 +82,7 @@ public class Ocena {
 				}
 				return Math.min(vrednostDesno, vrednostDol);
 			}
-			
-			
-			return ocena;
+			return 12 - ocena;
 	}
 	
 	public static int optimalnaCrni (Lokacija l, Igra igra, int ocena){ 
@@ -111,9 +106,7 @@ public class Ocena {
 			}
 			return Math.min(vrednostLevo, vrednostGor);
 		}
-		
-		
-		return ocena;
+		return 12 - ocena;
 		
 }
 	
@@ -152,6 +145,6 @@ public class Ocena {
 			}
 			}
 		}
-		return max;
+		return 5*(6 - max);
 	}
 }

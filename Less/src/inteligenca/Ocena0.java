@@ -4,7 +4,7 @@ import igra.Igra;
 import igra.Igralec;
 import igra.Lokacija;
 
-public class Ocena2 {
+public class Ocena0 {
 	public static final int ZMAGA = 1000000; 
 	public static final int ZGUBA = -ZMAGA;
 	public static final int NEODLOCENO = 0;
@@ -24,7 +24,7 @@ public class Ocena2 {
 			Lokacija[] figuriceCrni = igra.getIgralnaPlosca().crnaPolja();
 			
 			for (Lokacija l : figuriceBeli) {
-				vrednostBeli = vrednostBeli + (Igra.DIM -1 - l.getX()) + (Igra.DIM -1 - l.getY());
+				vrednostBeli = vrednostBeli - (Igra.DIM -1 - l.getX()) + (Igra.DIM -1 - l.getY());
 			}
 			
 			for (Lokacija l: figuriceCrni) {
@@ -32,9 +32,9 @@ public class Ocena2 {
 			}
 			
 			if (jaz == Igralec.BELI) {
-				return vrednostCrni - vrednostBeli;
+				return - vrednostBeli;
 			} else {
-				return vrednostBeli - vrednostCrni;
+				return - vrednostCrni;
 			}
 		}
 	}

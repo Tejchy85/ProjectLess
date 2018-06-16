@@ -37,7 +37,6 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 		@Override
 		protected Poteza doInBackground() throws Exception {
 			Igra igra = master.copyIgra();
-			//Thread.sleep(50);
 			OcenjenaPoteza p = alfaBeta(0, igra, -10000, 10000);
 			assert (p != null);
 			return p.poteza;
@@ -82,11 +81,10 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 			assert (naPotezi != null);
 			// Nekdo je na potezi, ugotovimo, kaj se splaca igrati
 			if (k >= globina) {
-				// dosegli smo najvecjo dovoljeno globino, zato
-				// ne vrnemo poteze, ampak samo oceno pozicije
+				// dosegli smo najvecjo dovoljeno globino, zato ne vrnemo poteze, ampak samo oceno pozicije
 				return new OcenjenaPoteza(
 						null,
-						Ocena2.oceniPozicijo(jaz, igra));
+						Ocena1.oceniPozicijo(jaz, igra));
 			} 
 		
 			//Iscemo najboljso potezo

@@ -91,7 +91,7 @@ public class Minimax extends SwingWorker<Poteza, Object> {
 			// ne vrnemo poteze, ampak samo oceno pozicije
 			return new OcenjenaPoteza(
 					null,
-					Ocena2.oceniPozicijo(jaz, igra));
+					Ocena0.oceniPozicijo(jaz, igra));
 		} 
 	
 		//Iscemo najboljso potezo
