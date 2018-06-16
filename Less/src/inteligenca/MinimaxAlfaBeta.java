@@ -38,7 +38,7 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 		protected Poteza doInBackground() throws Exception {
 			Igra igra = master.copyIgra();
 			//Thread.sleep(50);
-			OcenjenaPoteza p = alfaBeta(0, igra, 0, 0);
+			OcenjenaPoteza p = alfaBeta(0, igra, -10000, 10000);
 			assert (p != null);
 			return p.poteza;
 		}
@@ -110,20 +110,19 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 					najboljsa = p;
 					ocenaNajboljse = ocenaP;
 				}
-				//tu po potrebu dodamo alfa-beta
-				/*if (naPotezi == jaz) {
+				//alfa-beta
+				if (naPotezi == jaz) {
 					alfa = Math.max(alfa, ocenaNajboljse);
 				} else {
 					beta = Math.min(beta, ocenaNajboljse);
 				}
 				if (beta <= alfa) {
 					return new OcenjenaPoteza(null, ocenaNajboljse);
-				}*/
+				}
 			}
 
 			// Vrnemo najboljso najdeno potezo in njeno oceno
 			assert (najboljsa != null);
 			return new OcenjenaPoteza(najboljsa, ocenaNajboljse);
 		}
-		
 }
