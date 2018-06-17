@@ -41,19 +41,19 @@ public class Ocena {
 			vrednostBeli += optimalnaBeli(bFig,igra,0);
 		}
 		vrednostBeli += narazen(figuriceBeli);
+		vrednostBeli += sosedi(figuriceBeli);
 		
 		for (Lokacija cFig : figuriceCrni){
 			vrednostCrni += optimalnaCrni(cFig,igra,0);
 		}
 		vrednostCrni += narazen(figuriceCrni);
+		vrednostCrni += sosedi(figuriceCrni);
 
 		
-		
-		
 		if (jaz == Igralec.BELI){
-			return 2*vrednostBeli - vrednostCrni;		//malo pomnozimo, da ne igra defenzivno
+			return 3*vrednostBeli - vrednostCrni;		//malo pomnozimo, da ne igra defenzivno
 		}
-			return 2*vrednostCrni - vrednostBeli;
+			return 3*vrednostCrni - vrednostBeli;
 		}
 	}
 	
@@ -110,23 +110,6 @@ public class Ocena {
 		
 }
 	
-	
-	/*premikanje v desno in dol je za belega dobro 
-			public static int dobrePotezeBeli (Lokacija b, Igra igra){
-		int rez = 0;
-		int x = b.getX();
-		int y = b.getY();
-		LinkedList<Lokacija> mozne = igra.moznePoteze(b, igra.getKvotaPremikov());
-		if (mozne.contains(new Lokacija(x+1,y))){
-			rez += 1;
-			}
-		if (mozne.contains(new Lokacija(x,y+1))){
-			rez += 1;
-			}
-		return rez;
-		}
-	*/
-	
 	public static int narazen (Lokacija[] figurice){
 		int max = 0;
 		int x1 = 0;
@@ -140,11 +123,23 @@ public class Ocena {
 				y1 = l1.getY();
 				y2 = l2.getY();
 				int mmax = Math.max(Math.abs(x1-x2),Math.abs(y1-y2));
-			if (mmax > max){
-				max = mmax;
-			}
+				if (mmax > max){
+					max = mmax;
+				}
 			}
 		}
-		return 5*(6 - max);
+		return 6 - max;
+	}
+	public static int sosedi (Lokacija[] figurice) {
+		int sosedov = 0;
+		for (Lokacija l : figurice) {
+			for (Lokacija m : figurice) {
+				if (Math.abs(l.getX()-m.getX()) == 1 ||
+					Math.abs(l.getY()-m.getY()) == 1) {
+					sosedov += 1;
+				}
+			}
+		}
+		return sosedov;
 	}
 }

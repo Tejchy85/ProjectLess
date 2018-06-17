@@ -24,7 +24,7 @@ public class Ocena0 {
 			Lokacija[] figuriceCrni = igra.getIgralnaPlosca().crnaPolja();
 			
 			for (Lokacija l : figuriceBeli) {
-				vrednostBeli = vrednostBeli - (Igra.DIM -1 - l.getX()) + (Igra.DIM -1 - l.getY());
+				vrednostBeli = vrednostBeli + (Igra.DIM -1 - l.getX()) + (Igra.DIM -1 - l.getY());
 			}
 			
 			for (Lokacija l: figuriceCrni) {

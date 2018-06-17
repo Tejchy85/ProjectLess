@@ -84,7 +84,7 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 				// dosegli smo najvecjo dovoljeno globino, zato ne vrnemo poteze, ampak samo oceno pozicije
 				return new OcenjenaPoteza(
 						null,
-						Ocena1.oceniPozicijo(jaz, igra));
+						Ocena.oceniPozicijo(jaz, igra));
 			} 
 		
 			//Iscemo najboljso potezo
