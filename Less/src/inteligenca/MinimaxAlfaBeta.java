@@ -37,8 +37,9 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 		@Override
 		protected Poteza doInBackground() throws Exception {
 			Igra igra = master.copyIgra();
-			OcenjenaPoteza p = alfaBeta(0, igra, -10000, 10000);
+			OcenjenaPoteza p = alfaBeta(0, igra, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			assert (p != null);
+			System.out.println("MiminaxAlfaBeta: " + p);
 			return p.poteza;
 		}
 		
@@ -68,11 +69,11 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 			case ZMAGA_CRNI:
 				return new OcenjenaPoteza(
 						null,
-						(jaz == Igralec.CRNI ? Ocena.ZMAGA : Ocena.ZGUBA));
+						(jaz == Igralec.CRNI ? Ocena.ZMAGA-k : Ocena.ZGUBA+k));
 			case ZMAGA_BELI:
 				return new OcenjenaPoteza(
 						null,
-						(jaz == Igralec.BELI ? Ocena.ZMAGA : Ocena.ZGUBA));
+						(jaz == Igralec.BELI ? Ocena.ZMAGA-k : Ocena.ZGUBA+k));
 			case NEODLOCENO:
 
 				
@@ -84,13 +85,12 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 				// dosegli smo najvecjo dovoljeno globino, zato ne vrnemo poteze, ampak samo oceno pozicije
 				return new OcenjenaPoteza(
 						null,
-						Ocena.oceniPozicijo(jaz, igra));
+						Ocena1.oceniPozicijo(jaz, igra));
 			} 
 		
 			//Iscemo najboljso potezo
 			Poteza najboljsa = null;
 			int ocenaNajboljse = 0;
-			
 			for (Poteza p : igra.vsePoteze()) {
 				// V kopiji igre odigramo potezo p
 				Igra kopijaIgre = new Igra(igra);
@@ -107,18 +107,18 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 					) {
 					najboljsa = p;
 					ocenaNajboljse = ocenaP;
-				}
-				//alfa-beta
-				if (naPotezi == jaz) {
-					alfa = Math.max(alfa, ocenaNajboljse);
-				} else {
-					beta = Math.min(beta, ocenaNajboljse);
-				}
-				if (beta <= alfa) {
-					return new OcenjenaPoteza(null, ocenaNajboljse);
+					//alfa-beta
+					if (naPotezi == jaz) {
+						alfa = Math.max(alfa, ocenaNajboljse);
+					} else {
+						beta = Math.min(beta, ocenaNajboljse);
+					}
+					if (beta <= alfa) {
+						return new OcenjenaPoteza(null, ocenaNajboljse);
+					}
 				}
 			}
-
+			
 			// Vrnemo najboljso najdeno potezo in njeno oceno
 			assert (najboljsa != null);
 			return new OcenjenaPoteza(najboljsa, ocenaNajboljse);

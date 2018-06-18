@@ -160,14 +160,22 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 }
 	
 
-	public boolean odigraj(Poteza poteza) { 		//vrne, ali se je poteza odigrala
-		boolean a = igra.narediPotezo(poteza);
-		switch (igra.getTrenutnoStanje()) {
-		case BELI_NA_POTEZI: strategB.na_potezi(); break;
-		case CRNI_NA_POTEZI: strategC.na_potezi(); break;
-		default: break;
+	/**
+	 * To metodo pokliče strateg, ko hoče v igri povleči potezo.
+	 * @param poteza
+	 * @return
+	 */
+	public void odigraj(Poteza poteza) { 		//vrne, ali se je poteza odigrala
+		if (igra.narediPotezo(poteza)) {
+			switch (igra.getTrenutnoStanje()) {
+			case BELI_NA_POTEZI: strategB.na_potezi(); break;
+			case CRNI_NA_POTEZI: strategC.na_potezi(); break;
+			default: break;
+			}
+			osveziGUI();
+		} else {
+			System.out.print("Nekdo je poskusil izvesti neveljavno potezo!");
 		}
-		return a;
 	}
 	
 	public void osveziGUI() {
@@ -211,10 +219,6 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	
 	public static List<Poteza> vseMoznePoteze() {
 		return igra.vsePoteze();
-	}
-	
-	public static List<Poteza> vseDobre (){
-		return igra.dobrePoteze();
 	}
 	
 	public boolean veljavna (Poteza poteza) {

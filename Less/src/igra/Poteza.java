@@ -40,5 +40,13 @@ public class Poteza {
 		}
 		return false;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Poteza [zacetna=" + zacetna + ", koncna=" + koncna + "]";
+	}
+	
+	
 	
 }

@@ -26,13 +26,6 @@ public class Lokacija {
 		this.y = y;
 	}
 	
-	//najin print, da lahko lazje sproti preverjava lokacijo v testih
-	public void print() {
-		System.out.print(x);
-		System.out.println(y);
-		
-	}
-	
 	//metoda pravilno preveri, ali sta objekta enaka
 	@Override
 	public int hashCode() {
@@ -58,5 +51,12 @@ public class Lokacija {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Lokacija [x=" + x + ", y=" + y + "]";
+	}
+	
+	
 
 }

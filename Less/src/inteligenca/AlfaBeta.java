@@ -107,11 +107,7 @@ public class AlfaBeta extends SwingWorker<Poteza, Object> {
 		int ocenaP = 0;
 		
 		List<Poteza> poteze = new LinkedList<Poteza>();
-		if (!GlavnoOkno.vseDobre().isEmpty()){
-			poteze = GlavnoOkno.vseDobre();
-		} else {
-			poteze = GlavnoOkno.vseMoznePoteze();
-		}
+		poteze = GlavnoOkno.vseMoznePoteze();
 		
 		if (maksi){
 			ocenaP = Ocena.ZGUBA;
