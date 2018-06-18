@@ -20,10 +20,7 @@ public class TestIgra extends TestCase {
 		Poteza poteza = new Poteza(new Lokacija(1,1), new Lokacija(1,2));
 		LinkedList<Poteza> mozne = igra.moznePoteze(poteza.getZacetna(), igra.getKvotaPremikov());
 		for (Poteza p : mozne) {
-			System.out.println("Zacetna: " );
-			p.getZacetna().print();
-			System.out.print("Koncna: ");
-			p.getKoncna().print();
+			System.out.println(p);
 		}
 		assertEquals(igra.veljavnaPoteza(poteza), true);
 		igra.narediPotezo(poteza);
