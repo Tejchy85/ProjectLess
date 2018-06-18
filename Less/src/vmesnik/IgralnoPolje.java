@@ -90,7 +90,6 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		
 		//narisemo ograjice:
 		narisiOgrajice(g2, master.getPlosca().getOgrajiceVod(), master.getPlosca().getOgrajiceNavp());
-		master.osveziGUI();
 	
 	}
 	
