@@ -17,15 +17,15 @@ public class Igra {
 	protected Igralec naPotezi;
 	protected Plosca igralnaPlosca;
 	protected int kvotaPremikov; // vsak igralec ima na voljo po 3 poteze vsaki� ko je na vrsti
-	protected Stanje trenutnoStanje; //spremlja trenutno stanje
-	protected int zmagovalnaKvota; //ko beli zmaga si zapomnimo, v koliko premikih je koncal zadnjo potezo
+	private Stanje trenutnoStanje;
+	private int zmagovalnaKvota;
 	
 	public Igra() {
 		naPotezi = Igralec.BELI;
 		kvotaPremikov = 3; 
 		igralnaPlosca = new Plosca(DIM);
 		zmagovalnaKvota = 0;
-		trenutnoStanje = Stanje.BELI_NA_POTEZI;	
+		trenutnoStanje = Stanje.BELI_NA_POTEZI;
 	}
 	
 	/**
@@ -34,31 +34,11 @@ public class Igra {
 	 */
 
 	public Igra(Igra igra) {
-		int dim = Igra.DIM;
 		this.naPotezi = igra.getNaPotezi();
 		this.kvotaPremikov = igra.getKvotaPremikov();
-		this.zmagovalnaKvota = igra.getZmagovalnaKvota();
-		this.trenutnoStanje = igra.getTrenutnoStanje();
-		Polje[][] kopijaVsehPolj = new Polje[dim][dim];
-		int[][] kopijaNavpicnih = new int[dim][dim];
-		int[][] kopijaVodoravnih = new int[dim][dim];
-		Polje[][] vsaPolja = igra.getIgralnaPlosca().getVsa_polja();
-		int[][] navpicne = igra.getIgralnaPlosca().getOgrajiceNavp();
-		int[][] vodoravne = igra.getIgralnaPlosca().getOgrajiceVod();
-		
-		for (int i = 0; i < dim; i++) {
-			for (int j = 0; j < dim; j++) {
-				kopijaVsehPolj[i][j] = vsaPolja[i][j];
-				kopijaNavpicnih[i][j] = navpicne[i][j];
-				kopijaVodoravnih[i][j] = vodoravne[i][j];
-			}
-		}
-		
-		Plosca kopijaPlosca = new Plosca(dim);
-		kopijaPlosca.setOgrajiceNavp(kopijaNavpicnih);
-		kopijaPlosca.setOgrajiceVod(kopijaVodoravnih);
-		kopijaPlosca.setVsaPolja(kopijaVsehPolj);
-		this.igralnaPlosca = kopijaPlosca;
+		this.igralnaPlosca = new Plosca(igra.getIgralnaPlosca());
+		this.zmagovalnaKvota = igra.zmagovalnaKvota;
+		this.trenutnoStanje = igra.trenutnoStanje;
 	}
 		
 	/**
@@ -397,31 +377,6 @@ public class Igra {
 		
 	}
 	
-	public List<Poteza> dobrePoteze(){
-		List<Poteza> poteze = vsePoteze();
-		List<Poteza> dobre = new LinkedList<Poteza>();
-		if (naPotezi == Igralec.BELI){
-			for (Poteza p : poteze){
-				if (p.getKoncna().getX() - p.getZacetna().getX() > 0 || p.getKoncna().getY() - p.getZacetna().getY() > 0 ) {
-					dobre.add(p);
-				}
-				if (p.getZacetna().getX() == DIM || p.getZacetna().getY() == DIM){ //dodamo robne poteze, da preprecimo ciklanje
-					//dobre.add(p);
-				}
-			}
-		} else if (naPotezi == Igralec.CRNI){
-			for (Poteza p : poteze){
-				if(p.getKoncna().getX() - p.getZacetna().getX() < 0 || p.getZacetna().getY() - p.getKoncna().getY() > 0 ){
-					dobre.add(p);
-				}
-				if (p.getZacetna().getX() == 0 || p.getZacetna().getY() == 0){ //dodamo robne poteze, da preprecimo ciklanje
-					//dobre.add(p);
-				}
-			}
-				
-		}
-		return dobre;
-	}
 	
 	public Plosca getIgralnaPlosca() {
 		return igralnaPlosca;
@@ -431,34 +386,13 @@ public class Igra {
 		return trenutnoStanje;
 	}
 
-	public void setTrenutnoStanje(Stanje trenutnoStanje) {
-		this.trenutnoStanje = trenutnoStanje;
-	}
-
 	public int getKvotaPremikov() {
 		return kvotaPremikov;
-	}
-
-	public void setKvotaPremikov(int kvotaPremikov) {
-		this.kvotaPremikov = kvotaPremikov;
 	}
 
 	public Igralec getNaPotezi() {
 		return naPotezi;
 	}
-
-	public void setNaPotezi(Igralec naPotezi) {
-		this.naPotezi = naPotezi;
-	}
-
-	public int getZmagovalnaKvota() {
-		return zmagovalnaKvota;
-	}
-
-	public void setZmagovalnaKvota(int zmagovalnaKvota) {
-		this.zmagovalnaKvota = zmagovalnaKvota;
-	}
-
 
 	public static int getDim() {
 		return DIM;
