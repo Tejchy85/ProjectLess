@@ -33,12 +33,12 @@ public class Ocena1 {
 			for (Lokacija l : figuriceBeli) {
 				vrednostBeli = vrednostBeli + (Igra.DIM -1 - l.getX()) + (Igra.DIM -1 - l.getY());
 			}
-			vrednostBeli += narazen(figuriceBeli);
+			vrednostBeli -= narazen(figuriceBeli);
 			
 			for (Lokacija l: figuriceCrni) {
 				vrednostCrni = vrednostCrni + l.getX() + l.getY();
 			}
-			vrednostCrni += narazen(figuriceCrni);
+			vrednostCrni -= narazen(figuriceCrni);
 			
 			if (jaz == Igralec.BELI) {
 				return -vrednostBeli;
