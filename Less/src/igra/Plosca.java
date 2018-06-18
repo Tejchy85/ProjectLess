@@ -7,13 +7,11 @@ import java.util.ArrayList;
 
 
 public class Plosca {
-	protected int dim; //plosca je vselej kvadratna, zato potrebujemo le eno stevilo
 	protected Polje[][] vsaPolja;	
 	protected int[][] ograjiceVod;
 	protected int[][] ograjiceNavp;
 	
-	public Plosca(int dimenzija) {
-		dim = dimenzija;
+	public Plosca(int dim) {
 		vsaPolja = new Polje[dim][dim];
 		ograjiceNavp = new int[dim][dim+1]; //mozne napake: ravno obratno
 		ograjiceVod = new int[dim+1][dim];
@@ -31,7 +29,6 @@ public class Plosca {
 			}
 		}
 
-		
 	//s pomocjo malih ploscic sestavimo veliko plosco - predvsem nakljucno postavimo ograjice
 			
 	Ploscica[] seznamPloscic = {												
@@ -114,11 +111,28 @@ public class Plosca {
 		}
 	}
 	
+	public Plosca(Plosca p) {
+		int dim = p.getDim();
+		this.vsaPolja = new Polje[dim][dim];
+		this.ograjiceNavp = new int[dim][dim];
+		this.ograjiceVod = new int[dim][dim];
+		
+		for (int i = 0; i < dim; i++) {
+			for (int j = 0; j < dim; j++) {
+				this.vsaPolja[i][j] = p.vsaPolja[i][j];
+				this.ograjiceNavp[i][j] = p.ograjiceNavp[i][j];
+				this.ograjiceVod[i][j] = p.ograjiceVod[i][j];
+			}
+		}
+	}
+		
+	
+	
 	public Lokacija[] crnaPolja(){
 		Lokacija[] l = new Lokacija[4];
 		int p = 0;
-		for (int i=0; i < dim; i++){
-			for (int j=0; j < dim; j++){
+		for (int i=0; i < getDim(); i++){
+			for (int j=0; j < getDim(); j++){
 				if (this.vsaPolja[j][i] == Polje.CRNO){
 					l[p] = new Lokacija(i,j);
 					p++;
@@ -132,8 +146,8 @@ public class Plosca {
 	public Lokacija[] belaPolja(){
 		Lokacija[] l = new Lokacija[4];
 		int p = 0;
-		for (int i=0; i < dim; i++){
-			for (int j=0; j < dim; j++){
+		for (int i=0; i < getDim(); i++){
+			for (int j=0; j < getDim(); j++){
 				if (this.vsaPolja[j][i] == Polje.BELO){
 					l[p] = new Lokacija(i,j);
 					p++;
@@ -158,6 +172,7 @@ public class Plosca {
 	 */
 	
 	public boolean konecBeli() {       //beli je vse svoje figurice pripeljal do konca
+		int dim = getDim();
 		return (vsaPolja[dim-1][dim-1] == Polje.BELO && vsaPolja[dim-2][dim-1] == Polje.BELO && 
 				vsaPolja[dim-1][dim-2] == Polje.BELO && vsaPolja[dim-2][dim-2] == Polje.BELO);
 	}
@@ -193,7 +208,7 @@ public class Plosca {
 	}
 
 	public int getDim() {
-		return dim;
+		return this.vsaPolja.length;
 	}
 
 	@Override
