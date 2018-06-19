@@ -32,9 +32,9 @@ public class Ocena0 {
 			}
 			
 			if (jaz == Igralec.BELI) {
-				return - vrednostBeli;
+				return 3*vrednostCrni - vrednostBeli;
 			} else {
-				return - vrednostCrni;
+				return 3*vrednostBeli - vrednostCrni;
 			}
 		}
 	}

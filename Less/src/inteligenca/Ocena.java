@@ -40,20 +40,15 @@ public class Ocena {
 		for (Lokacija bFig : figuriceBeli){
 			vrednostBeli += optimalnaBeli(bFig,igra,0);
 		}
-		vrednostBeli += narazen(figuriceBeli);
-		vrednostBeli += sosedi(figuriceBeli);
 		
 		for (Lokacija cFig : figuriceCrni){
 			vrednostCrni += optimalnaCrni(cFig,igra,0);
 		}
-		vrednostCrni += narazen(figuriceCrni);
-		vrednostCrni += sosedi(figuriceCrni);
-
 		
 		if (jaz == Igralec.BELI){
-			return 3*vrednostBeli - vrednostCrni;		//malo pomnozimo, da ne igra defenzivno
+			return 2*vrednostBeli - vrednostCrni;		//malo pomnozimo, da ne igra defenzivno
 		}
-			return 3*vrednostCrni - vrednostBeli;
+			return 2*vrednostCrni - vrednostBeli;
 		}
 	}
 	
@@ -73,12 +68,12 @@ public class Ocena {
 				if(x+1 < dim){
 					vrednostDesno =  optimalnaBeli(new Lokacija(x + 1, y), igra, ocena + 1 + ograjiceNavp[y][x+1]);
 				}else {
-					vrednostDesno = 1500;
+					vrednostDesno = 42;
 				}
 				if(y+1 < dim){
 					vrednostDol = optimalnaBeli(new Lokacija(x, y + 1), igra, ocena + 1 + ograjiceVod[y+1][x]);			
 				} else{
-					vrednostDol = 1500;
+					vrednostDol = 42;
 				}
 				return Math.min(vrednostDesno, vrednostDol);
 			}
@@ -97,49 +92,16 @@ public class Ocena {
 			if(x-1 > 0){
 				vrednostLevo = optimalnaCrni(new Lokacija(x - 1, y), igra, ocena + 1 + ograjiceNavp[y][x]);
 			}else {
-				vrednostLevo = 1500;
+				vrednostLevo = 42;
 			}
 			if(y-1 > 0){
 				vrednostGor = optimalnaCrni(new Lokacija(x, y - 1), igra, ocena + 1 + ograjiceVod[y][x]);			
 			} else{
-				vrednostGor = 1500;
+				vrednostGor = 42;
 			}
 			return Math.min(vrednostLevo, vrednostGor);
 		}
 		return 12 - ocena;
 		
-}
-	
-	public static int narazen (Lokacija[] figurice){
-		int max = 0;
-		int x1 = 0;
-		int x2 = 0;
-		int y1 = 0;
-		int y2 = 0;
-		for (Lokacija l1 : figurice){
-			for (Lokacija l2 : figurice){
-				x1 = l1.getX();
-				x2 = l2.getX();
-				y1 = l1.getY();
-				y2 = l2.getY();
-				int mmax = Math.max(Math.abs(x1-x2),Math.abs(y1-y2));
-				if (mmax > max){
-					max = mmax;
-				}
-			}
-		}
-		return 6 - max;
-	}
-	public static int sosedi (Lokacija[] figurice) {
-		int sosedov = 0;
-		for (Lokacija l : figurice) {
-			for (Lokacija m : figurice) {
-				if (Math.abs(l.getX()-m.getX()) == 1 ||
-					Math.abs(l.getY()-m.getY()) == 1) {
-					sosedov += 1;
-				}
-			}
-		}
-		return sosedov;
 	}
 }
