@@ -38,6 +38,7 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 		protected Poteza doInBackground() throws Exception {
 			Igra igra = master.copyIgra();
 			OcenjenaPoteza p = alfaBeta(0, igra, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			System.out.println(p);
 			assert (p != null);
 			return p.poteza;
 		}
@@ -68,15 +69,15 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 			case ZMAGA_CRNI:
 				return new OcenjenaPoteza(
 						null,
-						(jaz == Igralec.CRNI ? Ocena.ZMAGA-k : Ocena.ZGUBA+k));
+						(jaz == Igralec.CRNI ? Ocena2.ZMAGA-k-Ocena2.oceniPozicijo(jaz, igra) : Ocena2.ZGUBA+k+Ocena2.oceniPozicijo(jaz, igra)));
 			case ZMAGA_BELI:
 				return new OcenjenaPoteza(
 						null,
-						(jaz == Igralec.BELI ? Ocena.ZMAGA-k : Ocena.ZGUBA+k));
+						(jaz == Igralec.BELI ? Ocena2.ZMAGA-k -Ocena2.oceniPozicijo(jaz, igra) : Ocena2.ZGUBA+k+Ocena2.oceniPozicijo(jaz, igra)));
 			case NEODLOCENO:
 
 				
-				return new OcenjenaPoteza(null, Ocena.NEODLOCENO);
+				return new OcenjenaPoteza(null, Ocena2.NEODLOCENO);
 			}
 			assert (naPotezi != null);
 			// Nekdo je na potezi, ugotovimo, kaj se splaca igrati
@@ -84,7 +85,7 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 				// dosegli smo najvecjo dovoljeno globino, zato ne vrnemo poteze, ampak samo oceno pozicije
 				return new OcenjenaPoteza(
 						null,
-						Ocena.oceniPozicijo(jaz, igra));
+						Ocena2.oceniPozicijo(jaz, igra));
 			} 
 		
 			//Iscemo najboljso potezo

@@ -19,12 +19,14 @@ public class Igra {
 	protected int kvotaPremikov; // vsak igralec ima na voljo po 3 poteze vsaki� ko je na vrsti
 	private Stanje trenutnoStanje;
 	private int zmagovalnaKvota;
+	private int zmagovalnaKvotaSpreminjajoca; 
 	
 	public Igra() {
 		naPotezi = Igralec.BELI;
 		kvotaPremikov = 3; 
 		igralnaPlosca = new Plosca(DIM);
 		zmagovalnaKvota = 0;
+		zmagovalnaKvotaSpreminjajoca = 0;
 		trenutnoStanje = Stanje.BELI_NA_POTEZI;
 	}
 	
@@ -39,6 +41,7 @@ public class Igra {
 		this.igralnaPlosca = new Plosca(igra.getIgralnaPlosca());
 		this.zmagovalnaKvota = igra.zmagovalnaKvota;
 		this.trenutnoStanje = igra.trenutnoStanje;
+		this.zmagovalnaKvotaSpreminjajoca = igra.zmagovalnaKvotaSpreminjajoca;
 	}
 		
 	/**
@@ -282,6 +285,7 @@ public class Igra {
 	 * @param koncna
 	 */
 	public boolean narediPotezo(Poteza poteza) {  //tu se pogoji nekako ponavljajo enako kot so napisani zgoraj - kako bi to lahko bilo bolje?
+		int kvota = 0;
 		if (veljavnaPoteza(poteza) == false) {
 			return false;
 			//System.out.println("Neveljaven premik. Poskusi znova.");
@@ -290,25 +294,25 @@ public class Igra {
 			igralnaPlosca.vsaPolja[poteza.getKoncna().getY()][poteza.getKoncna().getX()] = igralnaPlosca.vsaPolja[poteza.getZacetna().getY()][poteza.getZacetna().getX()];
 			igralnaPlosca.vsaPolja[poteza.getZacetna().getY()][poteza.getZacetna().getX()] = Polje.PRAZNO;
 			
-			//Izracun koliko kvote je porabil. 	mozne napake: napacni indeksi ograjic
+			//Izracun koliko kvote je porabil.
 			if (Math.abs(poteza.getZacetna().getX() - poteza.getKoncna().getX()) == 2 || Math.abs(poteza.getZacetna().getY() - poteza.getKoncna().getY()) == 2) { //presko�imo figurico
 				kvotaPremikov = kvotaPremikov - 1;
 			} else {
 				if (poteza.getZacetna().getX() < poteza.getKoncna().getX() ) {
 					//premik v desno: 
-					int kvota = 1 + igralnaPlosca.ograjiceNavp[poteza.getZacetna().getY()][poteza.getKoncna().getX()];
+					kvota = 1 + igralnaPlosca.ograjiceNavp[poteza.getZacetna().getY()][poteza.getKoncna().getX()];
 					kvotaPremikov = kvotaPremikov - kvota;
 				} else if (poteza.getZacetna().getX() > poteza.getKoncna().getX()) {
 					//premik v levo: 
-					int kvota = 1 + igralnaPlosca.ograjiceNavp[poteza.getZacetna().getY()][poteza.getZacetna().getX()];
+					kvota = 1 + igralnaPlosca.ograjiceNavp[poteza.getZacetna().getY()][poteza.getZacetna().getX()];
 					kvotaPremikov = kvotaPremikov - kvota;
 				} else if (poteza.getZacetna().getY() > poteza.getKoncna().getY() ) {
 					//premik gor: 
-					int kvota = 1 + igralnaPlosca.ograjiceVod[poteza.getZacetna().getY()][poteza.getZacetna().getX()];
+					kvota = 1 + igralnaPlosca.ograjiceVod[poteza.getZacetna().getY()][poteza.getZacetna().getX()];
 					kvotaPremikov = kvotaPremikov - kvota;
 				} else if(poteza.getZacetna().getY() < poteza.getKoncna().getY()) {
 					//premik dol:
-					int kvota = 1 + igralnaPlosca.ograjiceVod[poteza.getKoncna().getY()][poteza.getKoncna().getX()];
+					kvota = 1 + igralnaPlosca.ograjiceVod[poteza.getKoncna().getY()][poteza.getKoncna().getX()];
 					kvotaPremikov = kvotaPremikov - kvota;
 				}
 			}
@@ -331,6 +335,7 @@ public class Igra {
 				naPotezi = Igralec.CRNI;
 				trenutnoStanje = Stanje.CRNI_NA_POTEZI;
 				zmagovalnaKvota = 3 - kvotaPremikov;
+				zmagovalnaKvotaSpreminjajoca = 3 - kvotaPremikov;
 				kvotaPremikov = 3;		
 			} 
 			if (konecCrni) {
@@ -345,14 +350,24 @@ public class Igra {
 					return true;
 				}
 			}
+			if (zmagovalnaKvotaSpreminjajoca == 0) {
+				trenutnoStanje = Stanje.ZMAGA_BELI;
+				return true;
+			}
 		}
 		
 		//Spremenimo igralca, ce je potrebno
-				if (kvotaPremikov == 0) {
-					naPotezi = naPotezi.nasprotnik();
-					trenutnoStanje = trenutnoStanje.zamenjaj();
-					kvotaPremikov = 3; 
-				}
+		if (kvotaPremikov == 0) {
+			naPotezi = naPotezi.nasprotnik();
+			trenutnoStanje = trenutnoStanje.zamenjaj();
+			kvotaPremikov = 3; 
+		}
+		
+		//Spremenimo zmagovalno kvoto
+		if(zmagovalnaKvotaSpreminjajoca != 0) {
+			zmagovalnaKvotaSpreminjajoca = zmagovalnaKvotaSpreminjajoca - kvota;
+		}
+		
 		return true;
 	}
 

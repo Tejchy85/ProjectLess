@@ -22,15 +22,6 @@ public class Ocena {
 	 * @return ocena - vrednosti pozicije (ce je igre konec, je ocena zagotovo pravilna)
 	 */
 	public static int oceniPozicijo(Igralec jaz, Igra igra) {
-		switch (igra.getTrenutnoStanje()) {
-		case ZMAGA_BELI:
-			return (jaz == Igralec.BELI ? ZMAGA : ZGUBA);
-		case ZMAGA_CRNI:
-			return (jaz == Igralec.CRNI ? ZMAGA : ZGUBA);
-		case NEODLOCENO:
-			return NEODLOCENO;
-		default:
-		
 		// Ovrednotimo glede na to, koliko kvote potrebuje vsak igralec do koncne pozicije
 		int vrednostBeli = 0;
 		int vrednostCrni = 0;
@@ -49,7 +40,6 @@ public class Ocena {
 			return 2*vrednostBeli - vrednostCrni;		//malo pomnozimo, da ne igra defenzivno
 		}
 			return 2*vrednostCrni - vrednostBeli;
-		}
 	}
 	
 	
