@@ -6,10 +6,12 @@ public enum Stanje {
 	
 	
 	public Stanje zamenjaj() {
-		if(this == BELI_NA_POTEZI) {
+		if ( this == BELI_NA_POTEZI) {
 			return CRNI_NA_POTEZI;
-		} else { 
-			return BELI_NA_POTEZI;			
+		} else if ( this == CRNI_NA_POTEZI ) {
+			return BELI_NA_POTEZI;
+		} else {
+			return this;
 		}
 	}
 	

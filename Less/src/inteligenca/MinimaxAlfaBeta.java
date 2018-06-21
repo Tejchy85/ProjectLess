@@ -48,6 +48,7 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 			try {
 				Poteza p = this.get();
 				if (p != null) { master.odigraj(p); }
+				System.out.println("SteviloKorakovBeli = " + master.getIgra().getSteviloKorakovBeli() + " SteviloKorakoCrni = " + master.getIgra().getSteviloKorakovCrni());
 			} catch (Exception e) {
 			}
 		}

@@ -18,15 +18,15 @@ public class Igra {
 	protected Plosca igralnaPlosca;
 	protected int kvotaPremikov; // vsak igralec ima na voljo po 3 poteze vsaki� ko je na vrsti
 	private Stanje trenutnoStanje;
-	private int zmagovalnaKvota;
-	private int zmagovalnaKvotaSpreminjajoca; 
+	private int steviloKorakovBeli; //števca premikov
+	private int steviloKorakovCrni;
 	
 	public Igra() {
 		naPotezi = Igralec.BELI;
 		kvotaPremikov = 3; 
 		igralnaPlosca = new Plosca(DIM);
-		zmagovalnaKvota = 0;
-		zmagovalnaKvotaSpreminjajoca = 0;
+		steviloKorakovBeli  = 0;
+		steviloKorakovCrni = 0;
 		trenutnoStanje = Stanje.BELI_NA_POTEZI;
 	}
 	
@@ -39,9 +39,9 @@ public class Igra {
 		this.naPotezi = igra.getNaPotezi();
 		this.kvotaPremikov = igra.getKvotaPremikov();
 		this.igralnaPlosca = new Plosca(igra.getIgralnaPlosca());
-		this.zmagovalnaKvota = igra.zmagovalnaKvota;
+		this.steviloKorakovBeli = igra.steviloKorakovBeli;
 		this.trenutnoStanje = igra.trenutnoStanje;
-		this.zmagovalnaKvotaSpreminjajoca = igra.zmagovalnaKvotaSpreminjajoca;
+		this.steviloKorakovCrni = igra.steviloKorakovCrni;
 	}
 		
 	/**
@@ -285,7 +285,6 @@ public class Igra {
 	 * @param koncna
 	 */
 	public boolean narediPotezo(Poteza poteza) {  //tu se pogoji nekako ponavljajo enako kot so napisani zgoraj - kako bi to lahko bilo bolje?
-		int kvota = 0;
 		if (veljavnaPoteza(poteza) == false) {
 			return false;
 			//System.out.println("Neveljaven premik. Poskusi znova.");
@@ -295,80 +294,76 @@ public class Igra {
 			igralnaPlosca.vsaPolja[poteza.getZacetna().getY()][poteza.getZacetna().getX()] = Polje.PRAZNO;
 			
 			//Izracun koliko kvote je porabil.
-			if (Math.abs(poteza.getZacetna().getX() - poteza.getKoncna().getX()) == 2 || Math.abs(poteza.getZacetna().getY() - poteza.getKoncna().getY()) == 2) { //presko�imo figurico
+			int kvota = 0;
+			if (Math.abs(poteza.getZacetna().getX() - poteza.getKoncna().getX()) == 2 || Math.abs(poteza.getZacetna().getY() - poteza.getKoncna().getY()) == 2) { //preskocimo figurico
 				kvotaPremikov = kvotaPremikov - 1;
+				kvota = 1;
 			} else {
 				if (poteza.getZacetna().getX() < poteza.getKoncna().getX() ) {
 					//premik v desno: 
 					kvota = 1 + igralnaPlosca.ograjiceNavp[poteza.getZacetna().getY()][poteza.getKoncna().getX()];
-					kvotaPremikov = kvotaPremikov - kvota;
 				} else if (poteza.getZacetna().getX() > poteza.getKoncna().getX()) {
 					//premik v levo: 
 					kvota = 1 + igralnaPlosca.ograjiceNavp[poteza.getZacetna().getY()][poteza.getZacetna().getX()];
-					kvotaPremikov = kvotaPremikov - kvota;
 				} else if (poteza.getZacetna().getY() > poteza.getKoncna().getY() ) {
 					//premik gor: 
 					kvota = 1 + igralnaPlosca.ograjiceVod[poteza.getZacetna().getY()][poteza.getZacetna().getX()];
-					kvotaPremikov = kvotaPremikov - kvota;
 				} else if(poteza.getZacetna().getY() < poteza.getKoncna().getY()) {
 					//premik dol:
 					kvota = 1 + igralnaPlosca.ograjiceVod[poteza.getKoncna().getY()][poteza.getKoncna().getX()];
-					kvotaPremikov = kvotaPremikov - kvota;
 				}
+				kvotaPremikov = kvotaPremikov - kvota;
 			}
-		
-		} 
-		
-		
-		//Preverimo, ali je igre konec.
-		boolean konecCrni = igralnaPlosca.konecCrni();
-		boolean konecBeli = igralnaPlosca.konecBeli();
-		
-		if (konecBeli && naPotezi == Igralec.CRNI && kvotaPremikov == 0){	
-			trenutnoStanje = Stanje.ZMAGA_BELI;
-			return true;
-		} else if (konecCrni && !konecBeli) { 
-			trenutnoStanje = Stanje.ZMAGA_CRNI;
-			return true;
-		} else if (konecBeli) {							//to je potrebno narediti, ker lahko beli konca ce preden porabi tri korake. 
-			if (naPotezi != Igralec.CRNI) {  
-				naPotezi = Igralec.CRNI;
-				trenutnoStanje = Stanje.CRNI_NA_POTEZI;
-				zmagovalnaKvota = 3 - kvotaPremikov;
-				zmagovalnaKvotaSpreminjajoca = 3 - kvotaPremikov;
-				kvotaPremikov = 3;		
-			} 
-			if (konecCrni) {
-				if (3 - kvotaPremikov < zmagovalnaKvota) {
+			
+			//povečava števila korakov
+			if (naPotezi == Igralec.BELI) {
+				steviloKorakovBeli = steviloKorakovBeli + kvota;
+			} else {
+				steviloKorakovCrni = steviloKorakovCrni + kvota;
+			}
+			
+			//Preverimo, ali je igre konec.
+			boolean konecCrni = igralnaPlosca.konecCrni();
+			boolean konecBeli = igralnaPlosca.konecBeli();
+			
+			if(konecCrni && !konecBeli) {
+				trenutnoStanje = Stanje.ZMAGA_CRNI;
+			} else if (konecBeli && konecCrni) {
+				if (steviloKorakovBeli > steviloKorakovCrni) {
 					trenutnoStanje = Stanje.ZMAGA_CRNI;
-					return true;
-				} else if (3 - kvotaPremikov == zmagovalnaKvota){
-					trenutnoStanje = Stanje.NEODLOCENO;	
-					return true;
-				} else {
+				} else if (steviloKorakovBeli < steviloKorakovCrni) {
 					trenutnoStanje = Stanje.ZMAGA_BELI;
-					return true;
+				} else {
+					trenutnoStanje = Stanje.NEODLOCENO;
+				}
+			} else if(konecBeli && !konecCrni) {
+				if (naPotezi == Igralec.BELI) {
+					naPotezi = Igralec.CRNI;
+					trenutnoStanje = Stanje.CRNI_NA_POTEZI;
+					kvotaPremikov = 3;
+				} else if(steviloKorakovBeli <= steviloKorakovCrni) {
+					trenutnoStanje = Stanje.ZMAGA_BELI;
 				}
 			}
-			if (zmagovalnaKvotaSpreminjajoca == 0) {
-				trenutnoStanje = Stanje.ZMAGA_BELI;
-				return true;
+			
+			
+			//Spremenimo igralca, ce je potrebno
+			if (kvotaPremikov == 0) {
+				naPotezi = naPotezi.nasprotnik();
+				trenutnoStanje = trenutnoStanje.zamenjaj();
+				kvotaPremikov = 3;
 			}
-		}
-		
-		//Spremenimo igralca, ce je potrebno
-		if (kvotaPremikov == 0) {
-			naPotezi = naPotezi.nasprotnik();
-			trenutnoStanje = trenutnoStanje.zamenjaj();
-			kvotaPremikov = 3; 
-		}
-		
-		//Spremenimo zmagovalno kvoto
-		if(zmagovalnaKvotaSpreminjajoca != 0) {
-			zmagovalnaKvotaSpreminjajoca = zmagovalnaKvotaSpreminjajoca - kvota;
-		}
-		
-		return true;
+			
+			return true;
+		} 
+	}
+
+	public int getSteviloKorakovBeli() {
+		return steviloKorakovBeli;
+	}
+
+	public int getSteviloKorakovCrni() {
+		return steviloKorakovCrni;
 	}
 
 	public List<Poteza> vsePoteze(){
