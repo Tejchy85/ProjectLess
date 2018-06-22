@@ -38,7 +38,6 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 		protected Poteza doInBackground() throws Exception {
 			Igra igra = master.copyIgra();
 			OcenjenaPoteza p = alfaBeta(0, igra, Integer.MIN_VALUE, Integer.MAX_VALUE);
-			System.out.println(p);
 			assert (p != null);
 			return p.poteza;
 		}
@@ -48,7 +47,6 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 			try {
 				Poteza p = this.get();
 				if (p != null) { master.odigraj(p); }
-				System.out.println("SteviloKorakovBeli = " + master.getIgra().getSteviloKorakovBeli() + " SteviloKorakoCrni = " + master.getIgra().getSteviloKorakovCrni());
 			} catch (Exception e) {
 			}
 		}
@@ -70,11 +68,11 @@ public class MinimaxAlfaBeta extends SwingWorker<Poteza, Object> {
 			case ZMAGA_CRNI:
 				return new OcenjenaPoteza(
 						null,
-						(jaz == Igralec.CRNI ? Ocena2.ZMAGA-k-Ocena2.oceniPozicijo(jaz, igra) : Ocena2.ZGUBA+k+Ocena2.oceniPozicijo(jaz, igra)));
+						(jaz == Igralec.CRNI ? Ocena2.ZMAGA-k+Ocena2.oceniPozicijo(jaz, igra) : Ocena2.ZGUBA+k-Ocena2.oceniPozicijo(jaz, igra)));
 			case ZMAGA_BELI:
 				return new OcenjenaPoteza(
 						null,
-						(jaz == Igralec.BELI ? Ocena2.ZMAGA-k -Ocena2.oceniPozicijo(jaz, igra) : Ocena2.ZGUBA+k+Ocena2.oceniPozicijo(jaz, igra)));
+						(jaz == Igralec.BELI ? Ocena2.ZMAGA-k+Ocena2.oceniPozicijo(jaz, igra) : Ocena2.ZGUBA+k-Ocena2.oceniPozicijo(jaz, igra)));
 			case NEODLOCENO:
 
 				

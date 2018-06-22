@@ -46,7 +46,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	}
 	
 	/**
-	 * Velikost panela vsaki� ko odpremo okno.
+	 * Velikost panela vsakic ko odpremo okno.
 	 */
 	@Override
 	public Dimension getPreferredSize() {
